@@ -1,0 +1,1473 @@
+% Dynamic Persuasion and Strategic Search
+% JMP
+% Yunfei (Jesse) Yao
+\documentclass[11pt]{extarticle}
+\usepackage{geometry}
+\geometry{top=1in,bottom=1in,left=1in,right=1in}
+\usepackage{setspace}
+\onehalfspacing
+\author{\Large Yunfei (Jesse) Yao\footnote{\hspace{0.1in}Comments welcome. I am indebted to J. Miguel Villas-Boas, Ganesh Iyer, and Yuichiro Kamada for continual guidance and support. I also thank Fred Feinberg, Liang Guo, Sherry He, Kinshuk Jerath, Shachar Kariv, T. Tony Ke, Dmitri Kuksov, Ryota Lijima, Olivia Natan, Ram Rao, Qitian Ren, Chris Shannon, Dong Wei, Pinar Yildirim, Zachary Zhong, Zihao Zhou, Yuting Zhu, and seminar participants at Berkeley Haas, Berkeley Econ theory lunch, Chinese University of Hong Kong, Hong Kong University of Science and Technology, Nova School of Business and Economics, Peking University, University of Illinois Urbana-Champaign, University of Melbourne, University of Rochester, and University of Texas at Dallas for constructive comments. All errors are my own. E-mail address: jesseyao@berkeley.edu.} \\ \textit{(University of California, Berkeley)} \\[50pt]}
+\date{\Large \today} %\\ [10pt] Latest Version: \href{http://www.jesseyao.com/Dynamic_Persuasion_and_Strategic_Search.pdf}{\textit{Click Here}}}
+\title{\Huge Dynamic Persuasion and Strategic Search \\[10pt]}
+\usepackage{caption}
+\usepackage{eurosym}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{indentfirst}
+\usepackage[pdftex]{graphics}
+\usepackage{tkz-euclide}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{nicefrac}
+\usepackage{footnotebackref}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float} 
+\newtheorem{mydef}{Definition}
+\newtheorem{claim}{Claim}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\supp}{\text{supp}}
+
+\usepackage{comment}
+
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}{Definition}
+\newtheorem{axiom}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{as}{Assumption}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{note}{Note}
+\newenvironment{solution}{\textit{Solution.}}
+
+\DeclareMathOperator*{\argmax}{argmax} 
+\DeclareMathOperator*{\argmin}{argmin} 
+
+
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\DT}{{\Delta\Theta}}
+\newcommand{\RP}{\mathcal{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\lmt}{\longmapsto}
+\newcommand{\lra}{\Leftrightarrow}
+\newcommand{\ra}{\Rightarrow}
+
+\newcommand{\dd}{\text{d}}
+\newcommand{\ddd}{\text{ d}}
+\newcommand{\T}{\mathcal T}
+\newcommand{\C}{\mathcal C}
+\newcommand{\D}{\mathcal D}
+\newcommand{\F}{{\mathcal F}}
+\newcommand{\z}{z}
+\newcommand{\co}{\mbox{co}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\lt}{{L}}
+\newcommand{\rt}{{R}}
+\newcommand{\down}{{D}}
+
+\newcommand{\m}{\wedge}
+\newcommand{\M}{\vee}
+
+\begin{document}
+	\maketitle
+\thispagestyle{empty}
+
+\newpage
+\section*{Abstract}	
+Consumers frequently search for information before making decisions. Since their search and purchase decisions depend on the information environment, firms have a strong incentive to influence it. This paper endogenizes the consumer’s information environment from the firm’s perspective. We consider a dynamic model where a firm sequentially persuades a consumer to purchase the product. The consumer only wishes to buy the product if it is a good match. The firm designs the information structure. Given the endogenous information environment, the consumer trades off the benefit and cost of information acquisition and decides whether to search for more information. Given the information acquisition strategy of the consumer, the firm trades off the benefit and cost of information provision and determines how much information to provide. This paper characterizes the optimal information structure under a general signal space. We find that the firm only smooths information provision over multiple periods if the consumer is optimistic about the product fit before searching for information. Moreover, if the search cost for the consumer is high, the firm designs the information such that the consumer will be certain that the product is a good match and will purchase it after observing a positive signal. If the search cost is low, the firm provides noisy information such that the consumer will be uncertain about the product fit but will still buy it after observing a positive signal. 
+% mention other applications?
+
+
+\thispagestyle{empty}
+
+\newpage	
+\setcounter{page}{1}
+\section{Introduction}
+With the rapid proliferation of digital technologies and information channels, it is increasingly common for consumers to seek detailed information before making a decision. More information can lead to less uncertainty and improve decision-making. Since consumers' search and purchase decisions depend on the information environment, firms have a strong incentive to influence it. Advertisers want to choose the advertising content to raise consumers' awareness and interests. Platforms want to design the website to attract traffic. Thus, the consumer faces endogenous information environment. For example, a consumer considering purchasing a pair of shoes may search on the internet to find out whether or not the item matches his needs.\footnote{We refer to the information provider (seller) as ``she'' and the decision-maker (consumer) as ``he'' throughout the paper.} The seller can influence consumers' search and purchase decisions through various methods. She can bid for search advertising spots to persuade the consumer. The content can be informative, showing features about the item, or persuasive, without detailed information. By spending more money for advertising, the seller can communicate information to potential buyers more frequently. Even if the consumer does not make a purchase right after seeing an ad, the seller can keep persuading the consumer through retargeting. At the same time, the consumer spends time and effort to search. He will only search for more information if he anticipates enough gain from it. 
+
+Such communications are also ubiquitous offline. For instance, an individual looking for a new car often visits a local dealership to talk with the dealer. The dealer will highlight various characteristics of the car. If the consumer is interested, the dealer often offers him a test drive to have a better sense of the car. This is time-consuming, in contrast to the ease of searching for information about a product on the internet, but they are often not sure whether they will like a product based solely on the information online. In the case of car-buying, test driving and then haggling with the dealer can take several hours, but people who purchase the car after visiting the dealership usually are sure that they like the car. Motivated by these examples, this paper endogenizes the consumer's information environment from the firm's perspective. %%% add one sentense
+%% provoke the question!
+By considering consumer search and firm information provision simultaneously, we wish to explain why the information environment of consumer search differs across various scenarios. We want to understand when the firm prefers to provide noisy rather than precise information and when it prefers to communicate with consumers for a longer time.
+
+%We find that the firm spreads information provision over multiple periods if and only if the prior belief for a good match is high. In equilibrium, if the search cost for the consumer is high, the firm will design the information such that the consumer will be certain that the product is a good match and will purchase it right after observing a positive signal. If the search cost is low, the firm provides noisy information such that the consumer will be uncertain about the product fit but still makes the purchase right after observing a positive signal. 
+%The firm extracts all the surplus from the consumer if it spreads information provision over multiple periods, while it may leave some surpluses to the consumer if it provides information only once. However, the longer expected search time of the consumer will discourage him from searching if he is unlikely to purchase a good product after searching. Hence, 
+
+The main contribution of this paper is to endogenize the consumer's search environment from the firm's perspective. We find that the firm provides information incrementally rather than only once if the consumer is optimistic about the product fit before searching for information. If the search cost for the consumer is high, the firm designs the information such that the consumer will be certain that the product is a good match and will purchase it right after observing a positive signal. If the search cost is low, the firm provides noisy information such that the consumer will be uncertain about the product fit but will still buy the product right after observing a positive signal. 
+
+Specifically, this paper considers a dynamic model where a receiver (consumer) makes a binary decision between action $G$ (purchase the product) and $B$ (outside option). There are two states, good (the product is a good match) and bad (the product is a bad match). A sender (firm) always prefers $G$ and sequentially persuades the receiver to take that action. In contrast, the receiver only wishes to take action $G$ if the state is good. Neither the sender nor the receiver knows the state initially but have a common prior belief about it. The receiver can incur costs to search for more information about the state. The updated belief helps him make decisions. If the receiver observes a negative signal, he knows that the state is less likely to be good and will not take action $G$ without the arrival of new information. If the receiver observes a positive signal, he knows that the state is more likely to be good, and the expected payoff of taking action $G$ increases. 
+
+The sender designs the information structure. Given the endogenous information environment, the receiver trades off the benefit and cost of information acquisition and decides whether to search for more information. The receiver is forward-looking and forms rational expectations of the sender's strategy. The sender can incur higher costs to provide more information so that the receiver will be more likely to take action $G$. Given the information acquisition strategy of the receiver, the sender trades off the benefit and cost of information provision and determines how much information to provide. Therefore, the receiver and the sender simultaneously trade off the benefit and cost of information acquisition/provision. 
+
+This paper characterizes the optimal information provision strategy of the sender and the optimal information acquisition strategy of the receiver. There are two periods in the main model. In each period, the sender chooses the information structure, and the receiver chooses whether to search for more information or make a decision.  We later extend the two-period model to an infinite-period model and show that the main insights extend to the richer model. Instead of looking at specific parameters of the search environment, we study the design of the information environment under general signal space and characterize the optimal information structure among all feasible information policies. We develop a constrained non-linear programming method to solve the sender's information design problem, because the widely-used concavification method due to Kamenica and Gentzkow (2011) cannot solve it when the receiver's particiaption is strategic. 
+
+In equilibrium, the sender induces the receiver to take action $G$ immediately upon observing a positive signal. This way, the sender saves the expected search time and does not need to compensate the receiver for a higher expected search cost. The sender extracts all the surplus from the receiver when she provides information in both periods, while she may leave some surpluses to the receiver when she provides information in only one period. Information smoothing can also save the persuasion cost. So, the sender has an incentive to spread information provision over multiple periods. However, the longer expected search time of the receiver will discourage him from searching if the likelihood of getting a strictly positive ex-post payoff is low. Hence, the sender only smooths information provision if the prior belief is high. If the search cost for the receiver is high, the sender will design the information such that the receiver will be certain that the state is good and will take action $G$ right after observing a positive signal. If the search cost is low, the sender provides noisy information such that the receiver will be uncertain about the state but still takes action $G$ right after observing a positive signal.
+
+We compare the profit-maximizing structure with the efficient (social welfare maximizing) information structure. When the search cost is high, the optimal strategy of the sender also maximizes social welfare. When the search cost is lower, the two information structures are different because the sender does not internalize the receiver's welfare.
+
+In the main model, the sender can commit to the current-period information structure but cannot commit to the information structure in the next period. In the extension, we study the implications of dynamic commitment. We find that the ability to commit to future strategies strictly benefits the sender when the search cost is high, while the benefit vanishes as the search cost approaches zero. 
+
+We also consider the implications of discounting. When the search cost is high, it is difficult to convince the receiver to participate. % convince the receiver to search
+Providing enough information to persuade the receiver to search dominates the force of discounting. So, the sender's optimal strategy does not depend on the discount factor. When the search cost is low and the players become less patient, the present value of the second-period profit decreases and the first-period participation constraint becomes tighter. The sender has a stronger incentive to convert the receiver early. So, she provides less information in the second period and more information in the first period. Moreover, we consider asymmetric discount factors in a model where the sender is patient while the myopic receiver only cares about the current-period payoff. We find that both players are worse off if the receiver is myopic rather than forward-looking. This implies that the sender should try to better inform the receiver of the possibility of multi-period information revelation and gradual learning. 
+
+Lastly, we extend the two-period model to an infinite-period model and show that the main insights extend to the richer model. When the search cost approaches zero, the ability to smooth the information over more extended periods is valuable for the sender. In that case, she could obtain the equilibrium payoff as if the persuasion cost were zero. We also find that the receiver will decide within a bounded number of periods.
+
+
+\subsection{Related Literature}
+There is a large stream of literature on optimal information acquisition. In particular, consumer search has raised growing interest both theoretically (Stigler 1961, Weitzman 1979, Wolinsky 1986, Moscarini and Smith 2001, Branco et al. 2012, Ke et al. 2016, Ke and Villas-Boas 2019, and Jerath and Ren 2022) and empirically (Hong and Shum 2006, Kim et al. 2010, 2017, Seiler 2013, Honka 2014, Ma 2016, Chen and Yao 2017, Honka and Chintagunta 2017, Seiler and Pinna 2017, Ursu et al. 2020, Moraga-González and Wildenbeest 2021, Morozov 2021, Morozov et al. 2021, and Yavorsky et al. 2021). In the above papers, the information environment is exogenous. Several papers study consumers' endogenous information acquisition. The consumer chooses both the search rule and the information environment. In Zhong (2022a), the decision-maker gradually gathers information about one product. Poisson learning is optimal for him. In Guo (2021), the consumer sequentially search for information about multiple products and determines how much to evaluate each product. 
+%In our paper, by contrast, the seller endogenizes the search environment.
+Because the strategy and the outcome depend on the information structure, other payoff-relevant parties (e.g., firms) have a strong incentive to influence it. We take this into account by having the firm endogenously determine the information environment of the consumer.  
+
+Some papers investigate the design of the search environment from the firm's perspective. In Dukes and Liu (2016) and Kuksov and Zia (2021), the platform or the seller select the search cost to influence the consumer's search strategy. In Villas-Boas (2009), Liu and Dukes (2013), and Kuksov and Lin (2017), the product line design of the seller impacts consumer's search decision. Villas-Boas and Yao (2021) consider the optimal retargeting strategy of the firm which advertises to consumers who have a high likelihood of considering the firm's product. By advertising, the firm increases the frequency of consumers’ learning information and the ability to track consumers. In Zhong (2022b), the platform recommends relevant sellers based on match values and prices to consumers. The platform designs the search algorithm by picking the match precision and the relative importance between prices and match values. Comparing the welfare outcomes among information structures emphasizing different vehicle characteristics under the counterfactuals of their structural model, Gardete and Hunter (2020) find that emphasizing the vehicle's history and obfuscating price information improves both consumer and firm welfare. Mayzlin and Shin (2011) consider a setting where the consumer can obtain an exogenously given signal by searching for information about the product quality. They find that uninformative advertising may serve as an invitation for the consumer to search. In Yao (2022), the firm can affect consumers' belief through informative advertising before they engage in costly search. In related literature on choice overload, the seller determines the amount of information provided to the consumer (Kuksov and Villas-Boas 2010, Branco et al. 2016). The decision of the seller affects the consumer's search cost. 
+
+While the above papers are related to our paper, there are substantial differences. Instead of looking at specific parameters of the search environment, we study the design of the information environment under a general signal space. We characterize the optimal information structure among all feasible information policies. In the existing literature, the consumer either fully observes the value of a product/attribute or gets a noisy signal from an exogenously specified distribution (e.g., a normal distribution). In contrast, in our paper, the firm determines the distribution of the signal. The optimal information structure can be asymmetric and may not correspond to standard distributions.
+
+We use a belief-based method of modeling information provision, first introduced by Aumann and Maschler (1995) and Kamenica and Gentzkow (2011) in the Bayesian persuasion and information design literature.\footnote{See Bergemann and Morris (2019) for a survey.} The sender picks a mean-preserving spread of the prior belief as the posterior belief, which simplifies the analysis. Some papers have studied the persuasion problem where either the receiver or the sender incurs costs. For example, Ball and Espín-Sánchez (2022) study a persuasion problem in which the sender chooses from a restricted set of feasible experiments, and the experiment can be costly. In Degan and Li (2021), the sender's persuasion cost depends on the precision of the signal. Wei (2021) considers a static persuasion problem in which a rationally inattentive receiver incurs information processing costs. Jerath and Ren (2021) consider a static model in which the consumer chooses the optimal information structures, taking into account that he needs to incur a cost to search for and process the signals. Instead of directly providing information, the firm influences the consumer's information environment by imposing constraints on the precision of the signals. Berman et al. (2022) study the information design of the recommendation algorithms under endogenous pricing and competition. Gentzkow and Kamenica (2014) extend the widely-used concavification approach of Kamenica and Gentzkow (2011) to the setting where the sender's cost is posterior-separable. We contribute to this literature by allowing the receiver to search for information voluntarily. The concavification approach cannot be used if the receiver's participation is strategic. So, we instead develop a constrained non-linear programming method to solve the sender's information design problem in the presence of consumer strategic search. Because we consider a dynamic problem, different information structures may correspond to different forms of sender's objectives and receiver's participation constraints. To reduce the dimensionality of the problem, we first show that the optimal information structure must induce the receiver to take action $G$ immediately after receiving a positive signal. This qualitative property greatly simplifies the problem as we can limit our attention to such information structures. Nevertheless, the constraints of the non-linear program of the sender consist of multiple variables, making the optimization problem challenging. To make the problem tractable, we transform the program into a set of constrained programs, each with one constrained variable. We then select the global solution by comparing the local solutions of each program.
+
+Ke et al. (2022) study how online platforms should design the information in the presence of consumer search. In their paper, the information impact both consumer search and targeted advertising and allow them to study the trade-off between sales commission and advertising revenue. The firm designs the information to manipulate consumer's belief prior to search. The consumer always process this information but can search for more information strategically given an exogenous information structure (full revelation upon search). Our contribution is to integrate the information provision with consumer search and fully endogenize the search environment. 
+
+While some recent papers extend the static setting of Bayesian persuasion to the dynamic one, the persuasion cost is usually zero or a constant (Ely 2017, Renault et al. 2017, Ball 2019, Che et al. 2020, Ely and Szydlowski 2020, Orlov et al. 2020, Iyer and Zhong 2021, Bizzotto et al. 2021). In our model, the sender incurs a persuasion cost, and the receiver incurs a search cost. Unlike most Bayesian persuasion literature, the receiver's participation is strategic. The sender may need to convince the receiver to search or speed up the receiver's learning by incurring a higher cost. Therefore, we can investigate the sender's optimal trade-off between the benefit and cost of information provision.
+
+
+The remainder of the paper is organized as follows. Section 2 presents the main model. Section 3 characterizes the optimal information provision strategy and the equilibrium outcomes. Section 4 characterizes the efficient information provision strategy and summarizes the information distortion when the sender rather than the social planner designs the information structure. Section 5 includes several model extensions. Section 6 concludes.
+
+
+\section{The Model}
+\subsection{States, Actions, and Payoffs}\label{model}
+There are two players, a sender and a receiver, and two states, good $(g)$ and bad $(b)$. The receiver ultimately makes a binary decision between $G$ and $B$. The sender wishes to persuade the receiver to take action $G$ regardless of the state, while the receiver wishes to match the decision with the state (taking action $G (B)$ when the state is $g (b)$). The payoffs of the decision for the players are the following:
+\begin{table}[H] \centering 
+	\small
+	\begin{tabular}{c c c}
+		\\
+		\hline
+		(sender payoff, receiver payoff)& action G & action B \\
+		\hline
+		state $g$ & $(p,v_g)$ & $(0,0)$  \\
+		&&\\
+		state $b$&$(p,v_b)$ & $(0,0)$ \\
+		\hline
+	\end{tabular}
+\end{table}
+
+The sender earns a positive payoff, $p > 0$, if the receiver takes action $G$. The receiver's payoff is positive if he takes action $G$ when the state is $g$, $v_g > 0$, and negative if he takes action $G$ when the state is $b$, $v_b < 0$. Both players get zero payoff if the receiver takes the action $B$ (which can be thought of as an outside option). We assume without loss of generality that $v_g = 1+v_b$.\footnote{To see that assuming $v_g = 1+v_b$ is without loss of generality, consider the following normalization. Let $v_g' = \frac{v_g}{v_g - v_b}, v_b' = \frac{v_b}{v_g - v_b}, p' = \frac{p}{v_g - v_b}$. Then, $v_g' - v_b' = 1$. We make this assumption to simplify the analysis and the presentation.} Neither the sender nor the receiver knows the state initially but have a common prior belief about it, $\mu_0 := \mathbb{P}(\text{the state is }g) \in (0,1)$. In each period $t \in \{0,1\}$, the sender determines and commits to the information structure of the current period but cannot commit to the information structure in the future. The receiver can search for information (action $S$) before deciding. The information acquisition is costly but helps the receiver make better decisions. If the receiver chooses to search, he observes a binary signal $s \in \{0,1\}$ that reveals some information about the state. %\footnote{Since there are only two states, more than two signal values will not benefit the sender.} 
+$\mathbb{P}[s=1\vert g]$ and $\mathbb{P}[s=1\vert b]$ uniquely determines the signal. We order the value of the signal such that $\mathbb{P}[s=1\vert g] > \mathbb{P}[s=1\vert b]$. Hence, $s = 1$ corresponds to a positive signal and $s=0$ corresponds to a negative signal. The players update the belief about the state according to Bayes' rule after the realization of the signal.\footnote{We can assume without loss of generality that the sender observes the signal realization. This is because the sender can perfectly infer the signal realization from the receiver's action under the optimal signal structure, according to Proposition \ref{iterative_one-shot}.} The game ends whenever the receiver makes a decision ($G$ or $B$). Figure \ref{timing} illustrates the timing of the game.
+%The sender earns a positive payoff, $p > 0$, if the receiver takes action $G$. The receiver's payoff is positive if he takes action $G$ when the state is $g$, $v_g > 0$, and negative if he takes action $G$ when the state is $b$, $v_b < 0$. Both players get zero payoff if the receiver takes the action $B$ (which can be thought of as an outside option). We assume without loss of generality that $v_g = 1+v_b$.\footnote{To see that assuming $v_g = 1+v_b$ is without loss of generality, consider the following normalization. Let $v_g' = \frac{v_g}{v_g - v_b}, v_b' = \frac{v_b}{v_g - v_b}, p' = \frac{p}{v_g - v_b}$. Then, $v_g' - v_b' = 1$. We make this assumption to simplify the analysis and the presentation.} Neither the sender nor the receiver knows the state initially but have a common prior belief about it, $\mu_0 := \mathbb{P}(\text{the state is }g) \in (0,1)$. In each period $t \in \{0,1\}$, the sender determines and commits to the information structure of the signal but cannot commit to the signal in the future. The receiver can search for information (action $S$) before deciding. The information acquisition is costly but helps the receiver make better decisions. If the receiver chooses to search, he observes an signal that reveals some information about the state. The sender does not observe the realization of the signal but can infer it from the receiver's action. We will later characterize the optimal signal structure in Proposition \ref{iterative_one-shot}. The optimal signal structure implies that the sender can perfectly infer the realization of the signal from the receiver's action. So, the receiver does not have private information. To simplify the analysis, we assume without loss of generality that the sender observes the realization of the signal in the remaining analysis. The players update the belief about the state according to Bayes' rule after the realization of the signal. The game ends whenever the receiver makes a decision ($G$ or $B$). Figure \ref{timing} illustrates the timing of the game.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=17cm]{Figures/timing.pdf}
+	\caption{Timing of the Game}\label{timing}
+\end{figure}
+
+Analogous to Proposition 1 of Kamenica and Gentzkow (2011), we can work with mean-preserving posterior beliefs rather than the specific signal structure to simplify the analysis. Specifically, the existence of a binary signal is equivalent to the existence of a binary-valued posterior belief whose expectation is equal to the prior belief.\footnote{In the appendix, we state this result formally and provide a proof.} Denote the belief at the beginning of each period by $\mu_t$. In each period, with probability $\lambda_t$, the receiver observes a positive signal and the belief increases to $\bar{\mu_t}$. We refer to $\lambda_t$ as the probability of a positive signal and $\bar{\mu_t}$ as the belief after observing a positive signal. With probability $1-\lambda_t$, the receiver observes a negative signal, and the belief decreases to $\underline{\mu_t}$. We refer to $\underline{\mu_t}$ as the belief after observing a negative signal.
+
+We assume there is no discounting in the main model, and discuss the implication of discounting in the extension. Since the sender designs and provides information to the receiver and the receiver does not need to collect the information, different information should cost differently for the sender but not for the receiver. Therefore, we assume that the receiver incurs a flow cost of $c$ per period of search. To persuade the receiver to take action $G$, the sender wants to increase the receiver's belief about the good state. It is easy to provide information that increases the receiver's belief with a low probability but hard to do so with a high probability. It becomes impossible to always increase the receiver's belief. So, we assume that the sender's cost of information provision is increasing and convex in the probability of a positive signal, $K = K(\lambda)$. It is relatively cheap for her to provide information with a low $\lambda$. The marginal cost increases at an increasing rate as $\lambda$ increases. 
+
+\begin{as}\label{assumption_sender_cost}
+	$K(\cdot) \in \mathcal{C}^2(\mathbb{R_+}),K'(\lambda)>0,K''(\lambda)>0$, $K(0) = 0$, $\lim\limits_{\lambda \rightarrow 1^-} K'(\lambda)=+\infty$, $\lim\limits_{\lambda \rightarrow 0^+} K'(\lambda)=0$.
+\end{as}
+
+Throughout this paper, we refer to the likelihood of a positive signal as the amount of information. More information means more frequent positive signals.
+
+The total payoff for each player is the payoff of the decision net of the information provision/acquisition costs. The receiver is forward-looking and forms rational expectations about the sender's strategy in the future. We assume that $\mu_0 v_g + (1-\mu_0) v_b < 0 \lra \mu_0 < -v_b$. So, the receiver will never take action $G$ without searching. Otherwise, the sender will provide no information, and the receiver always will take the desired action. We also assume that the search cost is not too high, $c < v_g$. Otherwise, the receiver will never search.
+
+
+\subsection{Applications}
+Our model can be applied to many settings where a sender wishes to persuade a receiver to take a particular action while the receiver wishes to match the action with the state and can strategically gather more information before making the decision. We illustrate two applications of the model in this section.
+
+%% more applications?
+
+%For another example, the FDA needs to decide whether to approve or disapprove many new drugs every year. The pharmaceutical company may design tests to convince the regulator that the drug is safe. Even if a test fails to convince the regulator, the firm can offer another test, hoping that the regulator will approve the drug after seeing the new test. Different tests entail different costs for the company. In the meantime, monitoring and examining the test is costly for the regulator. So, the regulator will only examine it if the likelihood that the result is positive and the precision of the test is high enough. 
+
+\subsubsection{Product Sales}\label{productsales}
+A seller offers a product with unit demand. The price is $p$, and the marginal cost is $m$. The product may be a good match or a bad match with the buyer. Neither the buyer nor the seller knows the state initially but they have a common prior belief. The product is of zero value to the buyer if the state is bad and is of value $v$ to the buyer if the state is good. The buyer decides whether or not to purchase the product. The payoffs of the decision for the players are the following:
+\begin{table}[H] \centering 
+	\small
+	\begin{tabular}{c c c}
+		\\
+		\hline
+		(sender payoff, receiver payoff)& purchasing & not purchasing \\
+		\hline
+		good match & $(p-m,v-p)$ & $(0,0)$ \\
+		&&\\
+		bad match &$(p-m,-p)$ & $(0,0)$ \\
+		\hline
+	\end{tabular}
+\end{table}
+The buyer can incur costs to search for more information about the product. The updated belief helps him make better purchasing decisions. If the buyer observes a negative signal, he knows that the product is less likely to be a good match and avoids wasting money on it without the arrival of new information. If the buyer observes positive news, he knows that the product is more likely to be a good match and the expected valuation increases. The buyer gets a positive surplus upon purchasing the good if the expected value is higher than the price.\footnote{A common concern about this example is the possibility of product return. When it is costless to return the product, the buyer will always buy without search and return the product if it turns out to be a bad match. However, even though the buyer can get a full refund from many market places such as Amazon, he needs to incur time and effort to bring the package to the store or a shipping carrier. The qualitative properties of the main model still hold as long as a proportion of the buyers have enough return costs.}
+
+
+\subsubsection{New Drug Launches}
+A pharmaceutical company develops a new drug and tries to get approval from the regulator (e.g., the FDA) by designing and conducting tests to convince the regulator that the drug is safe. If the regulator approves it, the firm gains an expected profit of $p$. The regulator gains a positive utility if the drug is safe and a negative utility if it is unsafe. The payoffs of the decision for the players are the following:
+\begin{table}[H] \centering 
+	\small
+	\begin{tabular}{c c c}
+		\\
+		\hline
+		(sender payoff, receiver payoff)& approval & disapproval \\
+		\hline
+		safe & $(p,v_g > 0)$ & $(0,0)$  \\
+		&&\\
+		unsafe &$(p,v_b < 0)$ & $(0,0)$ \\
+		\hline
+	\end{tabular}
+\end{table}
+Monitoring and examining the test is costly for the regulator. So, the regulator will only investigate the test if both the likelihood of a good result  and the precision of the test are high enough. Even if a single test fails to convince the regulator, the firm can offer another test, hoping it will convince the regulator to approve the drug.
+
+
+
+\subsection{Strategies and Equilibrium Concepts}\label{secstrategy}
+Since the belief is common knowledge and there is no private information, we consider the sender-preferred subgame perfect equilibrium, as in Kamenica and Gentzkow (2011). If multiple actions ($B$, $G$, and $S$) give the receiver the same expected payoff, we assume that the receiver chooses an action that maximizes the sender's expected payoff. We also assume that the sender prefers to give the receiver more surplus in the first period if more than one equilibrium lead to the same expected sender's payoff. A perturbation of very little discounting justifies this assumption. 
+
+\subsubsection{Equilibrium in the Second Period}\label{eq_subgame}
+The receiver has to make a decision between $G$ and $B$ at the end of the second period. Since it is costly for the sender to provide information, the sender will either give no information or provide enough information such that the receiver searches and will take action $G$ if a positive signal arrives. We illustrate the belief evolution in the last period in Figure \ref{subgame}. Also, the distribution of the belief induced by the signal should be a mean-preserving spread of the initial belief: $\mathbb{E}[\Delta \mu]=0$. In sum, the sender either does not provide information and obtains zero payoffs or takes into account the following constraints when designing the information structure:\\
+(1) participation constraint:
+\begin{equation}\label{IR_1}
+\lambda_1 [\bar{\mu_1} v_g + (1 - \bar{\mu_1})v_b] = \lambda_1 (\bar{\mu_1} + v_b) \geq c \tag{$IR_1$}
+\end{equation}
+(2)  feasibility constraint:
+\begin{equation}\label{F_1}
+\lambda_1 \bar{\mu_1} + (1-\lambda_1) \underline{\mu}_1 = \mu_1 \tag{$F_1$}
+\end{equation}
+If the sender provides information, the constrained program of the sender is:
+\begin{align}\tag{$P_1$} \label{P1}
+& \max\limits_{\lambda_1, \bar{\mu_1}} -K(\lambda_1) + p \lambda_1 \nonumber\\
+\text{s.t. } &\eqref{IR_1},\eqref{F_1}, \lambda_1 \in [0,1],\underline{\mu}_1  \in [0,\mu_1) \nonumber
+\end{align}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.4\linewidth]{Figures/subgame.pdf}
+	\caption{Belief Evolution in the Last Period}
+	\label{subgame}
+\end{figure}
+
+We analyze the solution to this problem in the next section. Though the information structure consists of $(\lambda_1, \bar{\mu_1}, \underline{\mu}_1)$, any two of them fully characterize the strategy because the third variable is then uniquely determined by $(F_1)$. Therefore, we use $(\lambda_1, \bar{\mu_1})$, the probability of a positive signal and the belief after observing a positive signal, to represent the sender's strategy.
+
+
+
+\subsubsection{Equilibrium for the Entire Game}
+The sender has three options. Firstly, she can provide no information and obtain zero payoffs. Secondly, she can provide information in only one period. If the receiver decides to search, he will observe a one-shot signal designed by the sender. The receiver takes action $G$ if a positive signal arrives and takes action $B$ if a negative signal comes. The sender will not provide extra information regardless of the signal realization. Her problem is exactly \eqref{P1}. Lastly, the sender can provide information in both periods. She can give a pair of one-shot signals, which means that the receiver will take action $G$ upon observing a positive signal in either period. If a negative signal arrives in the first period, the sender will provide another signal, hoping that a positive signal will arrive in the second period. The sender can also offer a pair of iterative signals. The receiver must search in both periods before taking action $G$ under iterative signals. We illustrate the belief evolution of the one-shot signals and iterative signals in Figure \ref{one-shot} and \ref{iterative}.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.9\linewidth]{Figures/one-shot.pdf}
+	\caption{Belief Evolution of One-shot Signals\\{\small Left Figure: Sender Only Persuades in One Period; Right Figure: Sender Persuades in Both Periods}}
+	\label{one-shot}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.9\linewidth]{Figures/iterative.pdf}
+	\caption{Belief Evolution of Iterative Signals\\{\small Left Figure: Receiver Keeps Searching Only after a Positive Signal; Right Figure: Receiver Searches in Both Periods}}
+	\label{iterative}
+\end{figure}
+
+Compared to one-shot signals, iterative signals require a longer search time. To compensate the receiver for the higher expected search costs, the sender needs to provide information more favorable to the receiver, which hurts the sender's payoff. The following result shows that the sender always prefers one-shot signals in equilibrium. So, we limit our attention to the optimal one-shot signals.
+
+%% think more about the intuition
+\begin{proposition}\label{iterative_one-shot}
+	For any pair of feasible iterative signals, there exists a one-shot signal that gives the sender a strictly higher payoff.
+\end{proposition}
+
+The sender takes into account the following constraints when designing the optimal one-shot signal of the first period:\\
+(1) participation constraint:
+\begin{align}\label{IR_0}
+&\lambda_0 [\bar{\mu_0} v_g + (1 - \bar{\mu_0})v_b] + (1-\lambda_0) \mathbb{E}[\text{receiver surplus at }t=1\vert \text{search at }t=1] \nonumber \\
+=&\lambda_0 (\bar{\mu_0} + v_b) + (1-\lambda_0) [\lambda_1(\bar{\mu_1} + v_b)-c] \geq c \tag{$IR_0$}
+\end{align}
+(2) feasibility constraint:
+\begin{equation}\label{F_0}
+\lambda_0 \bar{\mu_0} + (1-\lambda_0) \underline{\mu}_0 = \mu_0 \tag{$F_0$}
+\end{equation}
+
+If the sender provides information in both periods, her problem is:\footnote{We impose the following implicit assumptions on all of the programs in the remaining of the paper: $\bar{\mu_t} \in [-v_b,1],\underline{\mu_t} \in [0,\mu_t),\lambda_t \in [0,1],\underline{\mu}_0 = \mu_1$. The last equality comes from the fact that the belief at the beginning of the second period, $\mu_1$, is the belief after observing a negative signal in the first period, $\underline{\mu}_0$, under one-shot signals.}
+\begin{align}\tag{$P_{2}$} \label{P2}
+& \max\limits_{\lambda_0, \bar{\mu_0}, \mu_1, \lambda_1, \bar{\mu_1}} -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1)+p \lambda_1 \right] \nonumber\\
+\text{s.t. } &\eqref{IR_0},\eqref{F_0},(\lambda_1,\bar{\mu}_1) \text{ solves (\ref{P1})} \nonumber
+\end{align}
+
+We analyze the solution to this problem in the next section. We use $(\lambda_0, \bar{\mu_0}, \mu_1, \lambda_1, \bar{\mu_1})$, the probability of a positive signal in each period, the belief after observing a positive signal in each period, and the initial belief in the second period, to represent the sender's strategy.
+
+
+\section{Optimal Strategies}
+From the previous discussion, the receiver will search (take action $S$) whenever the sender provides information. The receiver will take action $G$ immediately upon receiving a positive signal and action $B$ if the sender does not provide information. Therefore, we only need to characterize the sender's strategy, which implies the receiver's strategy.
+
+\subsection{A Benchmark}
+We first consider a benchmark problem in which the receiver always participates and in which the sender can generate an arbitrary amount of information in each period. The sender chooses the information structure to maximize the expected payoff. We will use the solution throughout the subsequent analyses.
+\begin{align}\tag{$P_{b}$} \label{Pb} \max\limits_{\lambda_0, \lambda_1} -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1)+p \lambda_1\right] \nonumber
+\end{align}
+
+\begin{lemma}\label{unconstrained}
+	The solution to the benchmark problem \eqref{Pb}, $(\lambda_0^{**}, \lambda_1^{**})$, does not depend on the search cost $c$ and $\lambda_0^{**} < \lambda_1^{**}$. The benchmark sender's payoff is strictly positive. 
+\end{lemma}
+
+The above payoff is the highest possible payoff the sender can obtain in equilibrium. When the prior belief is high enough, the sender obtains the benchmark payoff by setting the probability of a positive signal to $\lambda_t^{**}$. When the prior is lower and a positive signal occurs with the benchmark probability, the sender needs to provide a very noisy signal (low $\bar{\mu_t}$) due to feasibility constraints. As a result, the receiver will be quite uncertain about the state even after observing a positive signal. So, he will choose not to search for information. This friction restricts the communication between the players and distorts the optimal strategy away from the benchmark strategy. For the problem to be non-degenerate, we concentrate on the case in which the prior is not too high throughout the paper. As a result, the optimal strategy is different from the benchmark solution.
+
+\subsection{Optimal Strategy in the Second Period}
+When the belief at the beginning of the second period is too low, the receiver will not search, given any feasible signals. Thus, the sender does not provide information to minimize the cost. When the belief at the beginning of the second period is higher, and the search cost is not too high, the sender provides information and obtains a positive payoff. The following proposition summarizes the optimal information structure.
+\begin{proposition}\label{strategy1p}
+	In the second period, the sender does not provide information when $\mu_1 < \mu_{0,1}:=c/v_g$. When $\mu_1 \geq \mu_{0,1}$, the optimal probability of a positive signal and the optimal belief after observing a positive signal, $(\lambda^*_1,\bar{\mu}_1^*)$, depend on the search cost $c$:
+	\begin{enumerate}
+		\item If $c \geq v_g \lambda_1^{**}$, there exists a unique $\widehat{c} \in \left(v_g\lambda_1^{**},v_g \mu_1 \right]$ such that the sender does not provide information if $c > \widehat{c}$ and $(\lambda^*_1,\bar{\mu}_1^*) = (c/v_g,1)$ if $c < \widehat{c}$. The receiver gets zero surplus.
+		
+		\item If $c \in \left[\mu_1+v_b\lambda_1^{**},v_g\lambda_1^{**} \right)$, $(\lambda^*_1,\bar{\mu}_1^*) = (\frac{\mu_1-c}{-v_b},\frac{-v_b \mu_1}{\mu_1-c})$. The receiver gets zero surplus.
+		
+		\item If $c < \mu_1+v_b\lambda_1^{**} \m v_g \lambda_1^{**}$, $(\lambda^*_1,\bar{\mu}_1^*) =  (\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}}\m 1)$. The receiver gets strictly positive surplus.
+	\end{enumerate}
+	
+\end{proposition}
+
+When the search cost is too high, the sender has to provide a lot of information to persuade the receiver to search. Even if it is feasible for the sender to provide enough information that the receiver will search, it is so costly that the expected sender's payoff is negative. So, the sender chooses not to provide information, and the receiver does not search. 
+
+When the search cost is high but not too high, the sender will provide just enough information such that the receiver searches. Since the receiver's participation constraint is hard to satisfy, in equilibrium, the receiver becomes certain ($\bar{\mu_1} = 1$) that the state is $g$ after observing a positive signal. Suppose, instead, a positive signal does not fully reveal the state ($\bar{\mu_1} < 1$). In that case, its arrival rate will need to be higher to persuade the receiver to search. Since the marginal cost of increasing the probability of a positive signal exceeds the marginal benefit, the sender's payoff decreases. The sender trades off the frequency of positive signal for precision.
+%% arrival rate?
+
+When the search cost is intermediate, the receiver's participation constraint is easier to satisfy. Since the marginal benefit of increasing the probability of a positive signal exceeds the marginal cost, in equilibrium, the sender trades off the precision of a positive signal for frequency. The receiver is still uncertain about the state after observing a positive signal, but the belief is high enough that the receiver searches. 
+
+When the search cost is low, the information friction does not distort the information structure. The sender provides the benchmark amount of information, and the receiver gets a strictly positive surplus.
+% summarize the above results by a table
+
+\subsection{Optimal Strategy for the Entire Game}
+When the prior is too low, any feasible signal the sender can generate is not attractive enough for the receiver to search. Thus, it is impossible to communicate between the sender and the receiver. When the prior is higher, and the search cost is not too high, the sender provides information and obtains a positive payoff.
+
+\begin{proposition}\label{strategy2p_smooth}
+	Suppose the search cost is not too high, $c < \widehat{c}$. There exists $\mu_{1,2} \geq c(2v_g-c)/(v_g)^2$ such that the sender does not provide information if the prior is low, $\mu_0 < \mu_{0,1}$, provides information in one period if $\mu_0 \in [\mu_{0,1},\mu_{1,2})$, and provides information in both periods if $\mu_0 > \mu_{1,2}$. Suppose the sender provides information in both periods. A positive signal fully reveals the state (which is $g$) when the search cost is high and partially reveals the state when the search cost is low. The receiver gets zero total surplus.
+\end{proposition}
+
+The widely-used concavification approach (Kamenica and Gentzkow 2011) cannot be used to solve this kind of games because the receiver's participation is strategic. We instead develop a constrained non-linear programming method to solve the sender's information design problem. The constraints of the non-linear program of the sender consist of multiple variables, making the optimization problem challenging. To make the problem tractable, we transform the program into a set of constrained programs, each with one constrained variable. We then select the global solution by comparing the local solutions of each program. 
+
+Since the information provision cost is non-linear in the probability of a positive signal, the sender has an incentive to smooth the information provision over two periods. When the prior is low, it is not feasible for the sender to provide enough information in both periods so that the receiver will search whenever a positive signal has not arrived. As the prior increases, it becomes feasible for the sender to smooth the information provision. If the sender finds it optimal to provide information in both periods at a given prior, she also prefers to smooth the information for any higher prior.
+
+When it is highly costly for the receiver to search, the optimal information structure fully convinces the receiver that the state is $g$ when a positive signal arrives. In equilibrium, the receiver obtains the highest possible surplus conditional on observing a positive signal and making the purchase. Without providing this type of information, which is favorable to the receiver, the sender cannot persuade the receiver to search. In contrast, when it is less costly for the receiver to search, the optimal information structure adds some noise to a positive signal. In equilibrium, the receiver is not sure that the state is $g$ after observing a positive signal. The state may be $b$ after the receiver takes action $G$. However, the likelihood of state $g$ after a positive signal is high enough to persuade the receiver to search. By adding some noise to a positive signal, the sender can provide more frequent positive signals and increase her payoff without violating the feasibility constraint.
+
+When the sender provides information in both periods, she can always extract surplus from the receiver if the receiver gets a strictly positive surplus. If the sender faces information under-provision, she can increase the payoff by increasing the probability of a positive signal and decreasing the belief after observing a positive signal. If the sender faces information over-provision, she can increase the payoff by reducing the probability of a positive signal and increasing the belief after observing a positive signal. This implies that the receiver gets zero surplus in equilibrium.
+
+The optimal strategy is consistent with real-world examples. Consider the application of product sales in section \ref{productsales}. A buyer may consider a pair of shoes or a car. Visiting the dealership is time-consuming, in contrast to the ease of searching for information about a pair of shoes on the internet, but consumers are often not sure whether they will like a product based solely on the information online. In the case of car-buying, test driving and then haggling with the dealer can take several hours, but people who purchase the car after visiting the dealership usually are sure that they like the car.
+
+%Consider the application of product sales in section \ref{productsales} when a buyer decides whether to purchase a pair of shoes and searches on Google to gather some information. The search cost is relatively low, and the buyer is unlikely to be sure that it is a good match, even after obtaining a positive signal and making the purchase. On the contrary, when a buyer visits a dealership and acquires information on the car of interest through talking to the dealer and test driving it, the search cost is relatively high, because it is costly to travel to the physical store and spend a significant amount of time there. When the buyer decides to buy the car, he is usually confident that it is a precisely good match.
+
+\subsection{Comparative Statics}
+When the sender provides information in only one period, the optimal strategy has a closed-form solution and is easy to analyze. Here, we discuss the comparative statics when the sender provides information in both periods. The specific form of the optimal strategy depends on the relative size of the search cost. According to Proposition \ref{strategy1p}, the sender's strategy in the last period is constant when the search cost is high (but not too high). When the search cost is lower, the sender’s strategy depends on her belief at the beginning of the second period, $\mu_1$. When $\mu_1 > c - v_b \lambda_1^{**}$, the receiver expects to get a strictly positive surplus in the second period, and thus the first-period participation constraint is relaxed (denote the corresponding strategy as the $S_+$ strategy). When $\mu_1 \in [c/v_g, c - v_b\lambda_1^{**}]$, the receiver expects to get zero surplus in the second period (denote the corresponding strategy as the $S_0$ strategy). In equilibrium, the sender endogenously determines whether to use the $S_0$ or $S_+$ strategy.
+
+\subsubsection{Comparative Statics With Regard to the Prior Belief}
+When the search cost is high, the prior determines whether the sender smooths information but does not affect the information structure, conditional on the sender providing information. When the search cost is low, the prior affects the information structure monotonically. When the search cost is intermediate, the sender may switch from the $S_0$ strategy to the $S_+$ strategy as the prior increases. There can be a discrete jump in the optimal information structure. We leave the analysis of this case to the appendix.
+
+\begin{proposition}\label{strategy2cl}
+	Suppose the sender provides information in both periods. When the search cost is high, $v_g\lambda_1^{**} \leq c < \widehat{c}$, positive signal fully reveals the state. Neither the probability of a positive signal, $\lambda_t^*$, nor the sender's payoff depends on the prior, $(\lambda_t^*,\bar{\mu_t}^*)=(c/v_g,1)$. When the search cost is low, $c \leq \tilde{c} := v_g K'^{-1}\left[K(\lambda_1^{**})/ \lambda_1^{**}\right]$, the probability of a positive signal, $\lambda_{t}^*$, is continuous and increases in the prior. The belief after observing a positive signal, $\bar{\mu}_t^*$, is continuous and decreases in the prior. The sender's payoff strictly increases in the prior.
+\end{proposition}
+
+The optimal information is perfectly smooth when the search cost is high and the sender provides information in both periods. Since the participation constraint of the receiver is strong, a positive signal fully reveals the state is $g$. Because it is very costly for the receiver to acquire information, the minimal amount of information to persuade the receiver to search is high. The marginal cost of providing more information exceeds the marginal benefit. Even if the prior increases and it is feasible for the sender to provide more information, she will prefer not to do so. Hence, conditional on the sender providing information, the information structure does not depend on the prior.
+
+When the search cost is low, and the sender provides information in both periods, she chooses between $S_+$ and $S_0$ strategies. Under the $S_+$ strategy, the receiver observes less frequent positive signals in the first period and more frequent positive signals in the second period. On average, he spends a longer time searching. Consequently, the sender has to provide information more favorable to the receiver to compensate for the higher expected total search cost, which reduces the sender's surplus. Therefore, the sender always chooses the $S_0$ strategy in equilibrium, and the optimal strategy is continuous in the prior. The sender faces information under-provision in both periods. More frequent positive signals are feasible when the prior is higher. Even if the receiver becomes less sure about the state being good after observing a positive signal, he will still search as long as the likelihood of receiving a positive signal and earning a strictly positive surplus increases. In equilibrium, the sender trades off the precision of a positive signal for frequency as the prior increases. The consumer spends less time searching for information because he is more likely to receive a positive signal and make a decision in the first period.
+
+
+\subsubsection{Comparative Statics With Regard to the Sender's Costs}
+Providing the same amount of information may impose different costs on the sender. To study the impact of the sender's information provision costs on the optimal strategy, we rewrite the sender's cost function as $K(\lambda) = \eta \tilde{K}(\lambda)$, where $\tilde{K}(1/2) = 1$ for identification. It is more costly for the sender to provide information when $\eta$ is larger. The following proposition summarizes the comparative statics of the optimal strategy about $\eta$.
+
+\begin{proposition}\label{cs_sender_cost}
+	Suppose the sender provides information in both periods. Her payoff strictly decreases in the relative cost of information provision, $\eta$. When the search cost is low, $c \leq \tilde{c}$, the sender provides (weakly) less information in the first period and (weakly) more information in the second period, as $\eta$ increases. When the search cost is high, $c \geq v_g\lambda_1^{**}$, the optimal strategy of the sender does not depend on $\eta$.
+\end{proposition}
+
+When the search cost is high, it is very costly for the receiver to search. The sender needs to provide a lot of information to persuade the receiver to search. As a result, the marginal cost of providing more information exceeds the marginal benefit. So, the sender provides the minimum amount of information for the receiver to search, which does not depend on the sender's cost. Hence, the optimal information structure does not depend on the relative cost of information provision.
+
+When the search cost is low, and the relative cost of information provision increases, the marginal cost of providing information increases, while the marginal benefit remains the same. Because the sender definitely incurs the information provision cost in the first period, she provides less information in the first period. This allows her to provide more information in the second period when the information provision cost is not always incurred, and when she faces information under-provision. The consumer spends more time searching for information because he is less likely to receive a positive signal and make a decision in the first period.
+
+\subsection{A Numerical Example}
+We illustrate the optimal strategy of the sender by a numerical example. The sender's cost function has the truncated quadratic form, $K(\lambda) = k\lambda^2/ (1-\lambda)$, which satisfies Assumption \ref{assumption_sender_cost}. In each figure below, we present the optimal strategy and the sender's payoffs from the optimal one-period, $S_0$, and $S_+$ strategies\footnote{The domain of the prior is $[c(2v_g-c)/(v_g)^2,\widehat{\mu}_0\m p]$. When $\mu_0 < c(2v_g-c)/(v_g)^2$, the sender provides information in at most one period. When $\mu_0 \geq \widehat{\mu}_0 := 2c-v_b\lambda_1^{**}-[c+(1-\lambda_1^{**})v_b]\lambda_0^{**}$, the sender always chooses the benchmark solution.}. The search cost is low in Figure \ref{cs1}.\footnote{The choice of the specific parameter values do not affect the qualitative property of the optimal strategy (i.e., the shape of the figure). What matters is the relative value. The search cost is low if $c \leq (1-p) \lambda_0^{**}$, intermediate if $(1-p) \lambda_0^{**} < c < (1-p) \lambda_1^{**}$, and high if $(1-p) \lambda_1^{**} \leq c < \widehat{c}$.} The sender always prefers the $S_0$ strategy when she provides information in both periods. As illustrated, the probabilities of positive signal at both periods, $\lambda_0^*$ and $\lambda_1^*$, are continuous and increase in $\mu_0$. The beliefs after observing a positive signal in each period, $\bar{\mu}_0^*$ and $\bar{\mu}_1^*$, are continuous and decrease in $\mu_0$. When the prior is lower than the intercept of the brown line, the sender prefers providing information in only one period to smooth the information provision. When the search cost increases to the intermediate level (Figure \ref{ci1}), the sender always provides information in both periods provided that it is feasible. So, we do not plot the sender's payoff of providing information in only one period. The sender prefers the $S_0$ strategy for a low prior and switches to the $S_+$ strategy as the prior increases. The optimal strategy is non-monotonic and discontinuous in $\mu_0$ due to the switch. When the search cost further increases (Figure \ref{ch}), the optimal information structure is perfectly smooth, and a positive signal always fully reveals the state.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Figures/Figure2_convex_t_n.pdf}
+	\caption{The optimal strategy when $c = 0.01, p = 0.8, v_g = 0.2, v_b = -0.8, k = 0.5$}\label{cs1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Figures/Figure4_convex_t_n.pdf}
+	\caption{The optimal strategy when $c = 0.067, p = 0.8, v_g = 0.2, v_b = -0.8, k = 0.5$}\label{ci1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Figures/Figure6_convex_t_n.pdf}
+	\caption{The optimal strategy when $c = 0.08, p = 0.8, v_g = 0.2, v_b = -0.8, k = 0.5$}\label{ch}
+\end{figure}
+
+
+
+\section{The Efficient Information Structure}
+In the previous sections, the sender designs the information structure to maximize the expected payoff. This section characterizes the efficient strategy when a social planner designs the information structure to maximize total welfare. We then investigate the information distortion caused by not taking into account receiver surplus. For tractability reasons, we use a special form of the payoff function, specified in section \ref{productsales}. So, in this section, $v_g = 1-p$ and $v_b = - p$.
+%% assume zero mrginal cost!
+
+
+\subsection{Efficient Strategy in the Last Period}
+As discussed in the previous section, the sender does not provide information if the belief at the beginning of the second period is too low, $\mu_1 < \mu_{0,1}$. So, we concentrate on the case in which $\mu_1 \geq \mu_{0,1}$. In the second period, the social planner's problem is:
+\begin{align}\tag{$E_1$} \label{eP1}
+& \max\limits_{\lambda_1, \bar{\mu_1}} -K(\lambda_1) + p \lambda_1 + \lambda_1(\bar{\mu_1} - p) - c \nonumber\\
+\text{s.t. } &\eqref{IR_1},\eqref{F_1} \nonumber
+\end{align}
+Below, we discuss the efficient information structure in the last period intuitively. The formal characterization of the efficient strategy in the last period is in the appendix. When the search cost is high, %$c \geq (1-p)\tilde{\lambda_1}$, 
+it is very costly for the receiver to search. The sender needs to provide a lot of information to persuade the receiver to search. As a result, the marginal cost of providing more information exceeds the marginal benefit. So, the sender provides the minimum amount of information necessary to induce the receiver to search, which does not depend on whether the sender maximizes the sender's surplus or total welfare. Hence, there is no information distortion. When the search cost is lower, %$c < (1-p)\tilde{\lambda_1}$, 
+it is easier to persuade the receiver to search. The sender provides more than the minimum amount of information necessary to induce the receiver to search. The marginal costs of providing more information are the same for both the sender and the social planner, while the marginal benefit of providing more information is smaller for the sender. Therefore, the sender provides less information than the social planner does when the search cost is high or the initial belief is high. One exception is that, when both the search cost and the initial belief are low, %$c \leq (1-p) \lambda_1^{**}$ and $\mu_1 < \lambda_1^{**}$, 
+the sender provides more information than the social planner does because the social planner can only generate infrequent signals.
+
+
+\subsection{Efficient Strategy for the Entire Game}
+As in the previous section, the social planner does not provide information if the prior is too low or the search cost is too high. When she provides information in only one period, the previous subsection characterizes the efficient strategy. When she provides information in both periods, her problem is:
+\begin{align}\tag{$E_2$} \label{eP2}
+& \max\limits_{\lambda_0, \bar{\mu_0}, \mu_1, \lambda_1, \bar{\mu_1}} -K(\lambda_0) + \lambda_0 \bar{\mu_0} - c + (1-\lambda_0) \left[-K(\lambda_1)+\lambda_1-c\right] \nonumber\\
+\text{s.t. } &\eqref{IR_0},\eqref{F_0},(\lambda_1,\bar{\mu}_1) \text{ solves (\ref{eP1})} \nonumber
+\end{align}
+
+The following proposition compares the payoff-maximizing strategy and the efficient strategy when the sender provides information in both periods. 
+\begin{proposition}\label{estrategy2p}
+	Suppose the sender provides information in both periods. When $c \geq v_g\lambda_1^{**}$, the payoff-maximizing strategy is efficient. When $c < v_g\lambda_1^{**}$, the sender, who maximizes her own payoff, provides less information in the first period and more information in the second period than does the social planner, who maximizes total welfare.
+\end{proposition}
+When the search cost is high, similar to the argument in the previous subsection, the sender provides the minimum amount of information for the receiver to search, which does not depend on the sender's objective (maximizing sender surplus or total surplus). Hence, there is no information distortion. When the search cost is lower, %$c < (1-p)\tilde{\lambda_1}$, 
+it is easier to persuade the receiver to search. The sender provides more than the minimum amount of information for the receiver to search. The marginal costs of providing more information are the same for both the sender and the social planner, while the marginal benefit of providing more information is smaller for the sender. Therefore, the sender provides less information than the social planner does when the search cost is high or when the initial belief is high. One exception is that, when both the search cost and the initial belief are low, %$c \leq (1-p) \lambda_1^{**}$ and $\mu_1 < \lambda_1^{**}$, 
+the sender provides more information than the social planner does because the social planner can only generate infrequent signals.
+
+%\subsection{Public Policy and Regulations}
+
+
+ 
+\section{Model Extensions}
+
+\subsection{Dynamic Commitment}
+Under many circumstances, the assumption that the sender can generate credible signals within each period but does not have dynamic commitment power is reasonable. It is hard for the sender to commit to the entire information structure across all periods ex-ante and to convince the receiver that the sender will stick to the information structure when it is profitable to deviate to a different information structure during intermediate periods. However, factors such as reputation can give the sender stronger commitment power. Here, we study the implications of the case in which the sender has dynamic commitment power. The sender chooses and commits to the entire information structure to maximize the ex-ante expected surplus.
+\begin{align}\tag{$P_{dc}$} \label{P2dc}
+& \max\limits_{\lambda_0, \bar{\mu_0}, \mu_1, \lambda_1, \bar{\mu_1}} -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1)+p \lambda_1 \right] \nonumber\\
+\text{s.t. } &\eqref{IR_0},\eqref{F_0},\eqref{IR_1},\eqref{F_1} \nonumber
+\end{align}
+
+\begin{proposition}\label{dch}
+	Suppose the search cost is high, $v_g \lambda_1^{**} < c < \widehat{c}$, and $\mu_0 > c(2v_g-c)/(v_g)^2$. The sender provides information in both periods regardless of the dynamic commitment power. If the sender has dynamic commitment power, her payoff is strictly higher, and the receiver gets a strictly positive surplus in the second period. The benefit of dynamic commitment power for the sender vanishes as the search cost approaches zero.
+\end{proposition}
+
+We have shown that, when the search cost is high, the sender perfectly smooths the information if she doesn't have dynamic commitment power. If the sender instead has dynamic commitment power, she will commit to providing information more favorable to the receiver in the second period. As a result, the receiver will search even if the sender provides less information in the first period, relaxing the information over-provision issue. Though it hurts the sender's payoff in the second period, it increases the sender's payoff in the first period by reducing the information provision cost. The overall effect is strictly positive. So, the optimal information provision will not be perfectly smooth. 
+
+The above finding is related to results on durable good pricing (e.g., Coase 1972). Without dynamic commitment power, the monopolist tends to reduce the price as time goes on, which reduces profit, because a rational receiver will strategically wait. Here, dynamic commitment power also benefits the sender, but the underlying mechanisms differ. This paper focuses on persuasion (information provision) rather than incentive (pricing). In addition, in the durable good pricing example, the ability to commit not to provide a more favorable price in the future benefits the sender. By contrast, in this paper, the ability to commit to more favorable information in the future benefits the sender.
+
+However, when the search cost approaches zero, the difference between the sender surplus with and without dynamic commitment power approaches zero. The intuition is that the benefit of dynamic commitment power comes from relaxing the participation constraint in the first period by committing to providing more favorable information in the second period. However, the participation constraint is already very loose when the search cost is low. Thus, the benefit of dynamic commitment power approaches zero.
+
+
+\subsection{Discounting}
+In the main model, we assume that there is no discounting. In reality, information acquisition and provision usually happen in a short period, and that assumption is reasonable. However, some communications between the sender and the receiver can take longer. Here, we study the information provision strategy when the sender and the receiver have the same discount factor, $\delta \in (0,1)$. With discounting, the sender's problem becomes:
+\begin{align}\tag{$P_{2,\delta}$} \label{P2delta}
+& \max\limits_{\lambda_0, \bar{\mu_0}, \mu_1, \lambda_1, \bar{\mu_1}} -K(\lambda_0) + p \lambda_0 + \delta (1-\lambda_0) \left[-K(\lambda_1)+p \lambda_1 \right] \nonumber\\
+\text{s.t. } &\lambda_0 (\bar{\mu_0} + v_b) + \delta(1-\lambda_0) [\lambda_1(\bar{\mu_1} + v_b)-c] \geq c \tag{$IR_{0,\delta}$} \label{IR_0^delta}\\
+&\eqref{F_0},(\lambda_1,\bar{\mu}_1) \text{ solves (\ref{P1})} \nonumber
+\end{align}
+One can see that both the objective function and the first-period participation constraint change. When the players become less patient (the discount factor $\delta$ decreases), the present value of the second-period sender surplus decreases, and the first-period participation constraint becomes tighter. Thus, it is less attractive for the sender to sell the goods in the second period.
+
+\begin{proposition}\label{discounting}
+	When the search cost is high, $c \geq v_g\lambda_1^{**}$, the optimal strategy does not depend on the discount factor, $\delta$. When the search cost is low, $c \leq \tilde{c}$, the sender provides (weakly) more information in the first period and (weakly) less information in the second period, as players become less patient. 
+\end{proposition}
+When the search cost is high, it is hard to satisfy the participation constraints of the receiver. Providing enough information to persuade the receiver to search dominates the force of discounting. Therefore, the sender's strategy remains the same as the no-discounting case, and the sender perfectly smooths information provision. When the search cost is low, the sender provides (weakly) less information in the second period when the players are less patient because of discounting. The sender provides more information in the first period as she becomes more tempted to convert the receiver early. 
+
+We assume in the main model that the receiver is forward-looking and takes into account the potential payoff of the second period when he chooses his action in the first period. This assumption is reasonable if the information environment is transparent and the receiver knows that gradual learning is possible. We now consider the possibility of asymmetric discount factors. In particular, the sender is perfectly patient while the receiver is perfectly impatient (myopic). If the receiver is myopic, then he trades off only the current-period benefit and cost in deciding whether or not to search. The information in the second period cannot relax the first-period participation constraint. Therefore, when the receiver is myopic, the feasible information structure is a subset of when the receiver is forward-looking. If the receiver's surplus in the second period is strictly positive when the receiver is forward-looking, the optimal information structure may not be feasible when the receiver is myopic. Hence, the sender is (weakly) worse off if the receiver is myopic rather than forward-looking. This result has managerial implications, as it suggests that the sender should try to better inform the receiver of the possibility of gradual learning. Common knowledge of gradual information revelation improves the sender's surplus.
+
+
+
+\subsection{Infinite Number of Periods}
+The two-period model can capture information smoothing and gradual learning. We extend the main model to a model with an infinite number of periods and show that the main insights extend to this richer model. This also provides some additional insights.
+
+Time is discrete, $t = 0, 1, 2, ...$ In each period, the sender determines and commits to the information structure of the current period but cannot commit to the information structure in the future. The receiver can search for information before deciding. Unlike the two-period model, there is no deadline. The receiver can search for as long as he wants. Since the sender's payoff is bounded by $p$, the payoff function is well-defined even without the discount factor. So, we do not consider discounting for consistency with the main model. We can analyze the problem similarly if we include discounting.
+
+\begin{proposition}\label{infinite-period}
+	%The sender persuades for a finite periods of time. 
+	When the search cost is high, $v_g\lambda_1^{**} \leq c < \widehat{c}$, the sender provides perfectly smooth information for $k := \lfloor \frac{ln(1-\mu_0)}{ln(1-c/v_g)} \rfloor$ periods, and a positive signal fully reveals the state, $(\lambda_t^*,\bar{\mu_t}^*)=(c/v_g,1),$ for $t = 0,1,...,k-1$. When the search cost is low, the sender adds noise to positive signals. As the search cost approaches zero, the sender could obtain the equilibrium payoff as if the persuasion cost were zero.
+\end{proposition}
+
+This proposition shows that the main insights are robust to the specification of the length of time. The two-period model corresponds to the case when there is a deadline in the information acquisition. When time is infinite, there is no limit on how long the receiver can search. Under high search costs, the optimal information structure fully convinces the receiver that the state is $g$ when a positive signal arrives. Under low search costs, the optimal information structure adds some noise to the positive signal. The intuition is the same as the two-period case. Because the receiver can keep searching for a longer period, the sender can better smooth the information. When the search cost is high, the sender may provide information for more than two periods if she believes that the state is likely to be $g$ and the receiver is willing to spend more time searching. The proposition shows that the sender smooths information provision over more periods for a higher prior belief. The ability to smooth the information is valuable for the sender, especially when the search cost approaches zero. In that case, she could obtain the equilibrium payoff as if the persuasion cost were zero. Because of the low search cost, the sender can convince the receiver to search with very little information in each period. The sender's cost becomes very low by smoothing the information over many periods.
+
+%The model predicts that the receiver will decide within a bounded number of periods under endogenous information structures. On the contrary, consumers may be stuck in the continuation region and keep searching when the information environment is exogenous (e.g., Moscarini and Smith 2001, Branco et al. 2012). The consumer incurs a high search cost when he spends a long time searching. Too much searching hurts not only the consumer but also the firm. To persuade the consumer to keep searching, the firm must incur higher persuasion costs. In equilibrium, the firm will design the information structure such that the consumer searches for a limited period.
+
+
+
+\section{Concluding Remarks}
+Consumers frequently search for information before making decisions. Since their search and purchase decisions depend on the information environment, firms have a strong incentive to influence it. This paper endogenizes consumers' information environment from the firm's perspective under a general signal space.
+
+We examine the optimal information provision strategy of a sender and the optimal information acquisition strategy of a receiver when the sender sequentially persuades a receiver to take a particular action (e.g., to purchase a good). The sender prefers that action regardless of the unknown state, while the receiver only wishes to take that action if the state is good. In our model, the sender incurs a cost to provide information, and the receiver incurs a cost to search. The receiver trades off the cost of searching and the benefit of obtaining more accurate information to make better decisions. The sender trades off the cost of information provision and the benefit of persuading the receiver to search and then take the sender's preferred action. We allow for gradual communication between the sender and the receiver. Consequently, the sender also makes the intertemporal trade-off of smoothing the information to reduce the persuasion cost. In equilibrium, she uses one-shot signals that induce the receiver to immediately take the sender's preferred action upon observing a positive signal. The sender smooths information over multiple periods if and only if there is a high prior that the state is good. The sender extracts all the surplus from the receiver when she provides information in both periods, while she may leave some surplus for the receiver when she provides information in only one period. When the search cost for the receiver is high, the receiver is sure that the state is good when he takes the desired action. When the search cost is low, the optimal information structure does not fully reveal the state, which may be bad even though the receiver takes the desired action. We compare the payoff-maximizing information structure with the efficient information structure and find no information distortion when the search cost is high. There can be upward or downward information distortion when the search cost is lower.
+
+There are some limitations to the current work. The implementation of a given signal depends on the institutional details of the specific problem. Further empirical work can complement the current paper by putting the theoretical results into practice. In addition, it will be interesting to study the optimal persuasion strategy when there is more than one sender. Such competition may lead the sender to provide more information and improve equilibrium efficiency. Moreover, the sender has complete control of the information structure in this paper. It will be interesting to consider the case where the sender can only partially control the information environment.
+
+
+
+\newpage
+\section*{References}
+\vspace{-10pt}
+Aumann, R. J., Maschler, M. (1995). Repeated games with incomplete information. MIT press.
+
+Ball, I. (2019). Dynamic information provision: Rewarding the past and guiding the future. Available at SSRN 3103127.
+
+Ball, I., Espín-Sánchez, J. A. (2022). Experimental Persuasion.
+
+Bergemann, D., Morris, S. (2019). Information design: A unified perspective. Journal of Economic Literature, 57(1), 44-95.
+
+Berman, R., Zhao, H., Zhu, Y. (2022). Strategic Recommendation Algorithms: Overselling and Demarketing Information Designs. Available at SSRN 4301489.
+
+Bizzotto, J., Rüdiger, J., Vigier, A. (2021). Dynamic persuasion with outside information. American Economic Journal: Microeconomics, 13(1), 179-94.
+
+Branco, F., Sun, M., Villas-Boas, J. M. (2012). Optimal search for product information. Management Science, 58(11), 2037-2056.
+
+Branco, F., Sun, M., Villas-Boas, J. M. (2016). Too much information? Information provision and search costs. Marketing Science, 35(4), 605-618.
+
+Che, Y. K., Kim, K., Mierendorff, K. (2020). Keeping the listener engaged: a dynamic model of bayesian persuasion. arXiv preprint arXiv:2003.07338.
+
+Chen, Y., Yao, S. (2017). Sequential search with refinement: Model and application with click-stream data. Management Science, 63(12), 4345-4365.
+
+Coase, R. H. (1972). Durability and monopoly. The Journal of Law and Economics, 15(1), 143-149.
+
+Degan, A., Li, M. (2021). Persuasion with costly precision. Economic Theory, 72(3), 869-908.
+
+Dukes, A., Liu, L. (2016). Online shopping intermediaries: The strategic design of search environments. Management Science, 62(4), 1064-1077.
+
+Ely, J. C. (2017). Beeps. American Economic Review, 107(1), 31-53.
+
+Ely, J. C., Szydlowski, M. (2020). Moving the goalposts. Journal of Political Economy, 128(2), 468-506.
+
+Gardete, P., Hunter, M. (2020). Guiding Consumers through Lemons and Peaches: An Analysis of the Effects of Search Design Activities.
+
+Gentzkow, M., Kamenica, E. (2014). Costly persuasion. American Economic Review, 104(5), 457-62.
+
+Guo, L. (2021). Endogenous Evaluation and Sequential Search. Marketing Science, 40(3), 413-427.
+
+Hong, H., Shum, M. (2006). Using price distributions to estimate search costs. The RAND Journal of Economics, 37(2), 257-275.
+
+Honka, E. (2014). Quantifying search and switching costs in the US auto insurance industry. The RAND Journal of Economics, 45(4), 847-884.
+
+Honka, E., Chintagunta, P. (2017). Simultaneous or sequential? search strategies in the us auto insurance industry. Marketing Science, 36(1), 21-42.
+
+Iyer, G., Zhong, Z. Z. (2021). Pushing Notifications as Dynamic Information Design. Marketing Science
+
+Jerath, K., Ren, Q. (2021). Consumer Attention to Favorable and Unfavorable Product Information, and Firm Information Design. Journal of Marketing Research
+
+Jerath, K., Ren, Q. (2022). Consumer Search and Product Returns.
+
+Kamenica, E., Gentzkow, M. (2011). Bayesian persuasion. American Economic Review, 101(6), 2590-2615.
+
+Ke, T. T., Lin, S., Lu, M. Y. (2022). Information design of online platforms. Available at SSRN.
+
+Ke, T. T., Shen, Z. J. M., Villas-Boas, J. M. (2016). Search for information on multiple products. Management Science, 62(12), 3576-3603.
+
+Ke, T. T., Villas-Boas, J. M. (2019). Optimal learning before choice. Journal of Economic Theory, 180, 383-437.
+
+Kim, J. B., Albuquerque, P., Bronnenberg, B. J. (2010). Online demand under limited consumer search. Marketing science, 29(6), 1001-1023.
+
+Kim, J. B., Albuquerque, P., Bronnenberg, B. J. (2017). The probit choice model under sequential search with an application to online retailing. Management Science, 63(11), 3911-3929.
+
+Kuksov, D., Lin, Y. (2017). Signaling low margin through assortment. Management Science, 63(4), 1166-1183.
+
+Kuksov, D., Villas-Boas, J. M. (2010). When more alternatives lead to less choice. Marketing Science, 29(3), 507-524.
+
+Kuksov, D., Zia, M. (2021). Benefits of customer loyalty in markets with endogenous search costs. Management Science, 67(4), 2171-2190.
+
+Liu, L., Dukes, A. (2013). Consideration set formation with multiproduct firms: The case of within-firm and across-firm evaluation costs. Management Science, 59(8), 1871-1886.
+
+Ma, L. (2016). Only the interested learn: A model of proactive learning of product reviews. Working paper.
+
+Mayzlin, D., Shin, J. (2011). Uninformative advertising as an invitation to search. Marketing science, 30(4), 666-685.
+
+Moraga-González, J. L., Sándor, Z., Wildenbeest, M. R. (2021). Consumer search and prices in the automobile market.
+
+Morozov, I. (2021). Measuring benefits from new products in markets with information frictions. Available at SSRN 3446398.
+
+Morozov, I., Seiler, S., Dong, X., Hou, L. (2021). Estimation of preference heterogeneity in markets with costly search. Marketing Science, 40(5), 871-899.
+
+Moscarini, G., Smith, L. (2001). The optimal level of experimentation. Econometrica, 69(6), 1629-1644.
+
+Orlov, D., Skrzypacz, A., Zryumov, P. (2020). Persuading the principal to wait. Journal of Political Economy, 128(7), 2542-2578.
+
+Renault, J., Solan, E., Vieille, N. (2017). Optimal dynamic information provision. Games and Economic Behavior, 104, 329-349.
+
+Seiler, S. (2013). The impact of search costs on consumer behavior: A dynamic approach. Quantitative Marketing and Economics, 11(2), 155-203.
+
+Seiler, S., Pinna, F. (2017). Estimating search benefits from path-tracking data: measurement and determinants. Marketing Science, 36(4), 565-589.
+
+Stigler, G. J. (1961). The economics of information. Journal of political economy, 69(3), 213-225.
+
+Ursu, R. M., Wang, Q., Chintagunta, P. K. (2020). Search duration. Marketing Science, 39(5), 849-871.
+
+Villas-Boas, J. M. (2009). Product variety and endogenous pricing with evaluation costs. Management Science, 55(8), 1338-1346.
+
+Villas-Boas, J. M., Yao, Y. (2021). A dynamic model of optimal retargeting. Marketing Science, 40(3), 428-458.
+
+Wei, D. (2021). Persuasion under costly learning. Journal of Mathematical Economics, 94, 102451.
+
+Weitzman, M. L. (1979). Optimal search for the best alternative. Econometrica: Journal of the Econometric Society, 641-654.
+
+Wolinsky, A. (1986). True monopolistic competition as a result of imperfect information. The Quarterly Journal of Economics, 101(3), 493-511.
+
+Yao, Y. J. (2022). Multi-attribute Search and Informative Advertising.
+
+Yavorsky, D., Honka, E., Chen, K. (2021). Consumer search in the US auto industry: The role of dealership visits. Quantitative Marketing and Economics, 19(1), 1-52.
+
+Zhong, W. (2022a). Optimal dynamic information acquisition. Econometrica, 90(4), 1537-1582.
+
+Zhong, Z. (2022b). Platform search design: The roles of precision and price. Marketing Science.	
+
+\newpage
+\section*{Appendix}
+The following proposition formalizes the claim that we can work with mean-preserving posterior beliefs rather than the specific signal structure in section \ref{model}.
+\begin{proposition}\label{equiv_rep}\textbf{(Equivalent Representations of the Signal)} The following are equivalent:	
+	\begin{enumerate}
+		\item There exists a binary signal $s \in \Delta(\{0,1\})$ such that $\mathbb{P}[s=1\vert g] > \mathbb{P}[s=1\vert b]$.
+		
+		\item There exists a binary-valued posterior belief whose expectation is equal to the prior.
+	\end{enumerate}	
+\end{proposition}
+
+\begin{proof}[Proof of Proposition \ref{equiv_rep}]
+	$1 \ra 2:$	Given a binary signal such that $\mathbb{P}[s=1\vert g] > \mathbb{P}[s=1\vert b]$, law of iterated expectation implies that $\mathbb{E}[\mathbb{P}[g\vert s]] = \mathbb{E}[\mathbb{E}[\mathbf{1}_{[g]}\vert s]] = \mathbb{E}[\mathbf{1}_{[g]}] = \mathbb{P}[g]$. So, the expectation of the posterior belief is equal to the prior. Note that $\mathbb{P}[s=0\vert g] < \mathbb{P}[s=01\vert b]$. By Bayes' rule, $\mathbb{P}[g \vert s=1] = \frac{\mathbb{P}[s=1\vert g] \mathbb{P}[g]}{\mathbb{P}[s=1\vert g] \mathbb{P}[g]+\mathbb{P}[s=1\vert b] \mathbb{P}[b]} > \frac{\mathbb{P}[s=1\vert g] \mathbb{P}[g]}{\mathbb{P}[s=1\vert g] \mathbb{P}[g]+\mathbb{P}[s=1\vert g] \mathbb{P}[b]} = \mathbb{P}[g] = \frac{\mathbb{P}[s=0\vert g] \mathbb{P}[g]}{\mathbb{P}[s=0\vert g] \mathbb{P}[g]+\mathbb{P}[s=0\vert g] \mathbb{P}[b]} > \frac{\mathbb{P}[s=0\vert g] \mathbb{P}[g]}{\mathbb{P}[s=0\vert g] \mathbb{P}[g]+\mathbb{P}[s=0\vert b] \mathbb{P}[b]} = \mathbb{P}[g \vert s=0]$. So, the posterior belief is binary-valued.
+	
+	$2 \ra 1:$ Given a binary-valued posterior belief whose expectation is equal to the prior, $\mu_0$. Denote the distribution of the belief by $\mu = \begin{cases}
+	\bar{\mu}_1 > \mu_0&~w.p.~\lambda_1\\
+	\underline{\mu}_1 < \mu_0&~w.p.~1-\lambda_1
+	\end{cases}$. We now construct a binary signal $s \in \Delta(\{0,1\})$. Define $\mathbb{P}[s=1\vert g] = \frac{\bar{\mu}_1 \lambda_{1}}{\mu_0}$ and $\mathbb{P}[s=1\vert b] = \frac{(1-\bar{\mu}_1) \lambda_{1}}{(1-\mu_0)}$. One can verify by Bayes' rule that this signal $s$ induces exactly the same posterior belief, using the assumption that $\mu_0 = \lambda_1 \bar{\mu}_1 + (1-\lambda_1)\underline{\mu}_1$. We just need to show that $\mathbb{P}[s=1\vert g] > \mathbb{P}[s=1\vert b]$, which follows from the fact that $\bar{\mu}_1 > \mu_0$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{iterative_one-shot}]
+	We first characterize the optimal one-period strategy (providing an one-shot signal) of the sender. Analagous to section \ref{eq_subgame}, the sender's problem is:
+	\begin{align}\tag{$P_0$} \label{P0}
+	& \max\limits_{\lambda_0, \bar{\mu_0}} -K(\lambda_0) + p \lambda_0 \nonumber\\
+	\text{s.t. } &\lambda_0 (\bar{\mu_0} + v_b) \geq c \tag{$IR_0'$}\\
+	&\eqref{F_0}, \lambda_0 \in [0,1],\underline{\mu}_0  \in [0,\mu_0) \nonumber
+	\end{align}
+	We transform \eqref{P0} into an equivalent program that is easier to analyze.
+	
+	\begin{lemma}\label{trans}
+		If $\mu_0 < c/v_g$, the sender does not provide information in the second period. If $\mu_0 \geq c/v_g$, \eqref{P0} is equivalent to:
+		\begin{align}\tag{$P'_0$} \label{P0'}
+		\Pi_1(\mu_0) := & \max -K(\lambda_0) + p \lambda_0 \nonumber\\
+		\text{s.t. } &\lambda_0 \in \left[\frac{c}{v_g}, \frac{\mu_0-c}{-v_b}\right] \nonumber
+		\end{align}
+	\end{lemma}
+	\begin{proof}
+		We first show that any $(\lambda_0,\mu_0)$ satisfying the constraints in \eqref{P0} also satisfy the constraints in \eqref{P0'}:
+		$(IR_0') \ra \lambda_0 \geq \frac{c}{\bar{\mu_0}+v_b} \geq \frac{c}{v_g}$. $(IR_0')~\&~(F_0) \ra \lambda_0 \leq \frac{\mu_0-c-\underline{\mu}_0}{-v_b-\underline{\mu}_0}\leq \frac{\mu_0-c}{-v_b}$. Thus, $\lambda_0 \in \left[\frac{c}{v_g}, \frac{\mu_0-c}{-v_b}\right]$. It is feasible for the sender to provide information in the second period iff $\left[\frac{c}{v_g}, \frac{\mu_0-c}{-v_b}\right]$ is non-empty: $\frac{c}{v_g} \leq \frac{\mu_0-c}{-v_b} \lra \mu_0 \geq \frac{c}{v_g}$. So, If $\mu_0 < \frac{c}{v_g}$, the sender will not provide information in the second period.
+		
+		We then show that for any $(\lambda_0,\mu_0)$ satisfying the constraints in \eqref{P0'} and $\mu_0 \geq \frac{c}{v_g}$, we can find $\bar{\mu_0},\underline{\mu}_0$ such that $(\lambda_0,\mu_0,\bar{\mu_0},\underline{\mu}_0)$ satisfies the constraints in \eqref{P0}. The conclusion then follows. Suppose $(\lambda_0,\mu_0)$ satisfies the constraints in \eqref{P0'}: $\lambda_0 \in \left[\frac{c}{v_g}, \frac{\mu_0-c}{-v_b}\right], \mu_0 \geq \frac{c}{v_g}$. Consider $\bar{\mu_0} = \frac{c}{\lambda_0}-v_b$ and $\underline{\mu}_0  = \frac{\mu_0-c+v_b \lambda_0}{1-\lambda_0}$. One can verify that $(\lambda_0,\mu_0,\bar{\mu_0},\underline{\mu}_0)$ satisfies $(IR_0')~\&~(F_0)$. So, we just need to show that $-v_b \leq \bar{\mu_0} \leq 1$ and $\underline{\mu}_0 \geq 0$. $\bar{\mu_0} = \frac{c}{\lambda_0}-v_b\geq -v_b$. $\lambda_0 \geq \frac{c}{v_g} \ra \bar{\mu_0} = \frac{c}{\lambda_0}-v_b \leq 1$. $\lambda_0 \leq \frac{\mu_0-c}{-v_b} \ra \mu_0 \geq c -v_b \lambda_0 \ra \underline{\mu}_0  = \frac{\mu_0-c + v_b\lambda_0}{1-\lambda_0} \geq 0$.
+	\end{proof}
+	Now consider the transformed program \eqref{P0'} when $\mu_0 \geq \frac{c}{v_g}$.
+	\begin{enumerate}
+		\item If $c \geq v_g \lambda_1^{**}~(i.e.~ \lambda_1^{**} \leq \frac{c}{v_g})$ and the sender provides information, then $\lambda_0^* = \frac{c}{v_g}$ due to strict concavity of the objective function. One can show that $(\lambda_0,\bar{\mu_0},\underline{\mu}_0) = (\frac{c}{v_g},1,\frac{\mu_0v_g-c}{v_g-c})$ is the only feasible information structure that satisfies $(IR_0')$ and $(F_0)$. Thus, the sender will provide information with $(\lambda_0,\bar{\mu_0},\underline{\mu}_0) = (\frac{c}{v_g},1,\frac{\mu_0v_g-c}{v_g-c})$ iff the sender surplus, $-K(\frac{c}{v_g})+p\cdot \frac{c}{v_g}$, is positive (when it is 0, the sender is indifferent between providing information or not). Let $f(\tilde{c}) = -K(\frac{\tilde{c}}{v_g})+p\cdot \frac{\tilde{c}}{v_g}$. We have $f(0) = 0,~f$ is strictly concave and obtains the maximum at $\tilde{c}^*=v_g\lambda_1^{**} < c < 1$. In addition, $f(v_g)<0$ because $\lim\limits_{\lambda \rightarrow 1} K'(\lambda)=+\infty$. Therefore, there exists a unique $\widehat{c} \in \left(v_g\lambda_1^{**},v_g\right)~s.t.~f(c)
+		\begin{cases}
+		\geq 0,~if~0\leq c \leq \widehat{c}\\
+		< 0,~if~c > \widehat{c}
+		\end{cases}$. Moreover, when the sender provides information, $\mu_0 \geq \frac{c}{v_g} \ra \widehat{c} \leq \mu_0 v_g$. So, the sender does not provide information if $c > \widehat{c}$ and provides information with $(\lambda^*_0,\bar{\mu}_0^*) = (\frac{c}{v_g},1)$ if $c < \widehat{c}$. The receiver surplus is 0.
+		
+		\item If $c \in \left[\mu_0 + v_b\lambda_1^{**},v_g\lambda_1^{**} \right)~(i.e.~ \lambda_1^{**} \geq \frac{\mu_0-c}{-v_b} > \frac{c}{v_g})$ and the sender provides information, then $\lambda_0^* = \frac{\mu_0-c}{-v_b}$ due to strict concavity of the objective function. One can show that $(\lambda_0,\bar{\mu_0},\underline{\mu}_0) = (\frac{\mu_0-c}{-v_b},\frac{-\mu_0 v_b}{\mu_0-c},0)$ is the only feasible information structure that satisfies $(IR_0')$ and $(F_0)$. Thus, the sender will provide information with $(\lambda_0,\bar{\mu_0},\underline{\mu}_0) = (\frac{\mu_0-c}{-v_b},\frac{-\mu_0 v_b}{\mu_0-c},0)$ iff the sender surplus, $-K(\frac{\mu_0-c}{-v_b})+p\cdot \frac{\mu_0-c}{-v_b}$, is positive. Since $-K(0)+p\cdot 0 = 0, \frac{\mu_0-c}{-v_b} < \lambda_1^{**}$, and the objective function is strictly concave, the sender surplus is always strictly positive. So, the sender will always provide information. The receiver surplus is zero.
+		
+		\item If $c < \mu_0 + v_b\lambda_1^{**} \m v_g \lambda_1^{**} ~(i.e.~ \lambda_1^{**} \in \left(\frac{c}{v_g}, \frac{\mu_0-c}{-v_b}\right))$, then the sender can obtain the maximum possible payoff by setting $(\lambda_0,\bar{\mu_0}) = (\lambda_1^{**},\frac{\mu_0}{\lambda_1^{**}}\m 1)$. Let $\underline{\mu}_0 = 
+		\begin{cases}
+		0 ,~if~\mu_0 \leq \lambda_1^{**}\\
+		\frac{\mu_0-\lambda_1^{**}}{1-\lambda_1^{**}},~if~\mu_0 > \lambda_1^{**}
+		\end{cases}$. One can verify that $(\lambda_0,\bar{\mu_0},\underline{\mu}_0)$ is feasible and satisfies $(IR_0')$ and $(F_0)$. We have shown in the proof of Lemma \ref{unconstrained} that the sender surplus is strictly positive. So, the sender will provide information and $(\lambda^*_0,\bar{\mu}_0^*) = (\lambda_1^{**},\frac{\mu_0}{\lambda_1^{**}}\m 1)$. The receiver surplus is $\begin{cases}
+		\mu_0 + v_b\lambda_1^{**} - c,~if~\mu_0 \leq \lambda_1^{**} \\
+		\lambda_1^{**}v_g - c,~if~\mu_0 > \lambda_1^{**}
+		\end{cases} > 0$.
+	\end{enumerate}
+	
+	There are two types of iterative signals. 
+	\begin{enumerate}[(a)]
+		\item The receiver searches regardless of the signal realization in the first period, and takes action $G$ ($B$) after observing a positive (negative) signal in the second period.
+		
+		Denote the information structure in the first period by $(\lambda_0,\bar{\mu}_0,\underline{\mu}_0)$. Denote the information structure in the second period by $(\lambda_1^p,\bar{\mu}_1^p,\underline{\mu}_1^p)$ if the receiver observes a positive signal in the first period, and by $(\lambda_1^n,\bar{\mu}_1^n,\underline{\mu}_1^n)$ if the receiver observes a negative signal in the first period. Now consder a one-period strategy $(\lambda_0',\bar{\mu}_0',\underline{\mu}_0') = (\lambda_0 \lambda_1^p + (1-\lambda_0) \lambda_1^n, \frac{\lambda_0 \lambda_1^p}{\lambda_0 \lambda_1^p + (1-\lambda_0) \lambda_1^n}\bar{\mu}_1^p + \frac{(1-\lambda_0) \lambda_1^n}{\lambda_0 \lambda_1^p + (1-\lambda_0) \lambda_1^n}\bar{\mu}_1^n, \frac{\mu_0-\lambda_0 \lambda_1^p \bar{\mu}_1^p-(1-\lambda_0) \lambda_1^n \bar{\mu}_1^n}{1-\lambda_0 \lambda_1^p - (1-\lambda_0) \lambda_1^n})$. One can check that the variables are well-defined and the beliefs are feasible. We now check the participation constraint. $\lambda_0'(\bar{\mu}_0'+v_b)=[\lambda_0 \lambda_1^p + (1-\lambda_0) \lambda_1^n](\bar{\mu}_0'+v_b)=\lambda_0 \lambda_1^p(\bar{\mu}_1^p+v_b)+(1-\lambda_0) \lambda_1^n(\bar{\mu}_1^n+v_b) \geq 2c \geq c$, where the first inequality comes from the first-period participation constraint for the iterative signals.
+		\vspace{-10pt}
+		\begin{align*}
+		\Pi_1(\mu_0) \geq& -K(\lambda_0')+p \lambda_0'\\ 
+		>& - \lambda_0 K(\lambda_1^p) - (1-\lambda_0) K(\lambda_1^n) + \lambda_0 p \lambda_1^p + (1-\lambda_0) p \lambda_1^n ~(\text{convexity of }K)\\ 
+		>& -K(\lambda_0) + \lambda_0 (-K(\lambda_1^p) + p \lambda_1^p) + (1-\lambda_0) (-K(\lambda_1^n) + p \lambda_1^n)\\ 
+		=& \text{ sender's payoff using the iterative signals}
+		\end{align*}
+		\vspace{-40pt}
+		
+		\item The receiver searches (takes action $B$) if the signal is positive (negative) in the first period, and takes action $G$ ($B$) if the signal is positive (negative) in the second period.
+	\end{enumerate}
+	
+	If $c \geq v_g\lambda_1^{**}$, or $c < v_g\lambda_1^{**}$ and $\mu_1 \leq c-v_b\lambda_1^{**}$, the expected receiver surplus in the second period is 0. The receiver incurs search cost without any immediate benefit in the first period under iterative signals. The expected receiver surplus in the first period is strictly negative if he searches. Therefore, he will not search, and iterative signals are not feasible. Now we consider the case in which $c < v_g\lambda_1^{**}$ and $\mu_1 > c-v_b\lambda_1^{**}$. The sender's problem when she uses such iterative signals is:
+	\begin{align}\tag{$P_{iter}$} \label{Piter}
+	\Pi_{iter}(\mu_0) :=& \max -K(\lambda_0) + \lambda_0 \left[-K(\lambda_1^{**})+p \lambda_1^{**} \right] \nonumber\\
+	\text{s.t. } &\lambda_1 (\bar{\mu_1} + v_b) \geq \frac{1+\lambda_0}{\lambda_0} c \tag{$IR_{0,iter}$} \label{IR_0_iter}\\
+	&\lambda_1 (\bar{\mu_1} + v_b) \geq c \tag{$IR_{1,iter}$} \label{IR_1_iter}\\
+	&\eqref{F_0}, \eqref{F_1}, \mu_1 = \bar{\mu_0}, \lambda_1 = \lambda_1^{**}\nonumber
+	\end{align}
+	Note that $(IR_{0,iter})$ implies $(IR_1^{iter})$ and $(\lambda_1^*,\bar{\mu}_1^*)=(\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}})$ satisfies $(F_1)$. $\forall \mu_1 \geq \lambda_1^{**}$, the optimal second-period strategy is always $(\lambda_1^*,\bar{\mu}_1^*)=(\lambda_1^{**},1)$. Therefore, choosing $\mu_1$ above $\lambda_1^{**}$ does not increase the second-period sender's payoff or relax the first-period constraints. So, we can restrict $\mu_1$ to be less than or equal to $\lambda_1^{**}$.
+	
+	\begin{enumerate}[i)]
+		\item $\mu_0 \geq c-v_b\lambda_1^{**}$
+		
+		$\Pi_1(\mu_0) = -K(\lambda_1^{**})+p \lambda_1^{**} > \Pi_{iter}(\mu_0)$.
+		
+		\item $\mu_0 < c-v_b\lambda_1^{**}$
+		
+		$\Pi_1(\mu_0) = -K(\frac{\mu_0-c}{-v_b})+\frac{(\mu_0-c)p}{-v_b}$
+		\vspace{-10pt}	
+		\begingroup
+		\allowdisplaybreaks
+		\begin{align}
+		(F_1)~\&~(IR_{0,iter}) \ra& \lambda_0 \geq \frac{c}{\mu_1-c+v_b\lambda_1^{**}} (\ra \mu_1 \geq \frac{1+\lambda_{0}}{\lambda_{0}}c-v_b \lambda_{1}^{**}) \label{l0lower}\\
+		&\overset{\mu_1 \leq \lambda_1^{**}}{\geq} \frac{c}{v_g\lambda_1^{**}-c} \nonumber \\
+		(F_0) \ra& \lambda_0 = \frac{\mu_0-\underline{\mu}_0}{\mu_1-\underline{\mu}_0} \leq \frac{\mu_0}{\mu_1} \overset{\eqref{l0lower}}\leq \frac{\mu_0}{\frac{1+\lambda_0}{\lambda_0} c  - v_b \lambda_1^{**}} \ra \lambda_0 \leq \frac{\mu_0-c}{c-v_b\lambda_1^{**}} \nonumber 
+		\end{align}
+		\endgroup
+		A necessary condition for $\lambda_0$ to be well-defined is:
+		\begin{align}
+		\frac{c}{v_g\lambda_1^{**}-c} \leq \frac{\mu_0-c}{c-v_b\lambda_1^{**}} \lra \mu_0 \geq \frac{\lambda_1^{**} c}{v_g\lambda_1^{**}-c} (>\frac{c}{v_g}) \nonumber 
+		\end{align}
+		Therefore, it is feasible for the sender to provide a one-period signal whenever it is feasible to provide iterative signals.
+		
+		Define $\bar{\Pi}_{iter}(\mu_0):= \max \limits_{0\leq \lambda_0 \leq \frac{\mu_0-c}{c-v_b\lambda_1^{**}}} -K(\lambda_0) + \lambda_0 \left[-K(\lambda_1^{**})+p \lambda_1^{**} \right]$. One can see that $\bar{\Pi}_{iter}(\mu_0) \geq \Pi_{iter}(\mu_0)$. Let $\lambda_0^*(\mu_0) := \argmax \limits_{0\leq \lambda_0 \leq \frac{\mu_0-c}{c-v_b\lambda_1^{**}}} -K(\lambda_0) + \lambda_0 \left[-K(\lambda_1^{**})+p \lambda_1^{**} \right]$. We want to show:
+		\vspace{-20pt}
+		
+		\begin{align}
+		&\bar{\Pi}_{iter}(\mu_0) < \Pi_1(\mu_0) \nonumber\\
+		\lra &-K(\lambda_0^*(\mu_0)) + \lambda_0^*(\mu_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**} \right] < -K(\frac{\mu_0-c}{-v_b})+\frac{\mu_0-c}{-v_b}p \label{comparison1iter}
+		\end{align}
+		Notice that
+		\vspace{-35pt}
+		\begin{align*}
+		&\frac{d}{d \lambda_0}\left\{ -K(\lambda_0) + \lambda_0 \left[-K(\lambda_1^{**})+p \lambda_1^{**} \right] \right\} = -K'(\lambda_0) -K(\lambda_1^{**})+p \lambda_1^{**} \\
+		\ra& \lambda_0^*(\mu_0) =\begin{cases}
+		\frac{\mu_0-c}{c-v_b\lambda_1^{**}} &if~\mu_0 \leq \mu_0^t\\
+		\frac{\mu_0^t-c}{c-v_b\lambda_1^{**}} &if~\mu_0 > \mu_0^t\\
+		\end{cases} 
+		\end{align*}
+		, where $\lambda_0^t > 0$ is defined by $-K'(\lambda_0^t) -K(\lambda_1^{**})+p \lambda_1^{**} = 0,$ $\mu_0^t = \lambda_0^t (c-v_b\lambda_1^{**}) + c$.
+		
+		When $\mu_0 \leq \mu_0^t$, $\begin{cases}
+		\lambda_0^*(\mu_0) = \frac{\mu_0-c}{c-v_b\lambda_1^{**}} > \frac{\mu_0-c}{-v_b} \ra -K(\lambda_0^*(\mu_0)) < -K(\frac{\mu_0-c}{-v_b})\\
+		\lambda_0^*(\mu_0) p \lambda_1^{**} = \frac{\mu_0-c}{c-v_b\lambda_1^{**}} p \lambda_1^{**} < \frac{\mu_0 - c}{-v_b}p\\
+		-\lambda_0^*(\mu_0) K(\lambda_1^{**}) < 0
+		\end{cases} \ra$ \eqref{comparison1iter} holds, where the first inequality holds because $-v_b > \mu_1 > c - v_b \lambda_1^{**}$.
+		
+		When $\mu_0 > \mu_0^t$, 	  $\bar{\Pi}_{iter}(\mu_0) = \bar{\Pi}_{iter}(\mu_0^t)
+		< \Pi_1(\mu_0^t)
+		< \Pi_1(\mu_0)$. So, \eqref{comparison1iter} holds.		
+	\end{enumerate}
+	Thus, $\Pi_1(\mu_0) > \bar{\Pi}_{iter}(\mu_0)$ for any $\mu_0$ such that iterative signals are feasible.	
+\end{proof}
+
+
+\begin{proof}[Proof of Lemma \ref{unconstrained}]
+	$\lambda_0^{**}$ and $\lambda_1^{**}$ are determined by the first order conditions: $-K'(\lambda_1^{**}) + p = 0$ and $-K'(\lambda_0^{**}) + p + K(\lambda_1^{**}) - p \lambda_1^{**} = 0$.  $- K(0) + p \cdot 0 = 0~ \& -K'(\lambda) + p > 0 \text{ for small } \lambda \Rightarrow - K(\lambda_1^{**}) + p \lambda_1^{**} > 0$. Therefore, $-K'(\lambda_0^{**}) + p + K(\lambda_1^{**}) - p \lambda_1^{**} = 0$ implies that $-K'(\lambda_0^{**}) + p > 0 = -K'(\lambda_1^{**}) + p, \Rightarrow K'(\lambda_0^{**}) < K'(\lambda_1^{**}) \Rightarrow \lambda_0^{**} < \lambda_1^{**}$. $-K(0) + p\cdot 0 + (1-0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] > 0$ and strict concavity (w.r.t. $\lambda_0$) of the objective function imply that $-K(\lambda_0^{**}) + p \lambda_0^{**} + (1-\lambda_0^{**}) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]  > 0$.
+\end{proof}
+
+
+
+\begin{proof}[Proof of Proposition \ref{strategy1p}]
+	It can be proved in the same way as in the proof of Proposition \ref{iterative_one-shot} where we derive the optimal one-period strategy of the sender.
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{strategy2p_smooth}]
+	~\\(1) $v_g\lambda_1^{**} \leq c < \widehat{c}$
+	
+	If the sender provides information in both periods, the sender's constrained program is:
+	\begin{align}\tag{$P_{2H}$} \label{P2H}
+	& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{c}{v_g})+\frac{cp}{v_g}\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0},\mu_1 \geq \frac{c}{v_g} \nonumber
+	\end{align}
+	
+	We first transform \eqref{P2H} into an equivalent program that is easier to analyze.
+	\begin{lemma}\label{trans2cl}
+		Suppose $v_g\lambda_1^{**} \leq c < \widehat{c}$. If $\mu_{0,1} \leq \mu_0 < \frac{2v_g-c}{(v_g)^2} c$, the sender provides information in one period. If $\mu_0 \geq \frac{2v_g-c}{(v_g)^2} c$, \eqref{P2H} is equivalent to:
+		\begin{align}\tag{$P'_{2H}$} \label{P2H'}
+		& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{c}{v_g})+\frac{cp}{v_g}\right] \nonumber\\
+		\text{s.t. } &\lambda_0 \in \left[\frac{c}{v_g}, \frac{v_g\mu_0-(1+v_g)c}{-v_b v_g-c}\right] \nonumber
+		\end{align}
+	\end{lemma}
+	\begin{proof}
+		The proof of the equivalence between \eqref{P2H} and \eqref{P2H'} is similar to that of Lemma \ref{trans}. It is feasible for the sender to provide information at both periods if and only if the domain of $\lambda_1$ is non-empty: $\frac{c}{v_g} \leq \frac{v_g\mu_0-(2-p)c}{pv_g-c} \Leftrightarrow \mu_0 \geq \frac{2v_g-c}{(v_g)^2} c$.
+	\end{proof}
+	Denote the optimal $\lambda_0$ without constraints by $\lambda_{0,H}^{**}$. $\lambda_{0,H}^{**} = \argmax\limits_{\lambda_0} -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{c}{v_g})+\frac{cp}{v_g}\right]$. The following lemma summarizes the relative size of $\lambda_{0,H}^{**}$, $\lambda_0^{**}$, and $\frac{c}{v_g}$.
+	
+	\begin{lemma}\label{lambda2cl}
+		$0 < \lambda_{0,H}^{**} < \lambda_1^{**} \leq \frac{c}{v_g}$.
+	\end{lemma}
+	\begin{proof}
+		$\lambda_1^{**} < \frac{c}{v_g}$ is the assumption.
+		F.O.C $\ra K'(\lambda_{0,H}^{**}) = p + K(\frac{c}{v_g}) - \frac{cp}{v_g}.$ From Lemma \ref{unconstrained}, $K'(\lambda_1^{**}) = p$. $-K(\frac{c}{v_g}) + \frac{cp}{v_g} > 0$ when $c < \widehat{c}$. So, $K'(\lambda_{0,H}^{**}) < K'(\lambda_1^{**}) \ra \lambda_{0,H}^{**} < \lambda_1^{**}$. $-K'(\lambda_{0,H}^{**}) + p + K(\frac{c}{v_g}) - \frac{cp}{v_g} = 0 \ra K'(\lambda_{0,H}^{**}) = p + K(\frac{c}{v_g}) - \frac{cp}{v_g} > p - \frac{cp}{v_g} = (1-\frac{c}{v_g}) p > 0$, where the last inequality follows from the assumption that $c < v_g$. Thus, $\lambda_{0,H}^{**} > 0$.
+	\end{proof}
+	
+	When it is feasible for the sender to provide information in both periods, $\mu_0 \geq \frac{2v_g-c}{(v_g)^2} c$, Lemma \ref{lambda2cl} and strict concavity of the objective function imply that the optimal two-period strategy of the sender is  $(\lambda_t^*,\bar{\mu_t}^*)=(\frac{c}{v_g},1),t=0,1$. The sender surplus is $(2-\frac{c}{v_g}) \left[-K(\frac{c}{v_g})+\frac{cp}{v_g}\right] > -K(\frac{c}{v_g})+\frac{cp}{v_g}$, the sender surplus of the optimal one-period strategy. Therefore, the sender will always provide information in both periods as long as it is feasible.
+	
+	~\\(2) $c < v_g\lambda_1^{**}$
+	
+	If the sender provides information in both periods, we first show that we can restrict the domain of $\mu_1$ to be $\leq \lambda_1^{**}$. The intuition is that the optimal second-period strategy is always $(\lambda_1^*,\bar{\mu}_1^*)=(\lambda_1^{**},1),~ \forall \mu_1 \geq \lambda_1^{**}$. Therefore, choosing $\mu_1$ above $\lambda_1^{**}$ does not increase the second-period sender's payoff or relax the first-period constraints. Formally, when $\lambda_1^{**} \leq \mu_1 < \mu_0$, the sender's constrained program is:
+	
+	\vspace{-20pt}
+	\begin{align}
+	& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] \nonumber\\
+	\text{s.t. } &\lambda_0(\bar{\mu_0}+v_b) + (1-\lambda_0)[\lambda_1^{**}v_g-c]\geq c \tag{$\tilde{IR}_0'$}\\
+	&\eqref{F_0}, \mu_1\in [\lambda_1^{**}, \mu_0) \nonumber
+	\end{align}
+	$(\tilde{IR}_0')~\&~(F_0) \ra \lambda_0 \leq \frac{-2c+\mu_0-\mu_1+ v_g\lambda_1^{**}}{v_g\lambda_1^{**}-c-v_b-\mu_1} \leq \frac{\mu_0-2c+v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$ (``$=$'' when $\mu_1 = \lambda_1^{**}$). $(F_0) \ra \lambda_0 \geq \frac{\mu_0-\mu_1}{1-\mu_1}$. The domain of $\lambda_0$ is non-empty iff $\frac{\mu_0-\mu_1}{1-\mu_1}\leq \frac{-2c+\mu_0-\mu_1+ v_g\lambda_1^{**}}{v_g\lambda_1^{**}-c-v_b-\mu_1} \lra \mu_1 \leq \frac{-2c+v_g\lambda_1^{**}+\mu_0[1-v_g\lambda_1^{**}+c+v_b]}{v_g-c}$. Therefore, smaller $\mu_1$ means it is more likely for the domain of $\lambda_0$ to be non-empty and larger upper bound of $\lambda_0$. So, the optimal $\mu_1$ will never $\in (\lambda_1^{**},\mu_0)$. Hence, the optimal strategy in the last period is $(\lambda_1^*,\bar{\mu}_1^*)=
+	\begin{cases}
+	(\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}})& ,~if~ \mu_1 \in (c - v_b \lambda_1^{**}, \lambda_1^{**}]\\
+	(\frac{\mu_1-c}{-v_b},\frac{-\mu_1 v_b}{\mu_1-c})& ,~if~ \mu_1 \in [\frac{c}{v_g}, c - v_b \lambda_1^{**}]
+	\end{cases}$ and the constrained program of the entire game is either\footnote{We include $\mu_1 = c - v_b \lambda_1^{**}$ in \eqref{P2S_+} as well to simplify the exposition.}:
+	\begin{align}\tag{$P_{2S_+}$} \label{P2S_+}
+	& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0}, \mu_1\in [c - v_b \lambda_1^{**}, \lambda_1^{**}] \nonumber
+	\end{align}
+	
+	or:
+	\vspace{-33pt}
+	\begin{align}\tag{$P_{2S_0}$} \label{P2S_0}
+	& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0}, \mu_1 \in [\frac{c}{v_g}, c - v_b \lambda_1^{**}]\nonumber
+	\end{align}
+
+	We consider the two programs above separately, and then compare the corresponding local solutions to pin down the global solution.
+	
+	\begin{enumerate}
+		\item $S_+$ strategy (solution to \eqref{P2S_+})
+		
+		\begin{proposition}\label{strategy2S_+}
+			Suppose $c < v_g\lambda_1^{**}$ and $\mu_0<\widehat{\mu_0} = 2c-v_b\lambda_1^{**}-[c+(1-\lambda_1^{**})v_b]\lambda_0^{**}$. If $\mu_0 > 2c-v_b\lambda_1^{**}$ and $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$, \eqref{P2S_+} is feasible with the following solution. $\lambda_0^* =
+			\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$; $\bar{\mu}_0^* = \begin{cases}
+			\frac{(v_b-c)(c - v_b\lambda_1^{**})-v_b\mu_0}{\mu_0-2c+v_b \lambda_1^{**}} \in (-v_b,1)& ,if~\widehat{\mu_1}(\mu_0)<c-v_b\lambda_1^{**}\\
+			1 & ,if~\widehat{\mu_1}(\mu_0)\geq c-v_b\lambda_1^{**}
+			\end{cases}$; $(\lambda_1^*,\bar{\mu}_1^*)=(\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}})$; $\mu_1^* = \widehat{\mu_1}(\mu_0) \M c-v_b\lambda_1^{**}$, where $\widehat{\mu_1}(\mu_0) = \frac{2c-v_b\lambda_1^{**}-(1+c-v_b\lambda_1^{**}+v_b)\mu_0}{c-v_b-\mu_0}$. The receiver gets zero surplus.
+		\end{proposition}
+		
+		\begin{proof}
+			We first transform \eqref{P2S_+} into an equivalent program that is easier to analyze.
+			\begin{lemma}\label{trans2S_+}
+				Suppose $c < v_g\lambda_1^{**}$ and $ \mu_0 \geq \mu_{0,1}$. If $\mu_0 \leq 2c-v_b\lambda_1^{**}$ or $\mu_0 < \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$, the sender provides information in one period. If $\mu_0 > 2c-v_b\lambda_1^{**}$ and $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$, \eqref{P2S_+} is equivalent to:
+				\begin{align}\tag{$P''_{2S_+}$} \label{P2S_+''}
+				& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] \nonumber\\
+				\text{s.t. } &\lambda_0 \in \left(0, \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}\right] \nonumber
+				\end{align}
+			\end{lemma}
+			\begin{proof}
+				We first show that, if $\mu_0 > 2c-v_b\lambda_1^{**}$ and $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$, \eqref{P2S_+} is equivalent to:
+				\vspace{-20pt}
+				\begin{align}\tag{$P'_{2S_+}$} \label{P2S_+'}
+				& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] \nonumber\\
+				\text{s.t. } &\lambda_0 \in \left[\frac{\mu_0-\mu_1}{1-\mu_1}, \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c} \m \frac{\mu_0-\mu_1}{-v_b-\mu_1}\right] \nonumber\\
+				&\mu_1\in [c - v_b \lambda_1^{**} \M \widehat{\mu_1}(\mu_0), \lambda_1^{**}] \nonumber\\
+				,~&\text{where } \widehat{\mu_1}(\mu_0) = \frac{2c-v_b\lambda_1^{**}-(1+c-v_b\lambda_1^{**}+v_b)\mu_0}{c-v_b-\mu_0} \nonumber
+				\end{align}
+				$(F_0) \ra \lambda_0 = \frac{\mu_0-\mu_1}{\bar{\mu_0}-\mu_1} \in \left[\frac{\mu_0-\mu_1}{1-\mu_1}, \frac{\mu_0-\mu_1}{-v_b-\mu_1}\right]$. $(IR_0)~\&~(F_0) \ra \lambda_0 \leq \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$. For $\lambda_0$ to be positive, we need $\mu_0 > 2c-v_b \lambda_1^{**}$. The domain of $\lambda_0$ is non-empty iff $\frac{\mu_0-\mu_1}{1-\mu_1}\leq \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c} \Leftrightarrow \mu_1 \geq \widehat{\mu_1}(\mu_0)$. For $\mu_1 \leq \lambda_1^{**}$, we need $\widehat{\mu_1}(\mu_0) \leq \lambda_1^{**} \lra \mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$. We also have that $\mu_1 = \underline{\mu}_0 < \mu_0.$ Thus, the constraints in \eqref{P2S_+} imply the constraints in \eqref{P2S_+'}.
+				
+				For any $(\lambda_0,\mu_1)$ satisfying the constraints in \eqref{P2S_+'}, consider $(\lambda_0,\mu_1,\bar{\mu_0}=\frac{\mu_0-(1-\lambda_0)\mu_1}{\lambda_0},\bar{\mu_1}=\frac{\mu_1}{\lambda_1^{**}}\m 1, \underline{\mu}_1=\frac{\mu_1-\lambda_1^{**}\bar{\mu_1}}{1-\lambda_1^{**}})$. $(IR_0)~\&~(F_0)$ are satisfied by construction. $\bar{\mu_0}=\frac{\mu_0-(1-\lambda_0)\mu_1}{\lambda_0} > \frac{\mu_0-(1-\lambda_0)\mu_0}{\lambda_0} = \mu_0$. $\bar{\mu_0}=\frac{\mu_0-(1-\lambda_0)\mu_1}{\lambda_0} \leq \frac{\mu_0-(1-\frac{\mu_0-\mu_1}{1-\mu_1})\mu_1}{\frac{\mu_0-\mu_1}{1-\mu_1}} = 1$. One can verify that $\bar{\mu_1} \in (-v_b,1],~\underline{\mu}_1\in [0,-v_b)$. Therefore, the $(\lambda_0,\mu_1,\bar{\mu_0},\bar{\mu_1}, \underline{\mu}_1)$ we constructed satisfies all the constraints in \eqref{P2S_+} and is feasible.
+				
+				Therefore, the two programs are equivalent.
+				
+				We then show that \eqref{P2S_+'} is equivalent to \eqref{P2S_+''}. It is clear that the constraints in \eqref{P2S_+'} imply the constraints in \eqref{P2S_+''}. We now show that for any $\lambda_0 \in \left(0, \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}\right]$, we can find a feasible $(\lambda_0,\mu_1)$ that satisfies the constraints in \eqref{P2S_+'}. Since $\lambda_0 = \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$ maximizes the objective function among $\lambda_0 \in \left(0, \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}\right]$ when $\mu_0 < \widehat{\mu_0}$, we only need to verify (by construction) that $\lambda_0 = \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$ can be obtained.
+				\begin{enumerate}[i)]
+					\item $\widehat{\mu_1}(\mu_0) < c - v_b\lambda_1^{**}$
+					
+					Consider $\mu_1 = c - v_b\lambda_1^{**}, \lambda_0 = \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}, \bar{\mu_0} = \frac{\mu_0 - (1-\lambda_0)\mu_1}{\lambda_0} = 	\frac{(v_b-c)(c - v_b\lambda_1^{**})-v_b\mu_0}{\mu_0-2c+v_b \lambda_1^{**}}$. By construction, $(IR_0)$ and $(F_0)$ are satisfied; $\mu_1$'s constraints are also satisfied. So, we just need to verify that $\bar{\mu_0} \in (p,1)$. $\bar{\mu_0} < 1 \lra (v_b-c)(c - v_b\lambda_1^{**})-v_b\mu_0 < \mu_0-2c+v_b \lambda_1^{**} \lra \widehat{\mu_1}(\mu_0) < c - v_b\lambda_1^{**}$, which is the assumption.				 $\bar{\mu_0} > -v_b \lra c < -v_b(1-\lambda_1^{**})$, which holds because $\mu_0 > 2c-v_b \lambda_1^{**} \ra c < \frac{1}{2} (\mu_0 + v_b \lambda_1^{**}) \leq \mu_0 + v_b \lambda_1^{**} < -v_b + v_b \lambda_1^{**} = -v_b(1-\lambda_1^{**})$.
+					
+					
+					\item $\widehat{\mu_1}(\mu_0) \geq c - v_b\lambda_1^{**}$
+					
+					Consider $\lambda_0 = \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}, \bar{\mu_0} = 1, \mu_1 = \frac{\mu_0-\lambda_0 \bar{\mu_0}}{1-\lambda_0} =\widehat{\mu_1}(\mu_0)$. By construction, $(IR_0)$ and $(F_0)$ are satisfied; $\mu_1$'s constraints are also satisfied. So, we just need to verify that $\mu_1=\widehat{\mu_1}(\mu_0) \in [c - v_b\lambda_1^{**},\lambda_1^{**}]$.
+					$\widehat{\mu_1}(\mu_0) \geq c - v_b\lambda_1^{**}$ is the assumption. $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c} \ra \widehat{\mu_1}(\mu_0) \leq \lambda_1^{**}$.		
+				\end{enumerate}
+				\vspace{-20pt}
+			\end{proof}
+			
+			When $\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c} \geq \lambda_0^{**} (\lra \mu_0 \geq \widehat{\mu_0}),$ the optimal $\lambda_0$ is $\lambda_0^{**}$. When $\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c} < \lambda_0^{**},$ the  optimal $\lambda_0$ is $\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$ due to strict concavity of the objective function (denote it by $J(\lambda_0)$). Since the one-period optimal sender surplus is $-K(\lambda_1^{**})+p \lambda_1^{**} = J(0),~ J(\cdot)$ is strictly concave and obtains the unique maximum value at $\lambda_0^{**} > \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c},$ we have $J(\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}) > J(0)$. So, the sender always provides information in both periods when it is feasible ($\mu_0 > 2c-v_b\lambda_1^{**}$ and $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$). We will use this observation in the later proofs. According to the proof of Lemma \ref{trans2S_+}, the receiver always gets zero surpluses when $\mu_0 < \widehat{\mu_0}$. $\mu_1 = \widehat{\mu_1}(\mu_0) \M c-v_b\lambda_1^{**}$ is the smallest $\mu_1$ that supports $\lambda_0^* = \frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c}$, which gives the receiver the largest surplus in the first period. So, $\mu_1^* = \widehat{\mu_1}(\mu_0) \M c-v_b\lambda_1^{**}$. $(F_0) \ra \bar{\mu}_0^* = \frac{\mu_0 - (1-\lambda_0)\mu_1}{\lambda_0} = \begin{cases}
+			\frac{(v_b-c)(c - v_b\lambda_1^{**})-v_b\mu_0}{\mu_0-2c+v_b \lambda_1^{**}} \in (p,1)& ,if~\widehat{\mu_1}(\mu_0)<c-v_b\lambda_1^{**}\\
+			1 & ,if~\widehat{\mu_1}(\mu_0)\geq c-v_b\lambda_1^{**}
+			\end{cases}$	
+		\end{proof}
+		
+		\item $S_0$ strategy (solution to \eqref{P2S_0})
+		
+		\begin{proposition}\label{strategy2S_0}
+			% $c \leq v_g\lambda_1^{**}$ rathe than $c \leq v_g\lambda_0^{**}$.
+			Suppose $c \leq v_g\lambda_1^{**}$. When $\mu_0 \geq \frac{2v_g-c}{(v_g)^2}c$, \eqref{P2S_0'} is feasible. $\lambda_0^*$, $\lambda_1^*$, and $\mu_1^*$ are continuous and increase in $\mu_0$, while $\bar{\mu}_0^*$ and $\bar{\mu}_1^*$ are continuous and decrease in $\mu_0$, in the solution to \eqref{P2S_0'}. The receiver gets zero surplus at each period. 
+		\end{proposition}
+		\begin{proof}
+			We first transform \eqref{P2S_0} into an equivalent program that is easier to analyze.
+			\begin{lemma}\label{trans2S_0}
+				Suppose $c < v_g\lambda_1^{**}$. If $\mu_{0,1} \leq \mu_0 < \frac{2v_g-c}{(v_g)^2}c$, the sender provides information in one period. If $\mu_0 \geq \frac{2v_g-c}{(v_g)^2}c$, \eqref{P2S_0} is equivalent to:	
+				\begin{align}\tag{$P'_{2S_0}$} \label{P2S_0'}
+				& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+				\text{s.t. } &\lambda_0 \in \left[\frac{\mu_0-\mu_1}{1-\mu_1}, \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}\right] \nonumber\\
+				&\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right] \nonumber
+				\end{align}
+			\end{lemma}
+			\begin{proof}
+				Using the same argument as the proof of Lemma \ref{trans2S_+}, one can show that \eqref{P2S_0} is equivalent to:
+				\vspace{-10pt}
+				\begin{align}\tag{$P''_{2S_0}$} \label{P2S_0''}
+				& \max -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+				\text{s.t. } &\lambda_0 \in \left[\frac{\mu_0-\mu_1}{1-\mu_1}, \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}\right] \nonumber\\
+				&\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c}\m c-v_b\lambda_1^{**} \right] \nonumber
+				\end{align}
+				
+				We just need to show that \eqref{P2S_0''} is equivalent to \eqref{P2S_0'}. If $\frac{v_g\mu_0-c}{v_g-c} \leq c-v_b\lambda_1^{**}$, $\mu_1$'s constraint becomes $\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right]$. So, \eqref{P2S_0''} is equivalent to \eqref{P2S_0'}. 
+				
+				If $\frac{v_g\mu_0-c}{v_g-c} > c-v_b\lambda_1^{**}$, denote the solution to \eqref{P2S_0'} by $(\lambda_0, \mu_1)$.
+				\begin{enumerate}
+					\item $(\lambda_0^{**},\lambda_1^{**})$ can be obtained ($\lambda_1 = \lambda_1^{**} \lra \mu_1 = c-v_b\lambda_1^{**}$) in \eqref{P2S_0''}
+					
+					$\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c}\m c-v_b\lambda_1^{**} \right] $ is equivalent to $\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right] $, as the optimal $\mu_1$ under the latter (relaxed) constraint will be $c-v_b\lambda_1^{**}$. So, \eqref{P2S_0''} is equivalent to \eqref{P2S_0'}. 
+					
+					\item $(\lambda_0^{**},\lambda_1^{**})$ can not be obtained in \eqref{P2S_0''}
+					
+					Suppose $\mu_1 > c-v_b\lambda_1^{**}$. If $\lambda_0 >\frac{\mu_0-\mu_1}{1-\mu_1}$, consider $(\lambda_0'=\lambda_0, \mu_1'=\mu_1 - \varepsilon)$. For small enough $\varepsilon$, it is feasible and gives the sender a strictly higher payoff. A contradiction! If $\lambda_0 =\frac{\mu_0-\mu_1}{1-\mu_1}$ instead, we have $\frac{\mu_0-\mu_1}{1-\mu_1} \geq \lambda_0^{**}$. A contradiction!
+					
+					Therefore, $\mu_1 \leq c-v_b\lambda_1^{**}$ and thus \eqref{P2S_0''} is equivalent to \eqref{P2S_0'}. 
+				\end{enumerate}
+				
+				In sum, \eqref{P2S_0''} is equivalent to \eqref{P2S_0'}.	
+			\end{proof}
+			
+			%To solve \eqref{P2S_0'}, we introduce another lemma:
+			\begin{lemma}\label{binding}
+				Suppose $c < v_g\lambda_1^{**}$. For $\mu_0 < \widehat{\mu_0}, \lambda_0$ is binding at the upper bound in the solution to \eqref{P2S_0'}.
+			\end{lemma}
+			\begin{proof}
+				To solve \eqref{P2S_0'}, we consider several cases.
+				
+				\begin{enumerate}[i)]
+					\item $\lambda_0 \leq \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}$ is binding and $\mu_1$'s constraints are not binding.
+					
+					The Lagrangian is $\mathcal{L} = -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] + \eta \left(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}-\lambda_0\right)$ $s.t.~\eta \geq 0, \eta \left(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}-\lambda_0\right) = 0$.
+					
+					F.O.C. $\ra \begin{cases}
+					-K'(\lambda_0) + p +K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{v_b}-\eta = 0 \\
+					(1-\lambda_0) \left[K'(\frac{\mu_1-c}{-v_b})\cdot \frac{1}{v_b}-\frac{p}{v_b}\right]+\eta \cdot \frac{\mu_0+v_b-c}{(v_b+\mu_1)^2}=0
+					\end{cases}$
+					
+					Plug in $\lambda_0 = \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}$. Dividing the second equality by $\frac{\mu_0+v_b-c}{(v_b+\mu_1)^2}$ and comparing with the first equality, we obtain:
+					\begin{align*}
+					\eta &= -(v_b+\mu_1)\left[K'(\frac{\mu_1-c}{-v_b})\cdot \frac{1}{v_b}-\frac{p}{v_b}\right]\\
+					&=-K'(\lambda_0) + p +K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{v_b}\\
+					\ra~&K(\frac{\mu_1-c}{-v_b})+\frac{v_b+\mu_1}{v_b} K'(\frac{\mu_1-c}{-v_b})-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})-\frac{cp}{v_b}=0 \tag{$*$}\label{star}
+					\end{align*}
+					
+					$\frac{\partial}{\partial \mu_1} \left[K(\frac{\mu_1-c}{-v_b})+\frac{v_b+\mu_1}{v_b} K'(\frac{\mu_1-c}{-v_b})\right] = -\frac{v_b+\mu_1}{(v_b)^2}K''(\frac{\mu_1-c}{-v_b}) > 0$. So, the sum of the first two terms of the LHS of \eqref{star} strictly increases in $\mu_1$. $\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}$ strictly decreases in $\mu_1$, $K'(\cdot)$ strictly increases in $\mu_1$. So, $-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})$ strictly increases in $\mu_1$. Thus, the LHS of \eqref{star} strictly increases in $\mu_1$. When $\mu_0$ increases,  the LHS of \eqref{star} is strictly negative if $\mu_1$ is unchanged. Therefore, $\mu_1$ also has to increase. So, the sum of the first two terms of the LHS of \eqref{star} increases. As a result, the third term, $-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) = -K'(\lambda_0)$ has to decrease strictly. So, $\lambda_0$ has to increase strictly. In sum, the optimal $\lambda_0$ and $\mu_1$ are strictly increasing in $\mu_0$.
+					
+					\item $\mu_1\leq \frac{v_g\mu_0-c}{v_g-c}$ is binding.
+					
+					When $\mu_1 = \frac{v_g\mu_0-c}{v_g-c}$, $\lambda_0 \in \{\frac{c}{v_g}\}$. So, $\lambda_0$ is binding at the upper bound.
+					
+					\item $\mu_1\geq \frac{c}{v_g}$ is binding and $\lambda_0$ is not binding.
+					
+					The Lagrangian is $\mathcal{L} = -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] + \eta \left(\mu_1- \frac{c}{v_g}\right)$ $s.t.~\eta \geq 0, \eta \left(\mu_1- \frac{c}{v_g}\right) = 0$.
+					
+					F.O.C. $\ra \begin{cases}
+					-K'(\lambda_0) + p +K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{v_b} = 0 \\
+					(1-\lambda_0) \left[K'(\frac{\mu_1-c}{-v_b})\cdot \frac{1}{v_b}-\frac{p}{v_b}\right]+\eta =0
+					\end{cases}$
+					
+					The second equality $\ra \eta = -\frac{1-\lambda_0}{v_b} \left[K'(\frac{\mu_1-c}{-v_b})-p\right] \overset{c<v_g\lambda_{1}^{**}}{<} -\frac{1-\lambda_0}{v_b} \left[K'(\lambda_1^{**})-p\right] = 0$. 
+					But $\eta \geq 0$. A contradiction! So, this case cannot happen.
+					
+					\item $\mu_1\geq \frac{c}{v_g}$ is binding and $\lambda_0 \geq\frac{\mu_0-\mu_1}{1-\mu_1}$ is binding.
+					
+					The Lagrangian is $\mathcal{L} = -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] + \eta \left(\mu_1- \frac{c}{v_g}\right)+\xi \left( \lambda_0 - \frac{\mu_0-\mu_1}{1-\mu_1} \right)~s.t.~\eta \geq 0, \eta \left(\mu_1- \frac{c}{v_g}\right) = 0,\xi \geq 0, \xi \left( \lambda_0 - \frac{\mu_0-\mu_1}{1-\mu_1} \right) = 0$.
+					
+					F.O.C. $\ra \begin{cases}
+					-K'(\lambda_0) + p +K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{v_b}+\xi = 0 \\
+					(1-\lambda_0) \left[K'(\frac{\mu_1-c}{-v_b})\cdot \frac{1}{v_b}-\frac{p}{v_b}\right]+\eta+\xi \frac{1-\mu_0}{(1-\mu_1)^2} =0
+					\end{cases}$
+					
+					Similar to the previous case, the LHS of the second equality $> 0$. A contradiction! So, this case cannot happen. 
+					
+					\item $\lambda_0 \geq\frac{\mu_0-\mu_1}{1-\mu_1}$ is binding and $\mu_1$ is not binding.
+					
+					The Lagrangian is $\mathcal{L} = -K(\lambda_0) + p \lambda_0 + (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] + \xi \left( \lambda_0 - \frac{\mu_0-\mu_1}{1-\mu_1} \right)$ $s.t.~\xi \geq 0, \xi \left( \lambda_0 - \frac{\mu_0-\mu_1}{1-\mu_1} \right) = 0$.
+					
+					F.O.C. $\ra \begin{cases}
+					-K'(\lambda_0) + p +K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}+\xi = 0 \\
+					(1-\lambda_0) \left[K'(\frac{\mu_1-c}{-v_b})\cdot \frac{1}{v_b}-\frac{p}{v_b}\right]+\xi \frac{1-\mu_0}{(1-\mu_1)^2} =0
+					\end{cases}$
+					
+					Similar to the previous case, the LHS of the second equality $> 0$. A contradiction! So, this case cannot happen. 
+					
+					\item both $\lambda_0$ and $\mu_1$ are not binding.
+					
+					The solution is the unconstrained optimal solution $(\lambda_0^{**},\lambda_1^{**})$. But we have assumed that it is not feasible.
+				\end{enumerate}
+				
+				i) to vi) finish the proof of Lemma \ref{binding}.
+			\end{proof}
+			
+			According to Lemma \ref{binding}, if $\mu_0 \geq \frac{2v_g-c}{(v_g)^2}c$, \eqref{P2S_0'} is equivalent to:
+			\footnotesize
+			\begin{align}\tag{$P'''_{2S_0}$} \label{P2S_0'''}
+			& \max -K(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) + p~ \frac{\mu_0-\mu_1-c}{-v_b-\mu_1} + (1-\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+			\text{s.t. } &\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right] \nonumber
+			\end{align}
+			
+			\normalsize
+			The first order derivative of the objective function w.r.t. $\mu_1$ is:
+			\footnotesize
+			\begin{align*} 
+			D(\mu_0, \mu_1) := &\frac{\partial}{\partial \mu_1} \left\{-K(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) + p~ \frac{\mu_0-\mu_1-c}{-v_b-\mu_1} + (1-\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right]\right\}\\
+			= &\frac{\mu_0+v_b-c}{(\mu_1+v_b)^2} \left[ K(\frac{\mu_1-c}{-v_b})+\frac{v_b+\mu_1}{v_b} K'(\frac{\mu_1-c}{-v_b})-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})-\frac{cp}{v_b} \right]
+			\end{align*}
+			
+			\normalsize
+			The first term of $D(\mu_0, \mu_1)$, $\frac{\mu_0+v_b-c}{(\mu_1+v_b)^2}$, is always strictly negative. The second term, $K(\frac{\mu_1-c}{-v_b})+\frac{v_b+\mu_1}{v_b} K'(\frac{\mu_1-c}{-v_b})-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})-\frac{cp}{v_b}$, is the LHS of \eqref{star}, which has been shown to be strictly increasing in $\mu_1$ in the proof of Lemma \ref{binding}. One can see that $D(\mu_0, \mu_1)$ is strictly negative when $\mu_1$ is large. Thus, $D(\mu_0, \mu_1)$ is always negative or positive for $\mu_1$ small and negative for $\mu_1$ large. Let $\mu_1^{**}(\mu_0)$ be the cutoff value such that $D(\mu_0, \mu_1) \geq 0$ for $\mu_1 \leq \mu_1^{**}(\mu_0)$ and $D(\mu_0, \mu_1) \leq 0$ for $\mu_1 \geq \mu_1^{**}(\mu_0)$ ($\mu_1^{**}(\mu_0) := -\infty$ if $D(\mu_0, \mu_1)$ is always negative). Since $\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right]$, the optimal $\mu_1^*(\mu_0) = \left[\frac{c}{v_g} \M \mu_1^{**}(\mu_0)\right] \m \frac{v_g\mu_0-c}{v_g-c}$. One can see that we can define $\tilde{\mu}_1^{**}(\mu_0) := \begin{cases}
+			\frac{c}{v_g},~if~D(\mu_0, \mu_1) \text{ is always negative}\\
+			\mu_1^{**}(\mu_0),\text{ otherwise}
+			\end{cases}$. $\tilde{\mu}_1^{**}(\mu_0) \in (-\infty, + \infty)$ and $\mu_1^*(\mu_0) = \left[\frac{c}{v_g} \M \tilde{\mu}_1^{**}(\mu_0)\right] \m \frac{v_g\mu_0-c}{v_g-c}$. Since $\tilde{\mu}_1^{**}(\mu_0)$ is continuous in $\mu_0$, $\mu_1^*(\mu_0)$ is also continuous in $\mu_0$. It then implies that $\lambda_0^*(\mu_0) = \frac{\mu_0-\mu_1^*(\mu_0)-c}{-v_b-\mu_1^*(\mu_0)},~\lambda_1^*(\mu_0) = \frac{\mu_1^*(\mu_0) - c}{-v_b},$ and $\bar{\mu}_1^*(\mu_0) = \frac{- \mu_1^*(\mu_0) v_b}{\mu_1^*(\mu_0) - c}$ are continuous in $\mu_0$.
+			
+			We have shown in the proof of Lemma \ref{binding} that $\lambda_0^*$ and $\mu_1^*$ strictly increase in $\mu_0$ when $\mu_1^*$ is the interior solution. Now we consider the case when $\mu_1$ is binding. When $\mu_1^* = \frac{c}{v_g}$, $\lambda_0^* = \frac{\mu_0-\mu_1^*-c}{-v_b-\mu_1^*} = \frac{\mu_0-\frac{c}{v_g}-c}{-v_b-\frac{c}{v_g}}$ strictly increases in $\mu_0$. When $\mu_1^* = \frac{v_g\mu_0-c}{v_g-c}$, it is strictly increasing in $\mu_0$ and $\lambda_0^* = \frac{\mu_0-\mu_1^*-c}{-v_b-\mu_1^*} = \frac{c}{v_g}$ is constant. Together with the continuity property we just established, we have shown that $\lambda_0^*$ and $\mu_1^*$ (weakly) increase in $\mu_0$. Thus, $\lambda_1^* = \frac{\mu_1^* - c}{-v_b}$ (weakly) increases in $\mu_0$ and $\bar{\mu}_1^* = \frac{- \mu_1^* v_b}{\mu_1^* - c}$ (weakly) decreases in $\mu_0$.
+		\end{proof}
+		
+		According to the proof of Proposition \ref{iterative_one-shot} and Lemma \ref{trans2S_0}, the sender does not provide information iff $\mu_0 < \mu_{0,1}$ and provide information in one period if $\mu_{0,1} \leq \mu_0 < \frac{2v_g-c}{(v_g)^2}c$. Thus, we just need to determine whether she provides information in one period or in both periods when $\mu_0 \geq \frac{2v_g-c}{(v_g)^2}c$ by comparing the sender surplus of the optimal one-period strategy and the optimal sender surplus of the $S_0$ strategy.
+		
+		\begin{enumerate}
+			\item $c \leq v_g \lambda_0^{**}$
+			
+			Define $\mu_{1,2}:=\inf\{\mu_0\geq\frac{2v_g-c}{(v_g)^2}c:\Pi_{S_0}(\mu_0)\geq\Pi_1(\mu_0)\}$. One can see that $\mu_{1,2} \in [\frac{2v_g-c}{(v_g)^2}c,\widehat{\mu_0})$ and $\Pi_{S_0}(\mu_{1,2})\geq\Pi_1(\mu_{1,2})$. According to Lemma \ref{binding},
+			\small
+			\begin{align*}
+			\Pi_1(\mu_0) =& -K(\frac{\mu_0-c}{-v_b}\m\lambda_1^{**})+p(\frac{\mu_0-c}{-v_b}\m\lambda_1^{**})\\
+			\Pi_{S_0}(\mu_0) =&\max\limits_{\mu_1} -K(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) + p~ \frac{\mu_0-\mu_1-c}{-v_b-\mu_1} + (1-\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right]\\
+			s.t~&\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right]
+			\end{align*}
+			\normalsize
+			
+			
+			\begin{enumerate}[i)]
+				\item $\mu_{1,2} \geq c - v_b\lambda_1^{**}$
+				
+				$\forall \mu_0 \in (\mu_{1,2}, \widehat{\mu_0}], \Pi_{S_0}(\mu_0) > \Pi_{S_0}(\mu_{1,2}) \geq \Pi_1(\mu_{1,2}) = \Pi_1(\mu_0)$.
+				
+				\item $\mu_{1,2} < c - v_b\lambda_1^{**}$
+				
+				$\forall \mu_0 \in [\mu_{1,2}, c - v_b\lambda_1^{**})$, $\frac{d \Pi_1(\mu_0)}{d \mu_0} =K'(\frac{\mu_0-c}{-v_b})\frac{1}{v_b}-\frac{p}{v_b}$.
+				\begin{enumerate}
+					\item $\mu_1(\mu_0) = \mu_1^u(\mu_0) = \frac{v_g\mu_0-c}{v_g-c}$
+					
+					$\Pi_{S_0}(\mu_0) =-K(\frac{c}{v_g})+\frac{cp}{v_g}+(1-\frac{c}{v_g})[-K(\frac{\mu_1^u(\mu_0)-c}{-v_b})+\frac{(\mu_1^u(\mu_0)-c)p}{-v_b}]$.
+					
+					For $\Delta > 0$ small enough, we have $\mu_0 + \delta < c - v_b\lambda_1^{**},~\forall \delta \in (0,\Delta)$. Consider $\mu_{0,\delta} = \mu_0 + \delta \in (\mu_0, \mu_0 + \Delta)$, we have $\Pi_{S_0}(\mu_{0,\delta}) \geq \underline{\Pi_{S_0}}(\mu_{0,\delta}):=-K(\frac{c}{v_g})+\frac{cp}{v_g}+(1-\frac{c}{v_g})[-K(\frac{\mu_1^u(\mu_{0,\delta})-c}{-v_b})+\frac{(\mu_1^u(\mu_{0,\delta})-c)p}{-v_b}]$. Noticing that $\Pi_{S_0}(\mu_0) = \underline{\Pi_{S_0}}(\mu_0)$, we have
+					\begin{align*}
+					&\frac{d \Pi_{S_0}(\mu_0)}{d \mu_0}\geq \frac{d \underline{\Pi_{S_0}}(\mu_0)}{d \mu_0} = K'(\frac{\mu_1^u(\mu_0)-c}{-v_b})\frac{1}{v_b} - \frac{p}{v_b} > \frac{d \Pi_1(\mu_0)}{d \mu_0}		
+					\end{align*}
+					So, $\Pi_{S_0}(\mu_0) \geq \Pi_1(\mu_0), \forall \mu_0 \in [\mu_{1,2}, c - v_b\lambda_1^{**})$, and the inequality is strict when $\mu_0 > \mu_{1,2}$.
+					
+					\item $\mu_1(\mu_0) < \mu_1^u(\mu_0)$
+					
+					Let $\lambda_0 = \frac{\mu_0-\mu_1(\mu_0)-c}{-v_b-\mu_1(\mu_0)}$. For $\Delta > 0$ small enough, we have $\mu_0 + \delta < c - v_b\lambda_1^{**}$ and $\mu_1(\mu_0)+\frac{\delta}{1-\lambda_0} < \mu_1^u(\mu_0) < \mu_1^u(\mu_0+\delta),~\forall \delta \in (0,\Delta)$. Consider $\mu_{0,\delta} = \mu_0 + \delta \in (\mu_0, \mu_0 + \Delta)$. Since $\frac{\mu_0+\delta-(\mu_1+\frac{\delta}{1-\lambda_0})-c}{-v_b-(\mu_1+\frac{\delta}{1-\lambda_0})} = \lambda_0$, we have	$\Pi_{S_0}(\mu_{0,\delta}) \geq \underline{\widetilde{\Pi_{S_0}}}(\mu_{0,\delta}):= -K(\lambda_0)+p \lambda_0 +(1-\lambda_0)[-K(\frac{\mu_1(\mu_0)+\frac{\delta}{1-\lambda_0}-c}{p})+\frac{(\mu_1(\mu_0)+\frac{\delta}{1-\lambda_0}-c)p}{-v_b}]$.
+					\vspace{-20pt}
+					\begin{align*}
+					\frac{d \Pi_{S_0}(\mu_0)}{d \mu_0}\geq \frac{d \underline{\widetilde{\Pi_{S_0}}}(\mu_0)}{d \mu_0} 
+					=& (1-\lambda_0) \left[-\frac{1}{p}K'(\frac{\mu_1(\mu_0)-c}{p})\frac{1}{1-\lambda_0}+\frac{1}{1-\lambda_0}\right]\\  =&1-\frac{1}{p}K'(\frac{\mu_1(\mu_0)-c}{p})\\ \geq& 1-\frac{1}{p}K'(\frac{\mu_1^u(\mu_0)-c}{p})\\
+					>& \frac{d \Pi_1(\mu_0)}{d \mu_0}
+					\end{align*}
+					So, $\Pi_{S_0}(\mu_0) \geq \Pi_1(\mu_0)$ and the inequality is strict when $\mu_0 > \mu_{1,2}$.
+				\end{enumerate}
+				In sum, $\Pi_{S_0}(\mu_0) > \Pi_1(\mu_0),~\forall \mu_0 \in (\mu_{1,2}, \widehat{\mu_0}]$.
+			\end{enumerate}
+			
+			\item $v_g \lambda_0^{**} < c < v_g \lambda_1^{**}$
+			
+			The following lemma provides a closed-form solution to program \eqref{P2S_0} when the search cost is intermediate:
+			\begin{lemma}\label{bindingi}
+				Suppose $v_g\lambda_0^{**}<c<v_g\lambda_1^{**}$. $\lambda_0^* = \frac{c}{v_g}, \mu_1^* = \frac{v_g\mu_0-c}{v_g-c}$ in the solution to \eqref{P2S_0}.
+			\end{lemma}
+			\begin{proof}
+				According to the proof of Proposition \ref{strategy2S_0}, $\lambda_0^*$ is binding at the upper bound and increases in $\mu_0$ in the solution to \eqref{P2S_0'}, for $c < v_g\lambda_1^{**}$. One can see that $\lambda_0^* = \frac{c}{v_g}$ and $\mu_1^* = c - v_b \lambda_{1}^{**}$ for $\mu_0$ large enough in the solution to \eqref{P2S_0'}. Because $\lambda_0^* \geq \frac{c}{v_g}$, the only way for $\lambda_0^*$ to be increasing in $\mu_0$ is for it to always be $\frac{c}{v_g}$. Given $\lambda_0^* = \frac{c}{v_g}$, the optimal $\mu_1^* = \frac{v_g\mu_0-c}{v_g-c}$ for \eqref{P2S_0'}.  Lemma \ref{trans2S_0} shows that \eqref{P2S_0'} is equivalent to \eqref{P2S_0}. So, $\lambda_0^* = \frac{c}{v_g}, \mu_1^* = \frac{v_g\mu_0-c}{v_g-c}$ are also the solutions to \eqref{P2S_0}.
+			\end{proof}
+			
+			Define $\mu_{1,2}:=\inf\{\mu_0\geq\frac{2v_g-c}{(1-p)^2}c:\Pi_{S_0}(\mu_0)\geq\Pi_1(\mu_0) \text{ or }S_+ \text{ strategy is feasible}\}$. Note that $\mu_{1,2} \leq \mu_{2,+}$. If the $S_+$ strategy is feasible $\forall \mu_0 > \mu_{1,2}$, the 1-period sender surplus will always be dominated by the 2-period sender surplus $\forall \mu_0 > \mu_{1,2}$, as the optimal $S_+$ strategy generates a strictly higher sender surplus than the optimal 1-period strategy. We now consider the case in which the $S_+$ strategy is not feasible for some $\mu_0 > \mu_{1,2}$, which implies that $\Pi_{S_0}(\mu_{1,2}) \geq \Pi_1(\mu_{1,2})$.
+			\begin{align*}
+			\Pi_1(\mu_0) =& -K(\frac{\mu_0-c}{-v_b}\m\lambda_1^{**})+p(\frac{\mu_0-c}{-v_b}\m\lambda_1^{**})\\
+			\Pi_{S_0}(\mu_0) =&-K(\frac{c}{v_g})+\frac{cp}{v_g}+(1-\frac{c}{v_g})\left[-K(\frac{\mu_1^u(\mu_0)-c}{-v_b})+\frac{(\mu_1^u(\mu_0)-c)p}{-v_b}\right]
+			\end{align*}
+			\begin{enumerate}[i)]
+				\item $\mu_{1,2} \geq c - v_b\lambda_1^{**}$
+				
+				$\forall \mu_0 \in (\mu_{1,2}, \mu_{2,+}], \Pi_{S_0}(\mu_0) > \Pi_{S_0}(\mu_{1,2}) \geq \Pi_1(\mu_{1,2}) = \Pi_1(\mu_0)$.
+				
+				\item $\mu_{1,2} < c - v_b\lambda_1^{**}$
+				
+				$\forall \mu_0 \in [\mu_{1,2}, c - v_b\lambda_1^{**}]$,
+				\begin{align*}
+				\frac{d \Pi_1(\mu_0)}{d \mu_0} =&K'(\frac{\mu_0-c}{-v_b})\frac{1}{v_b}-\frac{p}{v_b}\\
+				\frac{d \Pi_{S_0}(\mu_0)}{d \mu_0} =&K'(\frac{\mu_1^u(\mu_0)-c}{-v_b})\frac{1}{v_b} - \frac{p}{v_b} > \frac{d \Pi_1(\mu_0)}{d \mu_0}
+				\end{align*}
+				So, $\Pi_{S_0}(\mu_0) \geq \Pi_1(\mu_0)$ and the inequality is strict when $\mu_0 > \mu_{1,2}$. $\Pi_{S_0}(c - v_b\lambda_1^{**}) > \Pi_1(c - v_b\lambda_1^{**})$. $\forall \mu_0 \in [c - v_b\lambda_1^{**}, \mu_{2,+}], \Pi_{S_0}(\mu_0) \geq \Pi_{S_0}(c - v_b\lambda_1^{**}) > \Pi_1(c - v_b\lambda_1^{**}) = \Pi_1(\mu_0)$.
+			\end{enumerate}
+			In sum, $\forall \mu_0 \in (\mu_{1,2}, \mu_{2,+}],~\Pi_{S_0}(\mu_0) > \Pi_1(\mu_0)$.
+			
+			
+		\end{enumerate}
+		
+		
+		
+		
+		
+	\end{enumerate}
+	
+	One can see that the optimal $S_+$ strategy always generates a strictly higher (and strictly positive) sender surplus than the optimal 1-period strategy. Therefore, the sender always provides information in both periods when the $S_+$ strategy is feasible.\footnote{But the optimal 2-period strategy may be either $S_+$ or the $S_0$ strategy.} By Lemma \ref{trans2S_+}, the $S_+$ strategy is feasible iff $\mu_0 > 2c-v_b\lambda_1^{**}$ and $\mu_0 \geq \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}$ when $c < v_g\lambda_1^{**}$. Hence, together with the above results on the $S_0$ strategy, there exists $\mu_{1,2} \in [\frac{2v_g-c}{(v_g)^2}c, 2c-v_b\lambda_1^{**} \M \frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c}]$ such that the sender does not provide information if $\mu_0 < \mu_{0,1}$, provides information in one period if $\mu_0 \in [\mu_{0,1},\mu_{1,2})$, and provides information in both periods if $\mu_0 > \mu_{1,2}$.
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{strategy2cl}]
+	
+	~
+	\begin{enumerate}[(1)]
+		\item High Search Cost ($v_g \lambda_1^{**} \leq c < \widehat{c}$)
+		
+		It has been shown in the proof of Proposition \ref{strategy2p_smooth}. Since the optimal strategy does not depend on the prior, the sender's payoff does not depend on the prior either.
+		
+		\item Low Search Cost ($c \leq \tilde{c} = v_g K'^{-1}\left[\frac{K(\lambda_1^{**})}{\lambda_1^{**}}\right]$)
+		
+		\vspace{-25pt}
+		\begin{align*}
+		\text{F.O.C. of \eqref{Pb}} \ra& K'(\lambda_0^{**}) = K(\lambda_1^{**}) + p(1-\lambda_1^{**})\\
+		\ra & \lambda_1^{**} K'(\lambda_0^{**}) - K(\lambda_1^{**}) =(1-\lambda_1^{**})\left[ -K(\lambda_1^{**})+p\lambda_1^{**}\right] > 0\\
+		\ra& K'(\lambda_0^{**}) > \frac{K(\lambda_1^{**})}{\lambda_1^{**}} = K'(\frac{\tilde{c}}{v_g})\\
+		\ra&\lambda_0^{**} > \frac{\tilde{c}}{v_g}\\
+		\ra& \tilde{c} < v_g\lambda_0^{**} < v_g\lambda_1^{**}
+		\end{align*}
+		We now compare the optimal sender surplus between the solution to \eqref{P2S_+} and the solution to \eqref{P2S_0}, and show that the optimal $S_0$ strategy is always preferred to the optimal $S_+$ strategy when both types of strategy are feasible. 
+		\begin{proposition}\label{comparisonS_+S_0}
+			Suppose $c \leq \tilde{c}$ and $\mu_0 < \widehat{\mu_0}$. The sender uses the $S_0$ strategy when she provides information in both periods. 
+		\end{proposition}
+		\begin{proof}
+			$\forall \mu_0 < \widehat{\mu_0}$ such that $S_0$ ($S_+$) strategy is feasible, denote the optimal sender surplus by $\Pi_{S_0}(\mu_0)$ ($\Pi_{S_+}(\mu_0)$).
+			
+			\begin{enumerate}[i)]
+				\item $\mu_0' := \frac{(v_g-c)(c-v_b\lambda_1^{**})+c}{v_g}\leq \mu_0 < \widehat{\mu_0}$
+				
+				$\frac{(v_g-c)(c-v_b\lambda_1^{**})+c}{v_g}\leq \mu_0 \lra \widehat{\mu_1}(\mu_0) \leq c-v_b\lambda_1^{**}$. According to Proposition \ref{strategy2S_+}, $(\lambda_{0,S_+},\mu_{1,S_+}) = (\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c},c-v_b\lambda_1^{**})$ gives $\Pi_{S_+}(\mu_0)$. $\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \m c-v_b\lambda_1^{**} \right]$ in \eqref{P2S_0''} and $\frac{(v_g-c)(c-v_b\lambda_1^{**})+c}{v_g}\leq \mu_0 \lra \frac{v_g\mu_0-c}{v_g-c} \geq c-v_b\lambda_1^{**}$. Consider $(\lambda_0, \mu_1) = (\frac{\mu_0 - \mu_1 - c}{-v_b-\mu_1},c-v_b\lambda_{1}^{**})$, which satisfies the costraints in \eqref{P2S_0''} and is identical to $(\lambda_{0,S_+},\mu_{1,S_+})$. So, $\Pi_{S_0}(\mu_0) \geq \Pi_{S_+}(\mu_0)$.
+				
+				\item $\mu_0 < \mu_0'$
+				
+				$\mu_0 < \mu_0' \lra \widehat{\mu_1}(\mu_0) > c-v_b\lambda_1^{**}$. According to Proposition \ref{strategy2S_+}, $(\lambda_{0,S_+},\mu_{1,S_+}) = (\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c},\widehat{\mu_1}(\mu_0))$ gives $\Pi_{S_+}(\mu_0)$.	One can verify that $\frac{v_g\mu_0'-c}{v_g-c} = c-v_b\lambda_1^{**}$,  $\frac{\mu_0'-2c+v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c} = \frac{c}{v_g}\leq \lambda_0^{**}$. So, $\mu_0' \leq \widehat{\mu_0}$, which implies that $\lambda_{0,S_+}(\mu_0') \leq \lambda_0^{**}$.
+				
+				Consider $\mu_0$ such that both $S_0$ and $S_+$ strategies are feasible. Let $\mu_1^u(\mu_0) := \frac{v_g\mu_0-c}{v_g-c}$.
+				\begin{align*}
+				\Pi_{S_+}(\mu_0) =& -K(\lambda_{0,S_+}(\mu_0))+p\lambda_{0,S_+}(\mu_0) +(1-\lambda_{0,S_+}(\mu_0))[-K(\lambda_1^{**})+p\lambda_1^{**}]\\
+				\Pi_{S_0}(\mu_0)\geq \underline{\Pi}_{S_0}(\mu_0):=&-K(\frac{c}{v_g})+\frac{cp}{v_g}+(1-\frac{c}{v_g})\left[-K(\frac{\mu_1^u(\mu_0)-c}{-v_b})+\frac{(\mu_1^u(\mu_0)-c)p}{-v_b}\right]
+				\end{align*}
+				
+				
+				\begin{lemma}\label{lambda01comparison}
+					$\frac{\mu_1^u(\mu_0)-c}{-v_b} \geq \lambda_{0,S_+}(\mu_0)$, $\forall \mu_0 < \mu_0'$.
+				\end{lemma}
+				\begin{proof}			
+					$\frac{d}{d \mu_0} [\frac{\mu_1^u(\mu_0)-c}{-v_b}] = \frac{v_g}{-v_b(v_g-c)}$, $\frac{d}{d \mu_0} [\lambda_{0,S_+}(\mu_0)] = \frac{1}{-v_b(1-\lambda_1^{**})-c}$. 
+					
+					$\frac{d}{d \mu_0} [\frac{\mu_1^u(\mu_0)-c}{-v_b}] \leq \frac{d}{d \mu_0} [\lambda_{0,S_+}(\mu_0)] \lra c(-2v_b-1)\leq -v_b v_g\lambda_1^{**} \hfill (*)$
+					
+					If $v_b \geq -1/2$, $(*)$ always holds. If $(-1<) ~v_b < -1/2$, we have that $\frac{-v_b}{-2v_b-1} \geq 1 \ra c \leq v_g\lambda_1^{**}\leq \frac{-v_bv_g}{-2v_b-1}\lambda_1^{**} \ra (*)$ also holds. So, $\frac{d}{d \mu_0} [\frac{\mu_1^u(\mu_0)-c}{-v_b}] \leq \frac{d}{d \mu_0} [\lambda_{0,S_+}(\mu_0)]$, $\forall \mu_0 < \mu_0'$. Note that $\frac{\mu_1^u(\mu'_0)-c}{-v_b} = \lambda_{1}^{**} > \lambda_{0}^{**} \geq \lambda_{0,S_+}(\mu'_0)$. This concludes the proof.
+				\end{proof}
+				
+				Now we calculate the increasing rate of the sender surplus as a function of $\mu_0$:
+				\small
+				\begin{align*}
+				\frac{d \Pi_{S_+}(\mu_0)}{d \mu_0} =&\frac{K'(\lambda_{0,S_+}(\mu_0))-K(\lambda_1^{**})+\frac{cp}{v_b}}{v_b(1-\lambda_1^{**})+c}-\frac{p}{v_b}\\
+				\frac{d \underline{\Pi}_{S_0}(\mu_0)}{d \mu_0} :=&\frac{K'(\frac{\mu_1^u(\mu_0)-c}{-v_b})}{v_b} - \frac{p}{v_b}\\
+				\frac{d \Pi_{S_+}(\mu_0)}{d \mu_0} \geq \frac{d \underline{\Pi}_{S_0}(\mu_0)}{d \mu_0} \lra&~ \frac{K'(\frac{\mu_1^u(\mu_0)-c}{-v_b})}{-v_b} + \frac{K(\lambda_1^{**})-\frac{cp}{v_b}}{-v_b(1-\lambda_1^{**})-c} \geq \frac{K'(\lambda_{0,S_+}(\mu_0))}{-v_b(1-\lambda_1^{**})-c} \tag{$\star$}\label{bigstar}
+				\end{align*}
+				%\vspace{-20pt}
+				% reversed order of the actual process of coming up the proof!
+				\begingroup
+				\allowdisplaybreaks
+				\begin{align*}
+				&c \leq \tilde{c} = v_g K'^{-1}\left[\frac{K(\lambda_1^{**})}{\lambda_1^{**}}\right]\\ 
+				\lra&K(\lambda_1^{**}) \geq \lambda_1^{**} K'(\frac{c}{v_g})\\
+				\ra& -v_b\left[K(\lambda_1^{**})-\frac{cp}{v_b}\right] \geq (c-v_b \lambda_1^{**}) K'(\frac{c}{v_g})    \left(c\leq v_g \lambda_1^{**} \ra K'(\frac{c}{v_g}) \leq K'(\lambda_1^{**}) = p\right)\\
+				\ra& -v_b\left[K(\lambda_1^{**})-\frac{cp}{v_b}\right] \geq (c-v_b \lambda_1^{**}) K'(\lambda_{0,S+}(\mu_0))   \left(\lambda_{0,S+}(\mu_0) < \lambda_{0,S+}(\mu_0') = \frac{c}{v_g}\right)\\
+				\lra&\frac{K'(\lambda_{0,S+}(\mu_0))}{-v_b} + \frac{K(\lambda_1^{**})-\frac{cp}{v_b}}{-v_b(1-\lambda_1^{**})-c} \geq \frac{K'(\lambda_{0,S_+}(\mu_0))}{-v_b(1-\lambda_1^{**})-c}\\
+				\overset{Lemma \ref{lambda01comparison}}{\ra}&\frac{K'(\frac{\mu_1^u(\mu_0)-c}{-v_b})}{-v_b} + \frac{K(\lambda_1^{**})-\frac{cp}{v_b}}{-v_b(1-\lambda_1^{**})-c} \geq \frac{K'(\lambda_{0,S_+}(\mu_0))}{-v_b(1-\lambda_1^{**})-c}\\
+				\overset{\eqref{bigstar}}{\lra}&\frac{d \Pi_{S_+}(\mu_0)}{d \mu_0} \geq \frac{d \underline{\Pi}_{S_0}(\mu_0)}{d \mu_0}
+				\end{align*}
+				\endgroup
+				\normalsize One can verify that $\lambda_{0,S_+}(\mu_0') = \frac{c}{v_g}$, $\frac{\mu_1^u(\mu_0')-c}{-v_b} = \lambda_1^{**}$. So, $\Pi_{S_+}(\mu_0') = \underline{\Pi}_{S_0}(\mu_0')$. Therefore, $\underline{\Pi}_{S_0} \geq \Pi_{S_+}(\mu_0)$. $\Pi_{S_0}(\mu_0)\geq \underline{\Pi}_{S_0} \ra	\Pi_{S_0}(\mu_0) \geq \Pi_{S_+}(\mu_0)$.
+			\end{enumerate}
+			
+			Now we show that the $S_0$ strategy is feasible whenever the $S_+$ strategy is feasible, which concludes the proof of Proposition \ref{comparisonS_+S_0}.
+			\begin{lemma}\label{S_+S_0}
+				Suppose $c < v_g\lambda_1^{**}$. For any $\mu_0$ such that the $S_+$ strategy is feasible, the $S_0$ strategy is also feasible.
+			\end{lemma}
+			\begin{proof}
+				Suppose there exists $\mu_0$ such that the $S_+$ strategy is feasible while the $S_0$ strategy is not feasible. Then, $2c-v_b\lambda_1^{**} < \frac{2v_g-c}{(v_g)^2}$ and $\frac{(2-\lambda_1^{**})c}{v_g(1-\lambda_1^{**})+c} < \frac{2v_g-c}{(v_g)^2}$, which is equivalent to $\lambda_1^{**} < \frac{c^2}{v_b(v_g)^2}+\frac{2c}{v_g}$ and $c > v_g\lambda_1^{**}$, which is not possible as we assumed that $c < v_g\lambda_1^{**}$.
+			\end{proof} 
+		\end{proof}	
+		\vspace{-15pt}
+		Proposition \ref{comparisonS_+S_0} tells us that we can limit our attention to the $S_0$ strategy when $c \leq \tilde{c}$. Proposition \ref{strategy2S_0} has characterized the optimal $S_0$ strategy, which implies that the sender's payoff strictly increases in the prior belief.
+	\end{enumerate} 
+\end{proof}
+
+
+\begin{proposition}\label{strategyI}\textbf{(Comparative Statics W.r.t. the Prior Belief When the Search Cost Is Intermediate)}
+	When the search cost is intermediate, $v_g\lambda_0^{**} < c < v_g\lambda_1^{**}$, and the sender provides information in both periods. There exists $\mu_{2,+}\in [\frac{2v_g-c}{(v_g)^2}c,\widehat{\mu_0})$ and $\mu_{2,0} \in [\frac{2v_g-c}{(v_g)^2}c,\mu_{2,+}]$. The probability of a positive signal in the first period, $\lambda_{0}^*$, remains the same when $\mu_0 < \mu_{2,0}$ and strictly increases in the prior when $\mu_0 > \mu_{2,+}$. The probability of a positive signal in the second period, $\lambda_{1}^*$, strictly increases in the prior when $\mu_0 < \mu_{2,0}$ and remains the same when $\mu_0 > \mu_{2,+}$. The belief after observing a positive signal in the second period, $\bar{\mu}_1^*$, strictly decreases in the prior when $\mu_0 < \mu_{2,0}$ or $\mu_0 > \mu_{2,+}$. A positive signal always fully reveals the state in the first period, $\bar{\mu}_0^* \equiv 1$.
+\end{proposition}
+
+When the expected receiver surplus in the second period is zero (the $S_0$ strategy), the minimum amount of information for the receiver to search in the first period is already too high. Under the $S_+$ strategy, the receiver anticipates that the sender will provide favorable information in the second period, which relaxes the first-period participation constraint. Therefore, the receiver is willing to search even if the sender provides less information in the first period. This benefits the sender. However, the $S_+$ strategy has the disadvantage of inducing higher expected receiver search costs.
+
+When the prior is low, the disadvantage of the $S_+$ strategy dominates the advantage. The sender prefers the $S_0$ strategy to the $S_+$ strategy. She faces information over-provision in the first period and under-provision in the second period. In the first period, she provides the minimum amount of information for the receiver to search. So, the probability of a positive signal in the first period, $\lambda_0^*$, does not depend on the prior. In the second period, she provides the maximum amount of information. More frequent positive signals are feasible when the prior is higher. Even if the receiver becomes less certain about the state being good after observing a positive signal, he will still search as long as the likelihood of receiving a positive signal and earning a strictly positive surplus increases. In equilibrium, the sender trades off the precision of a positive signal for frequency as the prior increases. 
+
+When the prior is high, the advantage of the $S_+$ strategy dominates the disadvantage. The sender prefers the $S_+$ strategy to the $S_0$ strategy. She faces information under-provision in the first period and no distortion in the second period. In the first period, she provides the maximum amount of feasible information, which strictly increases in the prior. In the second period, she provides the optimal amount of information, which does not depend on the prior. When the prior increases, the participation constraint in the first period is relaxed. To persuade the receiver to search in the first period, the sender can provide information less favorable to the receiver in the second period. She trades off the precision of a positive signal in the second period for the frequency of positive signals in the first period. So, the belief after observing a positive signal, $\bar{\mu}_1^*$, strictly decreases in the prior. The optimal strategy is discontinuous when the sender switches the types of strategy (as illustrated in Figure \ref{ci1}).
+
+\begin{proof}[Proof of Proposition \ref{strategyI}]
+	
+	We compare the sender surplus between the solution to \eqref{P2S_+} and the solution to \eqref{P2S_0}. The following result shows that the optimal $S_+$ strategy generates a strictly higher sender surplus than the optimal $S_0$ strategy when the prior is high.
+	\begin{lemma}\label{ci+surplus}
+		If $v_g\lambda_0^{**} < c < v_g\lambda_1^{**}$, the receiver gets strictly positive surplus in the second period when $\mu_0$ is close to $\widehat{\mu_0}$.
+	\end{lemma}
+	\begin{proof}
+		According to Proposition \ref{strategy2S_+}, the sender achieves the benchmark payoff $-K(\lambda_0^{**}) + p \lambda_0^{**} + (1-\lambda_0^{**}) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]$ when $\mu_0 \rightarrow \widehat{\mu_0}$ by the $S_+$ strategy. According to Lemma \ref{bindingi}, the sender surplus of the $S_0$ strategy is $\leq -K(\frac{c}{v_g}) + \frac{cp}{v_g} + (1-\frac{c}{v_g}) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] < -K(\lambda_0^{**}) + p \lambda_0^{**} + (1-\lambda_0^{**}) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]$ as $\lambda_0^{**} < \frac{c}{v_g} = \lambda_0$. The difference of the benchmark sender surplus and the sender surplus of the $S_0$ strategy is larger than a strictly positve constant. So, when $\mu_0 \rightarrow \widehat{\mu_0}$, the $S_+$ strategy gives the sender strictly higher payoff. $v_g\lambda_0^{**} < c \lra \widehat{\mu_1}(\widehat{\mu_0}) > c-v_b\lambda_1^{**} \ra$ the receiver gets strictly positive surplus from the $S_+$ strategy when $\mu_0 \rightarrow \widehat{\mu_0}$. Thus, the receiver gets strictly positive surplus in the second period in equilibrium when $\mu_0 \rightarrow \widehat{\mu_0}$. Continuity of the optimal strategy and sender surplus then implies that there exists a neighborhood $[\widehat{\mu_0}-\delta,\widehat{\mu_0}]$ for some $\delta > 0$ such that the receiver gets strictly positive surplus in the second period in equilibrium when $\mu_0\in [\widehat{\mu_0}-\delta,\widehat{\mu_0}]$.
+	\end{proof}
+
+	When $\frac{c}{v_g} \leq \mu_0 < \mu_{1,2}$, the sender provides information in one period. When $\mu_{1,2} \leq \mu_0 < \widehat{\mu_0}$, the sender provides information in both periods. Proposition \ref{strategy2S_+}, and Lemma \ref{bindingi} imply the explicit form of the optimal strategy. When $\mu_{1,2} \leq \mu_0 < \mu_{2,+}$, $(\lambda_0^*,\bar{\mu}_0^*) = (\frac{c}{v_g},1)$, $(\lambda_1^*,\bar{\mu}_1^*) = (\frac{v_g(\mu_0-c)-c(1-c)}{p(v_g-c)}, \frac{[v_g\mu_0-c]p}{v_g(\mu_0-c)-c(1-c)})$, $\mu_1^* = \frac{v_g\mu_0-c}{v_g-c} < c-v_b\lambda_1^{**}$. The receiver gets zero surplus in each period. When $\mu_{2,+} \leq \mu_0 < \widehat{\mu_0}$, $(\lambda_0^*,\bar{\mu}_0^*) = (\frac{\mu_0-2c +v_b \lambda_1^{**}}{-v_b(1-\lambda_1^{**})-c},1)$, $(\lambda_1^*,\bar{\mu}_1^*)=(\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}})$, $\mu_1^* = \widehat{\mu_1}(\mu_0) > c-v_b\lambda_1^{**}$, where $\widehat{\mu_1}(\mu_0) = \frac{2c-v_b\lambda_1^{**}-(1+c-v_b\lambda_1^{**}+v_b)\mu_0}{c-v_b-\mu_0}$. The receiver gets strictly positive surplus in the second period and zero total surplus. 
+\end{proof}
+
+
+\begin{proof}[Proof of Propostion \ref{cs_sender_cost}]
+	When the search cost is high, $v_g\lambda_1^{**} \leq c < \widehat{c}$, the optimal strategy of the sender is  $(\lambda_t^*,\bar{\mu_t}^*)=(\frac{c}{v_g},1)$ according to Proposition \ref{strategy2cl}, which does not depend on $\eta$.
+	% omit ,t=0,1
+	
+	When the search cost is low, $c < \tilde{c} < v_g\lambda_0^{**}$. The boundary solution does not depend on $\eta$. Consider the interior solution to \eqref{P2S_0}, we have: $\eta \tilde{K}(\frac{\mu_1-c}{-v_b})+\frac{p-\mu_1}{p} \eta \tilde{K}'(\frac{\mu_1-c}{-v_b})-\eta \tilde{K}'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})+c=0$. The LHS strictly increases in $\mu_1$ and strictly decreases in $\eta$. So, $\eta \uparrow \ra \mu_1^* \uparrow \ra \lambda_1^{*} = \frac{\mu_1^*-c}{p} \uparrow,  \lambda_0^* = \frac{\mu_0-\mu_1^*-c}{p-\mu_1^*} \downarrow$.
+\end{proof}
+
+
+
+\begin{proposition}\label{estrategy1p}\textbf{(Efficient Strategy in the Last Period)}
+	At the second period, the social planner does not provide information when $\mu_1 < \mu_{0,1}$. When $\mu_1 \geq \mu_{0,1}$, the efficient signal fully reveals the state when a positive signal arrives, $\bar{\mu}_{1,e} = 1$; the probability of a positive signal, $\lambda_{1,e}$, depends on the search cost:
+	\begin{enumerate}
+		\item if $c \geq v_g \lambda_1^{**}$, then there exists a unique $\widehat{\widehat{c}} \in \left(v_g\lambda_1^{**}, \mu_1v_g\right]$ such that the social planner does not provide information if $c > \widehat{\widehat{c}}$ and $\lambda_{1,e} = 
+		\frac{c}{v_g} \M (\tilde{\lambda_1}\m \mu_1)$ if $c \leq \widehat{\widehat{c}}$.
+		
+		\item if $c \in \left[\mu_1 +v_b\lambda_1^{**},v_g\lambda_1^{**} \right)$, then $\lambda_{1,e} = \mu_1$.
+		
+		\item if $c < \mu_1 +v_b\lambda_1^{**} \m v_g \lambda_1^{**}$, then $\lambda_{1,e} = \tilde{\lambda_1}\m \mu_1$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof of Proposition \ref{estrategy1p}]
+	We first introduce a benchmark problem, in which the receiver is forced to participate and the social planner can generate any signal that fully reveals the state when a positive signal arrives. The social planner chooses the information structure to maximize total welfare. We will use the solution throughout the remaining section.
+	\begin{align}\tag{$E_b$} \label{ePb}
+	& \max\limits_{\lambda_1} -K(\lambda_1) + \lambda_1\nonumber
+	\end{align}
+	
+	\begin{lemma}\label{eunconstrained}
+		The optimal solution to \eqref{ePb} exists and is unique. Denote it by $\tilde{\lambda_1}$. The objective function under $\tilde{\lambda_1}$ is strictly positive. $\tilde{\lambda_1}$ does not depend on the search cost $c$ and $\tilde{\lambda_1} > \lambda_1^{**}$, the solution to the payoff-maximizing benchmark problem.
+	\end{lemma}
+	\begin{proof}
+		All the results follow from the same argument as the proof of Lemma \ref{unconstrained} except $\tilde{\lambda_1} > \lambda_1^{**}$. The F.O.C.'s imply $K'(\tilde{\lambda_1}) = 1 > p = K'(\lambda_1^{**}) \ra \tilde{\lambda_1} > \lambda_1^{**}$. 
+	\end{proof}
+
+	As the social planner wants to maximize the total welfare, she always wants to make the precision of the signal, $\bar{\mu_1}$, as high as possible (subject to the feasibility constraint) given $\mu_1$ and $\lambda_1$, to increase receiver surplus while holding sender surplus fixed. So, if the social planner provides information, then $\bar{\mu_1} = \frac{\mu_1}{\lambda_1} \m 1$.
+	\begin{enumerate}
+		\item if $c \geq v_g \lambda_1^{**}~(i.e.~ \lambda_1^{**} \leq \frac{c}{v_g})$, then $TS =  \begin{cases}
+		-K(\lambda_1)+\mu_1-c,~if~\lambda_1\geq \mu_1\\
+		-K(\lambda_1)+\lambda_1-c,~if~\lambda_1< \mu_1\\
+		\end{cases}\ra \lambda_{1,e} = \frac{c}{v_g}\M(\tilde{\lambda_1} \m \mu_1)$ when the social planner provides information. The social planner woiuld provide information if the total surplus is non-negative. Similar to the proof of Proposition \ref{strategy1p}, one can show that there exists a unique $\widehat{\widehat{c}} \in \left(v_g\lambda_1^{**}, \mu_1v_g\right]$ such that the social planner does not provide information iff $c > \widehat{\widehat{c}}$. Moreover,  if $\widehat{\widehat{c}} \geq (1-p)\tilde{\lambda_1}$, $\lambda_{1,e} = \frac{c}{1-p} \ra \bar{\mu}_{1,e} = 1 \ra TS = -K(\lambda_{1,e}) + p \lambda_{1,e} \ra \widehat{\widehat{c}} = \widehat{c}$.
+		
+		\item if $c \in \left[\mu_1-p\lambda_1^{**},v_g\lambda_1^{**} \right)~(i.e.~ \lambda_1^{**} \geq \frac{\mu_1-c}{-v_b} > \frac{c}{1-p})$, then by the previous argument, $\lambda_{1,e} = \frac{c}{1-p}\M(\tilde{\lambda_1} \m \mu_1) = \mu_1$.
+		
+		\item if $c < \mu_1-p\lambda_1^{**} \m (1-p) \lambda_1^{**} ~(i.e.~ \lambda_1^{**} \in \left(\frac{c}{1-p}, \frac{\mu_1-c}{-v_b}\right))$, then the total welfare $TS =  \begin{cases}
+		-K(\lambda_1)+\mu_1-c,~if~\lambda_1\geq \mu_1\\
+		-K(\lambda_1)+\lambda_1-c,~if~\lambda_1< \mu_1\\
+		\end{cases}\ra \lambda_{1,e} = \tilde{\lambda_1} \m \mu_1$.
+	\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{estrategy2p}]
+	
+	When$(1-p)\tilde{\lambda_1} \leq c \leq \widehat{\widehat{c}}$, the constrained program of the social planner is:
+	\begin{align}\tag{$E_{2H}$} \label{eP2cl}
+	& \max -K(\lambda_0) + \lambda_0 \bar{\mu_0} - c + (1-\lambda_0) \left[-K(\frac{c}{1-p})+\frac{cp}{1-p}\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0},\mu_1 \geq \frac{c}{1-p} \nonumber
+	\end{align}
+	Using similar methods of finding the optimal sender strategy in the main text, one can show that the solution to \eqref{eP2cl} is $(\lambda_{0,e}, \lambda_{1,e}) = (\frac{c}{1-p}, \frac{c}{1-p})$. Therefore, there is no information distortion.  
+	
+	When $v_g\lambda_1^{**} \leq c < (1-p)\tilde{\lambda_1} \m \widehat{\widehat{c}}$, the constrained program of the social planner is:
+	\begin{align}\tag{$E_{2I}$} \label{eP2I}
+	& \max -K(\lambda_0) + \lambda_0 \bar{\mu_0} - c + (1-\lambda_0) \left[-K(\tilde{\lambda_1} \m \mu_1)+\tilde{\lambda_1} \m \mu_1-c\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0},\mu_1 \geq \frac{c}{1-p} \nonumber
+	\end{align}
+	Using similar methods of finding the optimal sender strategy in the main text, one can show that the solution to \eqref{eP2I} is $(\lambda_{0,e}, \lambda_{1,e}) = (\frac{c}{1-p}, \frac{c}{1-p})$. Therefore, there is no information distortion.
+	
+	When $c < v_g\lambda_1^{**}$, one can see that we can restrict $\mu_1$ to be less than or equal to $\tilde{\lambda_1}$ without loss of generality. The constrained program of the social planner is:
+	\begin{align}\tag{$E_{2S_0}$} \label{eP2S_0}
+	& \max -K(\lambda_0) + \lambda_0 \bar{\mu_0} - c + (1-\lambda_0) \left[-K(\mu_1)+\mu_1-c\right] \nonumber\\
+	\text{s.t. } &\eqref{IR_0},\eqref{F_0},\mu_1 \geq \frac{c}{1-p} \nonumber
+	\end{align}
+	Using similar methods of finding the optimal sender strategy in the main text, one can show that the solution to \eqref{eP2S_0} is $(\lambda_{0,e}, \lambda_{1,e}) = (\frac{\mu_0-\frac{c}{1-p}-c}{p-\frac{c}{1-p}}, \frac{c}{1-p})$. Therefore, the sender provides too much information (relative to the efficient solution) in the second period and too little information in the first period.
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{dch}]
+	One can see that if the expected surplus of the receiver in the second period is 0 in the optimal solution to \eqref{P2dc}, then $(\lambda_{1}^*,\bar{\mu}_1^*)$ solves \eqref{P1}. Otherwise, the sender can strictly increase the payoff by using the same $(\lambda_{0}^*,\bar{\mu}_0^*)$ and replacing $(\lambda_{1}^*,\bar{\mu}_1^*)$ by the optimal solution to \eqref{P1}, holding the same $\mu_1$. Hence, if dynamic commitment power strictly increases the sender surplus, the solution to \eqref{P2dc} must satisfy: $\mathbb{E}[\text{receiver surplus at }t=1] = (1-\lambda_0) [\lambda_1(\bar{\mu_1}+v_b)-c] > 0$. Denote the optimal sender surplus when the sender does not have dynamic commitment power by $\Pi_{wo}$. The corresponding optimal strategy of the sender is $(\lambda_t^*,\bar{\mu_t}^*)=(\frac{c}{v_g},1)$ according to Proposition \ref{strategy2cl}. Consider the following strategy: $(\lambda_{0},\bar{\mu_0},\lambda_{1},\bar{\mu_1}) = (\frac{c-\delta v_g}{(1-\delta) v_g},1,\frac{c}{v_g}+\delta,1)$. Denote the corresponding sender surplus by $\Pi(\delta)$. One can verify that it is feasible when $\delta > 0$ is small and the sender has dynamic commitment power, and leads to a payoff no larger than the optimal sender surplus with dynamic commitment (denote it by $\Pi_w$). 
+	
+	\begin{align*}
+	\Pi(\delta) =& -K\left[\frac{c-\delta v_g}{(1-\delta) v_g}\right] + p \frac{c-\delta v_g}{(1-\delta) v_g} + \left[1-\frac{c-\delta v_g}{(1-\delta) v_g}\right] \left[-K(\frac{c}{v_g}+\delta)+\frac{cp}{v_g}+\delta p\right]\\
+	\frac{d \Pi(\delta)}{d \delta} =& \frac{v_g-c}{(1-\delta)^2 v_g} \left[I_1(\delta)+I_2(\delta)\right]\\
+	\text{, where }& I_1(\delta) = K'\left[\frac{c-\delta v_g}{(1-\delta) v_g}\right] - (1-\delta)K'(\frac{cp}{v_g}+\delta)\\
+	& I_2(\delta) = \frac{cp}{v_g} - K(\frac{c}{v_g}+\delta)
+	\end{align*}
+	
+	$I_1(\delta) \rightarrow 0,~ I_2(\delta) \rightarrow \frac{cp}{v_g} - K(\frac{c}{v_g}) > 0 \text{ as } \delta \rightarrow 0.$ Therefore, $\exists \widehat{\delta} > 0~s.t.~\frac{d \Pi(\delta)}{d \delta} > 0,~ \forall \delta \in(0,\widehat{\delta}]$. Since $\Pi(\delta)$ is continuous in $\delta$ and $\Pi(0) = \Pi_{wo}$, we have $\Pi_w \geq \Pi(\delta) > \Pi_{wo},~ \forall \delta \in(0,\widehat{\delta}]$.
+	
+	We now show that the benefit of dynamic commitment power vanishes as the search cost approaches zero in several steps. Denote the optimal sender surplus when the sender has (does not have) dynamic commitment power and the search cost is c by $\Pi_{w,c}$ ($\Pi_{wo,c}$). Note that $\Pi_{w,c} \geq \Pi_{wo,c},\forall c \geq 0$.
+	
+	\begin{lemma}
+		%Suppose the sender provides information in both periods
+		When the search cost is zero, the optimal sender surpluses with and without dynamic commitment power are the same, $\Pi_{w,0} = \Pi_{wo,0}$.
+	\end{lemma}
+	\begin{proof}
+		Suppose the sender provides information in both periods. When the search cost is 0 and the sender uses one-shot signals, one can see that \eqref{IR_0} and \eqref{IR_1} are equivalent to $\bar{\mu}_0 \geq - v_b$ and $\bar{\mu}_1 \geq - v_b$. Therefore, even if the receiver obtains strictly positive surplus in the second period, the first-period participation constraint is not relaxed. Hence, the second-period strategy of the sender maximizes her second-period payoff in the solution to the program with dynamic commitment, \eqref{P2dc}, and thus satisfies the constraints of the program without dynamic commitment, \eqref{P2}. To show that dynamic commitment power does not improve the sender's payoff when $c = 0$, we just need to show that iterative signals are not optimal when the sender has dynamic commitment power.\footnote{We have shown in Proposition \ref{iterative_one-shot} that iterative signals are not optimal when the sender does not have dynamic commitment power.} When $c = 0 < v_g \lambda_1^{**}$ and $\mu_1 > c - v_b \lambda_1^{**} = - v_b \lambda_1^{**}$, the optimal strategy with and without dynamic commitment power coincides, as $(\lambda^*_1,\bar{\mu}_1^*) =  (\lambda_1^{**},\frac{\mu_1}{\lambda_1^{**}}\m 1)$. In the proof of Proposition \ref{iterative_one-shot}, we have shown that iterative signals are not optimal. So, we just need to show that iterative signals are not optimal when $\mu_1 \leq - v_b \lambda_1^{**}$.
+		
+		If $\mu_0 \geq - v_b \lambda_1^{**}$, then $\mu_1 = \bar{\mu}_0 > \mu_0 \geq - v_b \lambda_1^{**}$. So, iterative signals are not optimal.
+		
+		If $\mu_0 < - v_b \lambda_1^{**}$, we have:
+		\begin{align*}
+		\Pi_1(\mu_0) =& -K(\frac{\mu_0}{-v_b})+\frac{\mu_0 p}{-v_b}\\
+		\Pi_{iter}(\mu_0) =& \max\limits_{\lambda_0, \mu_1} -K(\lambda_0) + \lambda_0 \left[-K(\frac{\mu_1}{-v_b})+\frac{\mu_1 p}{-v_b} \right]\\
+		\text{s.t. } &\eqref{IR_0_iter}, \eqref{IR_1_iter}, \eqref{F_0}, \eqref{F_1}, \mu_1 = \bar{\mu_0}
+		\end{align*}
+		Denote the optimal soution when the sender uses iterative signals by $(\tilde{\lambda_0}, \tilde{\mu_1})$. $\Pi_{iter}(\mu_0) \leq \Pi_1(\mu_0) \lra -K(\tilde{\lambda_0}) + \tilde{\lambda_0} \left[-K(\frac{\tilde{\mu_1}}{-v_b})+\frac{\tilde{\mu_1} p}{-v_b} \right] \leq -K(\frac{\mu_0}{-v_b})+\frac{\mu_0 p}{-v_b}$. To show that iterative signals are not optimal, it suffices to show that $-\tilde{\lambda_0} K(\frac{\tilde{\mu_1}}{-v_b})+\frac{\tilde{\lambda_0}\tilde{\mu_1} p}{-v_b} \leq -K(\frac{\mu_0}{-v_b})+\frac{\mu_0 p}{-v_b}$. Strict convexity of $K(\cdot) \ra \tilde{\lambda_0} K(\frac{\tilde{\mu_1}}{-v_b}) = \tilde{\lambda_0} K(\frac{\tilde{\mu_1}}{-v_b}) + (1-\tilde{\lambda_0}) K(0) \geq K(\frac{\tilde{\lambda_0} \tilde{\mu_1}}{-v_b})$. Thus, $-\tilde{\lambda_0} K(\frac{\tilde{\mu_1}}{-v_b}) \leq - K(\frac{\tilde{\lambda_0} \tilde{\mu_1}}{-v_b})$. It suffices to show that $- K(\frac{\tilde{\lambda_0} \tilde{\mu_1}}{-v_b}) +\frac{\tilde{\lambda_0}\tilde{\mu_1} p}{-v_b} \leq -K(\frac{\mu_0}{-v_b})+\frac{\mu_0 p}{-v_b}$, which hold because $\eqref{F_0} \ra \tilde{\lambda_0} \tilde{\mu_1} \leq \mu_0$ and we know from the F.O.C. that $-K(\lambda) + p \lambda$ strictly increases in $\lambda$ when $\lambda < \lambda_1^{**}$ (here, $\lambda \leq \frac{\mu_0}{-v_b} < \lambda_1^{**}$).
+	\end{proof}
+	We now make the following observation. Since $\Pi_{w,c} \geq \Pi_{wo,c},\forall c \geq 0$ and $\Pi_{w,0} = \Pi_{wo,0}$, we must have $\Pi_{wo,c} \rightarrow \Pi_{w,c}$ as $c \rightarrow 0$ if $\Pi_{wo,c} \rightarrow \Pi_{wo,0}$ as $c \rightarrow 0$.\footnote{One can easily show this observation formally by the triangle inequality.} The next result confirms that it is indeed the case and thus finishes the proof.
+	\begin{lemma}
+		$\Pi_{wo,c} \rightarrow \Pi_{wo,0}$ as $c \rightarrow 0$.
+	\end{lemma}
+	\begin{proof}
+		Proposition \ref{comparisonS_+S_0} shows that the optimal strategy is the $S_0$ strategy when the search cost is low. So, according to Lemma \ref{trans2S_0} and \ref{binding}, for any $c$ small enough, the sender's problem is:
+		\begin{align*}\tag{$P'''_{2S_0}$}
+		\Pi_{wo,c} =& \max\limits_{\mu_1} -K(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) + p~ \frac{\mu_0-\mu_1-c}{-v_b-\mu_1} + (1-\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \\
+		\text{s.t. } &\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right] 
+		\end{align*}
+		Denote the solution when the search cost is 0 by $\mu_{1,0}^*$. Define $\mu_{1,c}$ to be the closest value to $\mu_{1,0}^*$ among $\left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right]$ and denote the corresponding sender surplus by $\underline{\Pi}_{wo,c}$. One can see that $\underline{\Pi}_{wo,c} \leq \Pi_{wo,c}$. Since $\mu_{1,0}^* \in \left[0, \frac{v_g\mu_0}{v_g} \right]$, we have $\mu_{1,c} \rightarrow \mu_{1,0}^*$ as $c \rightarrow 0$. Therefore, $\underline{\Pi}_{wo,c} \rightarrow \Pi_{wo,0}$ as $c \rightarrow 0$. Since $\underline{\Pi}_{wo,c} \leq \Pi_{wo,c} \leq \Pi_{wo,0}$, we also have $\Pi_{wo,c} \rightarrow \Pi_{wo,0}$ as $c \rightarrow 0$.
+	\end{proof}	
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{discounting}]
+	When $c \geq \widehat{c}$, the sender does not provide information for any $\delta$.
+	\begin{enumerate}[(1)]
+		\item $v_g\lambda_1^{**} \leq c < \widehat{c}$
+		
+		By the same argument as the proof of Proposition \ref{strategy2cl}, one can see that the optimal strategy of the sender does not depend on $\delta$. For low prior, $\mu_0 \in [\frac{c}{v_g}, \frac{2 v_g-c}{(v_g)^2} c)$, the sender provides information in one period, $(\lambda^*,\bar{\mu}^*)=(\frac{c}{v_g},1)$. For high prior, $\mu_0 \geq \frac{2 v_g-c}{(v_g)^2} c$, the sender provides information in both periods, $(\lambda_t^*,\bar{\mu_t}^*)=(\frac{c}{v_g},1),t=0,1$.
+		
+		\item $c \leq \tilde{c}$
+		
+		The sender's problem can be divided into 2 cases:
+		\begin{align}\tag{$P_{2S_+}^\delta$} \label{P2S_+^delta}
+		& \max -K(\lambda_0) + p \lambda_0 + \delta (1-\lambda_0) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right] \nonumber\\
+		\text{s.t. } &\eqref{IR_0^delta},\eqref{F_0}, \mu_1\in [c - v_b \lambda_1^{**}, \lambda_1^{**}] \nonumber
+		\end{align}
+		\begin{align}\tag{$P_{2S_0}^\delta$} \label{P2S_0^delta}
+		& \max -K(\lambda_0) + p \lambda_0 + \delta (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+		\text{s.t. } &\eqref{IR_0^delta},\eqref{F_0}, \mu_1 \in [\frac{c}{v_g}, c - v_b \lambda_1^{**}]\nonumber
+		\end{align}
+		
+		
+		Consider the solution to \eqref{P2S_0^delta}. By the same argument as the proof of Lemma \ref{trans2S_0}, \eqref{P2S_0^delta} is equivalent to	\begin{align}\tag{$P_{2S_0}^{\delta'}$} \label{P2S_0^delta'}
+		& \max -K(\lambda_0) + p \lambda_0 + \delta (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] \nonumber\\
+		\text{s.t. } &\lambda_0 \in \left[\frac{\mu_0-\mu_1}{1-\mu_1}, \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}\right] \nonumber\\
+		&\mu_1\in \left[\frac{c}{v_g}, \frac{v_g\mu_0-c}{v_g-c} \right] \nonumber
+		\end{align} 
+		By arguments similar to the proof of Lemma \ref{binding}, $\lambda_0 \leq \frac{\mu_0-\mu_1-c}{-v_b-\mu_1}$ is binding 	for $\mu_0 < \widehat{\mu_0}$. Suppose that $\mu_1$'s constraints are not binding.
+
+		The Lagrangian is $\mathcal{L} = -K(\lambda_0) + p \lambda_0 + \delta (1-\lambda_0) \left[-K(\frac{\mu_1-c}{-v_b})+\frac{(\mu_1-c)p}{-v_b}\right] + \eta \left(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}-\lambda_0\right)~s.t.~\eta \geq 0, \eta \left(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}-\lambda_0\right) = 0$. F.O.C. $\ra$
+		\begin{align*}
+		\eta &= \delta(p-\mu_1)-\delta\frac{p-\mu_1}{p} K'(\frac{\mu_1-c}{-v_b})\\
+		&=-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1}) + p + \delta\left[K(\frac{\mu_1-c}{-v_b})-\mu_1+c\right]\\
+		\ra&\delta\left[K(\frac{\mu_1-c}{-v_b})+\frac{p-\mu_1}{p} K'(\frac{\mu_1-c}{-v_b})-p+c\right]-K'(\frac{\mu_0-\mu_1-c}{-v_b-\mu_1})+p=0 \tag{$*_\delta$}\label{star_delta}
+		\end{align*}
+		The sum of the first two terms of the LHS of \eqref{star_delta} strictly increases in $\delta$, and the LHS of \eqref{star_delta} strictly increases in $\mu_1$. So, the optimal $\lambda_0$ strictly decreases in $\delta$; the optimal $\mu_1$ and $\lambda_1$ strictly increase in $\delta$. When one of $\mu_1$'s constraints is binding, $\lambda_0$ and $\lambda_1$ does not depend on $\delta$.
+		
+		We finish the proof of this case by showing that the $S_0$ strategy dominates the $S_+$ strategy. Denote the sender surplus of the optimal $S_0$ ($S_+$) strategy when the discount factor is $\delta \in (0,1)$ by $\Pi_{S_0}(\delta)$ ($\Pi_{S_+}(\delta)$) and denote the corresponding optimal $S_0$ ($S_+$) strategy at time t by $\lambda_{t,S_0}(\delta)$ ($\lambda_{t,S_+}(\delta)$). We have:
+		\begingroup
+		\allowdisplaybreaks
+		\begin{align*}
+		\Pi_{S_0}(\delta) =& -K(\lambda_{0,S_0}(\delta)) + p \lambda_{0,S_0}(\delta) + \delta (1-\lambda_{0,S_0}(\delta)) \left[-K(\lambda_{1,S_0}(\delta))+p \lambda_{1,S_0}(\delta)\right]\\
+		\geq& -K(\lambda_{0,S_0}(1)) + p \lambda_{0,S_0}(1) + \delta (1-\lambda_{0,S_0}(1)) \left[-K(\lambda_{1,S_0}(1))+p \lambda_{1,S_0}(1)\right]\\
+		=& -K(\lambda_{0,S_0}(1)) + p \lambda_{0,S_0}(1) + (1-\lambda_{0,S_0}(1)) \left[-K(\lambda_{1,S_0}(1))+p \lambda_{1,S_0}(1)\right]\\
+		&-(1-\delta)(1-\lambda_{0,S_0}(1)) \left[-K(\lambda_{1,S_0}(1))+p \lambda_{1,S_0}(1)\right]\\
+		\overset{(\dagger)}{\geq}& -K(\lambda_{0,S_+}(1)) + p \lambda_{0,S_+}(1) + (1-\lambda_{0,S_+}(1)) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]\\
+		&-(1-\delta)(1-\lambda_{0,S_+}(1)) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]\\
+		=& -K(\lambda_{0,S_+}(1)) + p \lambda_{0,S_+}(1) + \delta (1-\lambda_{0,S_+}(1)) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]\\
+		\geq& -K(\lambda_{0,S_+}(\delta)) + p \lambda_{0,S_+}(\delta) + \delta (1-\lambda_{0,S_+}(\delta)) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]\\
+		=&~  \Pi_{S_+}(\delta)
+		\end{align*}
+		\endgroup
+		, where the inequality $(\dagger)$ holds because Proposition \ref{comparisonS_+S_0} implies that $-K(\lambda_{0,S_0}(1)) + p \lambda_{0,S_0}(1) + (1-\lambda_{0,S_0}(1)) \left[-K(\lambda_{1,S_0}(1))+p \lambda_{1,S_0}(1)\right] \geq -K(\lambda_{0,S_+}(1)) + p \lambda_{0,S_+}(1) + (1-\lambda_{0,S_+}(1)) \left[-K(\lambda_1^{**})+p \lambda_1^{**}\right]$ and we have $\lambda_{0,S_0}(1) \geq \lambda_{0,S_+}(1),~-K(\lambda_{1,S_0}(1))+p \lambda_{1,S_0}(1) \leq -K(\lambda_1^{**})+p \lambda_1^{**}$.
+	\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{infinite-period}]
+	%%%We first show that the receiver searches for at most $\lfloor \frac{v_g \mu_0}{c} \rfloor$ periods. 
+	~
+	\begin{enumerate}[(1)]
+		\item High search cost $v_g \lambda_1^{**} \leq c < \widehat{c}$
+		
+		Consider an arbitrary period $t$ in which the receiver takes action $G$. Suppose the belief at the beginning of period $t$ is $\mu_t$.\footnote{It is possible that there are more than one initial beliefs at the beginning of period $t$ if the receiver searches for information regardless of the signal realization in a previous period. In that case, $\mu_t$ is any one of them. We will show that the optimal information structure is one-shot. So, there is actually one initial belief in any period.} One can see that the receiver must take action $G$ after observing a positive signal and take action $B$ or $S$ after observing a negative signal in period $t$. Denote the sender's (receiver's) continuation value after the receiver observes a negative signal in period $t$ by $V_t$ ($W_t$). $V_t, W_t \geq 0$ and (weakly) increase in $\underline{\mu}_t$. The sender's problem in period $t$ is:
+		\begin{align*}
+		\max\limits_{\lambda_t, \bar{\mu_t}}& -K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t\\
+		s.t.~&\lambda_t (\bar{\mu_t} + v_b) + (1-\lambda_t) W_t \geq c \tag{$IR_t$} \\
+		& \lambda_t \bar{\mu_t} + (1-\lambda_t) \underline{\mu}_t = \mu_t \tag{$F_t$} \label{F_t}
+		\end{align*}
+		Denote the optimal $\lambda_t$ without constraints by $\lambda_{t,H}^{**}$. $\lambda_{t,H}^{**} = \argmax\limits_{\lambda_t} -K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t$. The F.O.C. of $-K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t \ra K'(\lambda_{t,H}^{**}) = p - V_t < p = K'(\lambda_1^{**}) \ra \lambda_{t,H}^{**} < \lambda_1^{**} \leq c/v_g$. For any information structure in which $\lambda_{t} > c/v_g$, by reducing $\lambda_{t}$ (and potentially increasing $\bar{\mu_t}$ to satisfy the participation constraint), the sender can increase her payoff if $V_t$ is fixed. One can see that $\underline{\mu}_t$ and $W_t$ will (weakly) increase, as long as we keep \eqref{IR_t} binding. Hence, $V_t$ will also (weakly) increase. So, the sender's payoff will be even higher. So, under the optimal information structure, $\lambda_{t}^*$ must be no greater than $c/v_g$. %%% add more details!
+		Since it holds for any period in which the receiver takes action $G$, and the receiver surplus from that period is $\lambda_{t}^* (\bar{\mu_t} + v_b) - c \leq \frac{c}{v_g} (1 + v_b) - c = 0$. The receiver gets zero surplus in each period, $W_t =0$. Therefore, the receiver takes action $G$ immediately after observing a positive signal in any period he searches for information (otherwise, the expected gain from search is strictly negative and he will not search). This implies that the optimal information structure is $k$ periods of one-shot signals. To satisfy the receiver's particiaption constraints, $(\lambda_{t}^*,\bar{\mu}_{t}^*) = (c/v_g,1),$ for $t = 0,1,...,k-1$.
+		
+		The sender's expected payoff of providing $k$ periods of such information is: $\sum_{i=0}^{k-1}(1-\frac{c}{v_g})^i \left[\frac{cp}{v_g} - K(\frac{c}{v_g})\right]$, which increases in $k$. Thus, the sender will provide as many periods of information as possible. Now we characterize the maximum number of periods. 
+		
+		Denote the initial belief at the beginning of period $t$ by $\mu_t:= \underline{\mu}_{t-1}$. The feasibility costraint \eqref{F_t} and $(\lambda_{t}^*,\bar{\mu}_{t}^*) = (c/v_g,1)$ imply that $\mu_t = \frac{\mu_{t-1}-\frac{c}{v_g}}{1-\frac{c}{v_g}}$. By induction, one can show that $\mu_k = \frac{\mu_0 - 1 + (1-\frac{c}{v_g})^k}{(1-\frac{c}{v_g})^k}$. For it to be feasible to provide information in $k$ periods, we need $\mu_{k-1} \geq c/v_g \lra k \leq \frac{ln(1-\mu_0)}{ln(1-c/v_g)}$. Hence, the maximum number of periods is $\lfloor \frac{ln(1-\mu_0)}{ln(1-c/v_g)} \rfloor$.
+
+		
+		
+		\begin{comment}
+		Suppose the sender provides information for $k$ periods. In the last period, $t = k-1$, $(\lambda_{k-1}^*,\bar{\mu}_{k-1}^*) = (c/v_g,1)$ according to Proposition \ref{strategy1p}. The receiver gets zero expected surplus. Suppose the optimal signal in time $t$ is one-shot and $(\lambda_{t}^*,\bar{\mu}_{t}^*) = (c/v_g,1)$ for any $t \geq t'~(t' \geq 1)$, we want to show that the optimal signal in time $t=t'-1$ is one-shot and $(\lambda_{t'-1}^*,\bar{\mu}_{t'-1}^*) = (c/v_g,1)$. 
+		
+		Because the receiver's expected payoff during time $t \geq t'$ is zero, the optimal signal in time $t'-1$ is one-shot - the receiver takes action $G$ right after observing a positive signal. Suppose not, then the receiver searches for more information regardless of the signal realization, or searches for more information after observing a positive signal and takes action $B$ after observing a negative signal (clearly, he will not search and take action G regardless of the signal realization). But then, the receiver's expected surplus will be strictly negative because search is costly and he does not gain any utility in $t = t'-1$. Hence, the optimal signal in time $t'-1$ is one-shot. We just need to show that $(\lambda_{t'-1}^*,\bar{\mu}_{t'-1}^*) = (c/v_g,1)$. The sender's problem in $t = t'-1$ is:
+		\begin{align*}
+		 \max\limits_{\lambda_t, \bar{\mu_t}}& -K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t\\
+		s.t.~&\lambda_t (\bar{\mu_t} + v_b) \geq c \tag{$IR_t$} \\
+		& \lambda_t \bar{\mu_t} + (1-\lambda_t) \underline{\mu}_t = \mu_t \tag{$F_t$}\\
+		&(\lambda_{t},\bar{\mu}_{t}) = (c/v_g,1),~ \forall t \geq t'\\
+		&V_t = \sum_{i=0}^{k-t-1}(1-\frac{c}{v_g})^i \left[\frac{cp}{v_g} - K(\frac{c}{v_g})\right]
+		\end{align*}
+		Denote the optimal $\lambda_t$ without constraints by $\lambda_{t,H}^{**}$. $\lambda_{t,H}^{**} = \argmax\limits_{\lambda_t} -K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t$. The F.O.C. of $-K(\lambda_t) + p \lambda_t + (1-\lambda_t) V_t \ra K'(\lambda_{t,H}^{**}) = p - V_t < p = K'(\lambda_1^{**}) \ra \lambda_{t,H}^{**} < \lambda_1^{**} \leq c/v_g$. So, $(\lambda_{t}^*,\bar{\mu}_{t}^*) = (c/v_g,1)$.
+		
+		Therefore, the induction shows that the sender provides one-shot signal $(\lambda_{t}^*,\bar{\mu}_{t}^*) = (c/v_g,1)$ in each period, $t = 0, 1, ..., k-1$.
+		\end{comment}
+		
+		
+		\item Low search cost
+		
+		The receiver needs to decide between $G$ and $B$ at the end of the game. We first derive an upper bound on the probability that the receiver decides on $G$ under any feasible information structure. Denote the probability that the receiver takes action $G$ in period $t$ by $q_t$. Because the belief must be greater than or equal to $-v_b$ if the receiver takes action $G$, the mean-preserving property of the beliefs implies that $\mu_0 \geq \sum_{t=0}^{+\infty} q_t (-v_b) \ra \sum_{t=0}^{+\infty} q_t \leq -\frac{\mu_0}{v_b}$. %%% check! 
+		The probability that the receiver takes action $G$ eventually is bounded from above by $-\frac{\mu_0}{v_b}$. Thus, the sender's payoff is bounded from above by $-\frac{\mu_0 p}{v_b}$, even if the persuasion cost is zero. Now we show that the sender can achieve that payoff as the search cost vanishes. This means that she can obtain the equilibrium payoff as if the persuasion cost were zero.
+	
+	Consider the following strategy: Given a search cost $c$, the sender provides the same one-shot signals for $T$ consecutive periods ($t=0,1,...,T-1$), where $(\lambda_{t},\bar{\mu}_{t}) = (\lambda,\bar{\mu}) = (\sqrt{c},-v_b+\sqrt{c})$ and $T = \frac{ln\left(1-\frac{\mu_0}{-v_b+\sqrt{c}}\right)}{ln(1-\sqrt{c})}$. In each period, the receiver's expected payoff from searching is $\lambda_t (\bar{\mu_t} + v_b) - c = 0$. So, the receiver will keep searching if he observes a negative signal, except in the last period. By setting $\underline{\mu}_{T-1} = 0$, one can verify that the mean-preserving property of the belief is satisfied, and that the variables are well-defined for $c$ small. The probability that the receiver takes action $G$ eventually is $\sum_{t=0}^{T-1} \lambda (1-\lambda)^t = 1-(1-\lambda)^T = \frac{\mu_0}{-v_b+\sqrt{c}} \rightarrow -\frac{\mu_0}{v_b}$ as $c\rightarrow0$.
+	
+	The sender only incurs the persuasion cost if the receiver has not received a good signal. The expected total persuasion cost of the sender is bounded from above by the costs of always providing the information in $T$ periods, which is $T K(\sqrt{c})$.
+	\begin{align*}
+		\lim_{c\rightarrow 0} T K(\sqrt{c}) = \lim_{c\rightarrow 0} \frac{ln\left(1-\frac{\mu_0}{-v_b+\sqrt{c}}\right)}{ln(1-\sqrt{c})} K(\sqrt{c}) = ln\left(1+\frac{\mu_0}{v_b}\right) \lim_{c\rightarrow 0} \frac{K(\sqrt{c})}{ln(1-\sqrt{c})} \overset{\text{L'Hospital's rule}}{=} 0
+	\end{align*}
+	
+	Hence, the sender's payoff approaches $-\frac{\mu_0 p}{v_b}$ as $c \rightarrow 0$. The receiver's expected payoff from searching (net of the search cost) is zero in every period given the above strategy. One can see that the sender's payoff under the optimal strategy is no lower than that payoff, and it is bounded from above by $-\frac{\mu_0 p}{v_b}$. So, it also approaches $-\frac{\mu_0 p}{v_b}$ as $c \rightarrow 0$.
+	
+	Now we show that the sender adds noise to positive signals when the search cost is low. Suppose not. The mean-preserving property of the beliefs implies that $\mu_0 \geq \sum_{t=0}^{+\infty} q_t \cdot 1 \ra \sum_{t=0}^{+\infty} q_t \leq \mu_0 < -\frac{\mu_0}{v_b}$. Then, the payoff of the sender is bounded from above by $\mu_0 p < -\frac{\mu_0 p}{v_b}$. But, we have shown that the sender's payoff approaches $-\frac{\mu_0 p}{v_b}$ as $c \rightarrow 0$. So, it cannot be optimal for small $c$. Therefore, the sender adds noise to positive signals when the search cost is low.
+
+	\end{enumerate}
+
+
+\end{proof}
+
+
+
+\end{document}
