@@ -27,9 +27,34 @@ p.big {
     line-height: 1.8;
 }
 
+.section-header {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+/* style for WORKING PAPERS */
+.paper {
+      margin-bottom: 0.8em; /* gap between papers */
+    }
+    .paper ul {
+      margin: 0;
+      padding-left: 1.8em; /* indent space */
+      line-height: 1.8; /* spacing between lines within a paper */
+    }
+
+/* style for PUBLICATIONS (hanging indent)*/
+ol.reversed-list {
+  list-style-position: outside;
+  margin-left: 0;       /* ensure consistent spacing */ 
+  padding-left: 2.6em;  /* indent numbers and content */
+}
+
 ol.reversed-list li {
-      margin-bottom: 1.5em; /* space between papers */
-      line-height: 1.8;     /* spacing between lines within a paper */
+  text-indent: -1.5em;
+  padding-left: 1.5em;
+  margin-bottom: 1.2em;  /* gap between papers */
+  line-height: 1.8;      /* spacing between lines within a paper */
 }
 </style>
 
@@ -57,23 +82,54 @@ ol.reversed-list li {
 <p class="big"> &emsp;&emsp; I am an Assistant Professor at the Chinese University of Hong Kong. My research interests include competitive strategy, privacy, consumer search, and information economics. </p>    
    
     
-<br />
-<b> WORKING PAPERS </b>
+<div class="section-header">WORKING PAPERS</div>
 
-<ul> &#9675; <a href="Algorithmic_Targeting.pdf" target="_blank"> Precision-Recall Tradeoff in Competitive Targeting </a> &ensp; &ensp; Major revision at <i>Marketing Science</i> </ul>
-<ul> &ensp; with <i>Ganesh Iyer</i> and <i>Zemin (Zachary) Zhong</i>. </ul>
+<div class="paper">
+  <ul>
+    &#9675;
+    <a href="Algorithmic_Targeting.pdf" target="_blank">Precision-Recall Tradeoff in Competitive Targeting</a>
+    &ensp;&ensp;
+    Major revision at <i>Marketing Science</i>
+  </ul>
+  <ul>
+    &ensp; with <i>Ganesh Iyer</i> and <i>Zemin (Zachary) Zhong</i>.
+  </ul>
+</div>
 
-<ul> &#9675; <a href="Non_stationary_Pricing.pdf" target="_blank"> Consumer Gradual Learning and Firm Non-stationary Pricing </a> </ul> 
-<ul> &ensp; with <i>Wee Chaimanowong</i>. </ul>
+<div class="paper">
+  <ul>
+    &#9675;
+    <a href="Non_stationary_Pricing.pdf" target="_blank">Consumer Gradual Learning and Firm Non-stationary Pricing</a>
+  </ul>
+  <ul>
+    &ensp; with <i>Wee Chaimanowong</i>.
+  </ul>
+</div>
 
-<ul> &#9675; <a href="Lie_Detection.pdf" target="_blank"> Strategic Disinformation Generation and Detection </a> &ensp; &ensp; Major revision at <i>Management Science</i> </ul>
-<ul> &ensp; with <i>Wenxiao Yang</i> and <i>Pengxiang Zhou</i>. </ul>   
+<div class="paper">
+  <ul>
+    &#9675;
+    <a href="Lie_Detection.pdf" target="_blank">Strategic Disinformation Generation and Detection</a>
+    &ensp;&ensp;
+    Major revision at <i>Management Science</i>
+  </ul>
+  <ul>
+    &ensp; with <i>Wenxiao Yang</i> and <i>Pengxiang Zhou</i>.
+  </ul>
+</div>
 
-<ul> &#9675; <a href="Multi_attribute_Advertising.pdf" target="_blank"> Invitation to Search or Purchase? Optimal Multi-attribute Advertising </a> &ensp; &ensp; Major revision at <i>Management Science</i> </ul>
+<div class="paper">
+  <ul>
+    &#9675;
+    <a href="Multi_attribute_Advertising.pdf" target="_blank">Invitation to Search or Purchase? Optimal Multi-attribute Advertising</a>
+    &ensp;&ensp;
+    Major revision at <i>Management Science</i>
+  </ul>
+</div>
     
 
-<br />
-<b> PUBLICATIONS </b>
+<div class="section-header">PUBLICATIONS</div>
+
 
 <ol reversed class="reversed-list">
   <li>
@@ -125,17 +181,14 @@ ol.reversed-list li {
 </ol>
 
     
-    
-<br />
-<b> EDUCATION </b>
+<div class="section-header">EDUCATION</div>
 <ul> &#9675; Ph.D. Business Administration, University of California, Berkeley, 2023 </ul>
 <ul> &ensp; &ensp; &ensp; Exchange student in Economics, Stanford University, 2019 </ul>
 <ul> &#9675; B.S. Mathematics, B.S. Statistics, University of Michigan, 2017 </ul>
 <ul> &#9675; Major in Mathematics, Peking University, 2012 - 2015 </ul>
 
 
-<br />
-<b> CURRICULUM VITAE </b>
+<div class="section-header">CURRICULUM VITAE</div>
 <ul> <a href="CV_Yao_web.pdf" target="_blank">
 CV_Yao </a> </ul>
 
